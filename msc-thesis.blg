@@ -1,46 +1,61 @@
-This is BibTeX, Version 0.99d (TeX Live 2016)
-Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
-The top-level auxiliary file: bsc-thesis.aux
-The style file: apalike.bst
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: msc-thesis.aux
+The style file: unsrt.bst
 Database file #1: references.bib
-You've used 2 entries,
-            1935 wiz_defined-function locations,
-            484 strings with 4091 characters,
-and the built_in function-call counts, 814 in all, are:
-= -- 81
-> -- 20
-< -- 3
-+ -- 6
-- -- 6
-* -- 52
-:= -- 133
-add.period$ -- 6
-call.type$ -- 2
-change.case$ -- 12
-chr.to.int$ -- 2
-cite$ -- 2
-duplicate$ -- 41
-empty$ -- 66
-format.name$ -- 10
-if$ -- 172
-int.to.chr$ -- 1
-int.to.str$ -- 0
-missing$ -- 3
-newline$ -- 13
-num.names$ -- 6
-pop$ -- 18
+Warning--empty year in green_baseball_1961
+Warning--empty booktitle in voorhees_trec-8_1999
+Warning--empty year in voorhees_trec-8_1999
+Warning--empty journal in ferrucci_introduction_2012
+Warning--empty year in ferrucci_introduction_2012
+Warning--empty publisher in jurafsky_speech_2023
+Warning--empty year in jurafsky_speech_2023
+Warning--empty journal in hao_recent_2022
+Warning--empty year in hao_recent_2022
+Warning--empty journal in etezadi_state_2023
+Warning--empty year in etezadi_state_2023
+Warning--empty year in zhang_survey_2023
+Warning--empty journal in mishra_survey_2016
+Warning--empty year in mishra_survey_2016
+You've used 13 entries,
+            1791 wiz_defined-function locations,
+            507 strings with 5896 characters,
+and the built_in function-call counts, 3152 in all, are:
+= -- 246
+> -- 171
+< -- 2
++ -- 62
+- -- 49
+* -- 219
+:= -- 468
+add.period$ -- 36
+call.type$ -- 13
+change.case$ -- 13
+chr.to.int$ -- 0
+cite$ -- 27
+duplicate$ -- 128
+empty$ -- 316
+format.name$ -- 49
+if$ -- 696
+int.to.chr$ -- 0
+int.to.str$ -- 13
+missing$ -- 9
+newline$ -- 63
+num.names$ -- 13
+pop$ -- 67
 preamble$ -- 1
-purify$ -- 13
+purify$ -- 0
 quote$ -- 0
-skip$ -- 33
+skip$ -- 91
 stack$ -- 0
-substring$ -- 56
-swap$ -- 11
-text.length$ -- 1
+substring$ -- 195
+swap$ -- 33
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 10
-warning$ -- 0
-while$ -- 7
-width$ -- 0
-write$ -- 27
+type$ -- 0
+warning$ -- 14
+while$ -- 27
+width$ -- 15
+write$ -- 114
+(There were 14 warnings)

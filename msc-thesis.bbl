@@ -1,16 +1,63 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
 
-\bibitem[Newman, 2010]{Newman2010}
-Newman, M. (2010).
-\newblock {\em Networks: an introduction}.
-\newblock Oxford University Press.
+\bibitem{farea_evaluation_2022}
+Amer Farea, Zhen Yang, Kien Duong, Nadeesha Perera, and Frank Emmert-Streib.
+\newblock Evaluation of question answering systems: Complexity of judging a natural language.
 
-\bibitem[Spitz and Gertz, 2016]{Spitz2016a}
-Spitz, A. and Gertz, M. (2016).
-\newblock Terms over {LOAD:} leveraging named entities for cross-document
-  extraction and summarization of events.
-\newblock In {\em Proceedings of the 39th International {ACM} {SIGIR}
-  conference on Research and Development in Information Retrieval, {SIGIR}
-  2016, Pisa, Italy, July 17-21, 2016}, pages 503--512.
+\bibitem{green_baseball_1961}
+Bert~F. Green, Alice~K. Wolf, Carol Chomsky, and Kenneth Laughery.
+\newblock Baseball: an automatic question-answerer.
+\newblock In {\em Papers presented at the May 9-11, 1961, western joint {IRE}-{AIEE}-{ACM} computer conference}, {IRE}-{AIEE}-{ACM} '61 (Western), pages 219--224. Association for Computing Machinery.
+
+\bibitem{voorhees_trec-8_1999}
+E.~Voorhees.
+\newblock The {TREC}-8 question answering track report.
+
+\bibitem{ferrucci_introduction_2012}
+D.~A. Ferrucci.
+\newblock Introduction to this is watson.
+\newblock 56(3):1:1--1:15.
+\newblock Conference Name: {IBM} Journal of Research and Development.
+
+\bibitem{jurafsky_speech_2023}
+Dan Jurafsky and James~H. Martin.
+\newblock {\em Speech and Language Processing}.
+\newblock 3 edition.
+
+\bibitem{hao_recent_2022}
+Tianyong Hao, Xinxin Li, Yulan He, Fu~Lee Wang, and Yingying Qu.
+\newblock Recent progress in leveraging deep learning methods for question answering.
+\newblock 34(4):2765--2783.
+
+\bibitem{zhu_retrieving_2021}
+Fengbin Zhu, Wenqiang Lei, Chao Wang, Jianming Zheng, Soujanya Poria, and Tat-Seng Chua.
+\newblock Retrieving and reading: A comprehensive survey on open-domain question answering.
+
+\bibitem{etezadi_state_2023}
+Romina Etezadi and Mehrnoush Shamsfard.
+\newblock The state of the art in open domain complex question answering: a survey.
+\newblock 53(4):4124--4144.
+
+\bibitem{zhang_survey_2023}
+Qin Zhang, Shangsi Chen, Dongkuan Xu, Qingqing Cao, Xiaojun Chen, Trevor Cohn, and Meng Fang.
+\newblock A survey for efficient open domain question answering.
+\newblock In {\em Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 14447--14465. Association for Computational Linguistics.
+
+\bibitem{mishra_survey_2016}
+Amit Mishra and Sanjay~Kumar Jain.
+\newblock A survey on question answering systems with classification.
+\newblock 28(3):345--361.
+
+\bibitem{zamani_conversational_2023}
+Hamed Zamani, Johanne~R. Trippas, Jeff Dalton, and Filip Radlinski.
+\newblock Conversational information seeking.
+
+\bibitem{rajpurkar_squad_2016}
+Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and Percy Liang.
+\newblock {SQuAD}: 100,000+ questions for machine comprehension of text.
+
+\bibitem{dasigi_dataset_2021}
+Pradeep Dasigi, Kyle Lo, Iz~Beltagy, Arman Cohan, Noah~A. Smith, and Matt Gardner.
+\newblock A dataset of information-seeking questions and answers anchored in research papers.
 
 \end{thebibliography}
