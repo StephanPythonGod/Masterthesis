@@ -17,45 +17,53 @@ Warning--empty year in etezadi_state_2023
 Warning--empty year in zhang_survey_2023
 Warning--empty journal in mishra_survey_2016
 Warning--empty year in mishra_survey_2016
-You've used 13 entries,
+Warning--empty journal in dimitrakis_survey_2020
+Warning--empty year in dimitrakis_survey_2020
+Warning--empty year in roberts_how_2020
+Warning--empty journal in harabagiu_open_domain_2003
+Warning--empty year in harabagiu_open_domain_2003
+Warning--empty journal in nassiri_transformer_2023
+Warning--empty year in nassiri_transformer_2023
+Warning--empty year in nishida_retrieve-and-read_2018
+You've used 20 entries,
             1791 wiz_defined-function locations,
-            507 strings with 5896 characters,
-and the built_in function-call counts, 3152 in all, are:
-= -- 246
-> -- 171
-< -- 2
-+ -- 62
-- -- 49
-* -- 219
-:= -- 468
-add.period$ -- 36
-call.type$ -- 13
-change.case$ -- 13
+            540 strings with 7462 characters,
+and the built_in function-call counts, 5198 in all, are:
+= -- 414
+> -- 284
+< -- 4
++ -- 102
+- -- 82
+* -- 375
+:= -- 764
+add.period$ -- 57
+call.type$ -- 20
+change.case$ -- 20
 chr.to.int$ -- 0
-cite$ -- 27
-duplicate$ -- 128
-empty$ -- 316
-format.name$ -- 49
-if$ -- 696
+cite$ -- 42
+duplicate$ -- 209
+empty$ -- 507
+format.name$ -- 82
+if$ -- 1149
 int.to.chr$ -- 0
-int.to.str$ -- 13
-missing$ -- 9
-newline$ -- 63
-num.names$ -- 13
-pop$ -- 67
+int.to.str$ -- 20
+missing$ -- 14
+newline$ -- 97
+num.names$ -- 20
+pop$ -- 101
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 91
+skip$ -- 149
 stack$ -- 0
-substring$ -- 195
-swap$ -- 33
-text.length$ -- 2
+substring$ -- 354
+swap$ -- 59
+text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 14
-while$ -- 27
-width$ -- 15
-write$ -- 114
-(There were 14 warnings)
+warning$ -- 22
+while$ -- 46
+width$ -- 22
+write$ -- 178
+(There were 22 warnings)

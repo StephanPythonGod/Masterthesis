@@ -1,4 +1,4 @@
-This chapter provides essential background information and reviews relevant prior research. It commences with an introduction to the sub-task of Question Answering (\gls{qa}), as presented in Section \ref*{sec:qa}. As previously mentioned in the Introduction (Chapter \ref{chap:intro}), this chapter maintains a clear distinction between \gls{qa} and \gls{convqa}. Consequently, Section \ref{sec:cqa} extends upon the foundational knowledge of \gls*{qa} and introduces the requisite concepts for the transformation of a QA-System into a \gls{convqa}-System.
+This chapter provides essential background information and reviews relevant prior research. It commences with an introduction to the sub-task of Question Answering (\gls{qa}), as presented in Section \ref*{sec:qa}. As previously mentioned in the Introduction (Chapter \ref{chap:intro}), this chapter maintains a clear distinction between \gls{qa} and \gls{convqa}. Consequently, Section \ref{sec:cqa} extends upon the foundational knowledge of \gls*{qa} and introduces the requisite concepts for the transformation of a QA-System into a \gls{convqa}-System. Section \ref{sec:related_work} will delve into the related work, providing a comprehensive overview of the current state-of-the-art in the field of \gls{qa} and \gls{convqa} over textual knowledge sources.
 
 \section{Question Answering}
 \label{sec:qa}
@@ -27,7 +27,7 @@ The \textbf{\gls{qa}-Framework} encompasses external factors such as Question an
     
     \item \textbf{Knowledge Base (KB) QA}: In this approach, a semantic representation of the question is constructed, and a knowledge base is queried using this representation. The returned results are then used to generate an answer.
     
-    \item \textbf{Generative Question Answering}: Here, knowledge is fully explicit, and a neural network (NN) generates answers based on its trained parameters.
+    \item \textbf{Generative Question Answering}: Here, knowledge is fully implicit, and a neural network (NN) generates answers based on its trained parameters.
 \end{enumerate}
 
 For visual clarity, a diagram illustrating the adjusted \gls{qa} Framework Classification by Farea et al. is provided in Figure \ref{fig:qa_classification}.
@@ -80,6 +80,48 @@ Lastly, a \gls{qa}-System can be characterized by the \textbf{Answer Types} it o
    \item \textit{Agnostic answers} typically correspond to complex questions that necessitate the system to consider multiple documents and information sources to formulate a response. In such cases, no predefined or annotated answer exists.
 \end{itemize}
 
+% Pushed 1st
+
+\subsection{Information Retrieval Architectures}
+\label{subsec:qa_architectures}
+
+As stated in the previous section (Section \ref{subsec:qa_basics}), there are three major paradigms in \gls{qa}: \gls{ir}-based \gls{qa}, \gls{kb}-based QA, and Generative \gls{qa}. This section will primarily concentrate on the first paradigm, \gls{ir}-based QA, as it holds the most promise for addressing the objectives of this thesis topic.
+
+This thesis will not focus on \gls{kb} QA, as this approach requires the mapping of the query to a structured data representation. As the task of this thesis is to develop a general system, which is adaptable to different data inputs, \gls{kb} QA will be excluded \cite{dimitrakis_survey_2020}.
+
+Generative \gls{qa} is often denoted as \textit{Retriever-free} or \textit{Neural-based} approaches. The central characteristic of this paradigm is that knowledge resides within the parameters of a neural network. Consequently, the knowledge is implicit, and the \gls{qa} system will not furnish a specific document, passage, or other source from which it extracted the information. Instead, it offers a textual excerpt. While these systems can achieve competitive performance compared to \gls{ir}-based \gls{qa} systems, they are not under consideration for this thesis due to their lack of reference, which is a crucial requirement for the system to be developed \cite{roberts_how_2020}.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Retriever_Reader.png}
+    \caption{Reader-Retriever-System Architecture for \gls{qa} by Zhu et. al. \cite{zhu_retrieving_2021}. The dashed lines indicate optional modules.}
+    \label{fig:rr_architecture}
+\end{figure}
+
+Figure \ref{fig:rr_architecture} depicts the general architecture of a \textbf{Retriever-Reader-System}, as defined by Zhu et al. \cite{zhu_retrieving_2021}. This architecture serves as the foundational framework for \gls{ir}-Based \gls{qa} systems and was initially introduced by Harabagiu et al. \cite{harabagiu_open_domain_2003}. In this framework, all modules operate independently, can be trained separately, and are subject to independent evaluation.
+
+The \textbf{Retriever} module's primary role is to retrieve relevant documents, passages, or other pertinent information from a knowledge source and rank them based on their relevance to answering the user's query. Subsequently, the \textbf{Reader} module extracts the answer from the retrieved documents and presents it to the user. This task bears a close resemblance to \gls{mrc}, with the key distinction that in \gls{ir}-Based \gls{qa}, the system must handle multiple documents and comprehend them to formulate a response, unlike classical \gls{mrc} tasks, which typically involve only one context document.
+
+The \textbf{Document Post-Processor} module's role is to curate and refine the set of documents that will be forwarded as "Relevant Documents" to the subsequent stage, the Reader. Concurrently, the \textbf{Answer Post-Processor} assists the Reader in addressing complex questions for which the answer may not be found in a single document alone \cite{zhu_retrieving_2021,jurafsky_speech_2023}.
+
+It's worth noting that some researchers include a \textbf{Question Analysis} module preceding the Retriever, which aims to preprocess the received question for more efficient query execution in the Retriever \cite{nassiri_transformer_2023}. However, for the purposes of this thesis, we adhere to Zhu et al.'s definition \cite{zhu_retrieving_2021}, where this functionality is considered part of the Retriever.
+
+Conceptually, there are three distinct approaches to the Retriever itself: \textit{Sparse Retrieval, Dense Retrieval,} and \textit{Iterative Retrieval.} The specifics of these approaches will be thoroughly explored in Section \ref{subsec:qa_retrieval}.
+
+Document Post-Processors can be categorized into \textit{Supervised Learning, Reinforcement Learning,} and \textit{Transfer Learning}-based approaches. A detailed discussion of these approaches is also provided in Section \ref{subsec:qa_retrieval}.
+
+In Section \ref{subsec:qa_user_interaction}, we will delve into the finer details of Reader approaches and Answer Post-processing. Broadly speaking, there are two primary types of Readers: \textit{Extractive} and \textit{Generative} Readers. As for Answer Post-processing, it involves two key categories: \textit{Rule-based} and \textit{Learning-based} approaches.
+
+There are also \textit{End-to-End} approaches that employ a single module to execute the entire \gls{qa} task. Excluding generative approaches, two common categories of such approaches are \textbf{Retriever-Reader} and \textbf{Retriever-only} models.
+
+An End-to-End Retriever-Reader aims to train both the Retriever and Reader in a single backpropagation step, and in some cases, it introduces additional knowledge sources beyond the traditional \gls{ir} framework. An illustrative example is \gls{rag} \cite{lewis_retrieval-augmented_2021}. \gls{rag} consists of a pre-trained Generator with implicit knowledge encoded in its parameters and a pre-trained Retriever. For each question, the Retriever identifies the most relevant documents and generates a latent vector based on them. This latent vector, along with the original question, is fed into the Generator.
+
+Another end-to-end approach, similar to \gls{rag}, is \gls{realm} \cite{guu_realm_2020}. While these previous two approaches extended the capabilities of pre-trained \gls{s2s} models, Nishida et al. pursued a different path by training a single \gls{nn} to perform both tasks simultaneously: \gls{ir} and \gls{mrc} \cite{nishida_retrieve-and-read_2018}.
+
+It is noteworthy that all these end-to-end approaches have demonstrated competitive performance compared to state-of-the-art methods on specific \gls{qa} datasets.
+
+An essential yet often underestimated question is: What defines textual data, and how should one preprocess formats such as PDFs to extract this textual content? While many datasets already comprise small contextual snippets, it's crucial not to overlook the entire process of extracting snippets from unstructured PDFs, for example. Approaches to tackle this challenge will be explored in detail in the upcomming Section \ref{subsec:qa_indexing}.
 
 \subsection{Indexing Approaches}
 \label{subsec:qa_indexing}
@@ -87,14 +129,15 @@ Lastly, a \gls{qa}-System can be characterized by the \textbf{Answer Types} it o
 \subsection{Retrieval Approaches}
 \label{subsec:qa_retrieval}
 
-\subsection{User Interaction}
+\subsection{Reader Approaches}
 \label{subsec:qa_user_interaction}
 
-\subsection{Example Architectures}
-\label{subsec:qa_architectures}
 
 \subsection{Limitations}
 \label{subsec:qa_limitations}
 
 \section{Conversational Question Answering}
 \label{sec:cqa}
+
+\section{Related Work}
+\label{sec:related_work}

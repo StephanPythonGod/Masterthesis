@@ -4,6 +4,10 @@
 Amer Farea, Zhen Yang, Kien Duong, Nadeesha Perera, and Frank Emmert-Streib.
 \newblock Evaluation of question answering systems: Complexity of judging a natural language.
 
+\bibitem{zhu_retrieving_2021}
+Fengbin Zhu, Wenqiang Lei, Chao Wang, Jianming Zheng, Soujanya Poria, and Tat-Seng Chua.
+\newblock Retrieving and reading: A comprehensive survey on open-domain question answering.
+
 \bibitem{green_baseball_1961}
 Bert~F. Green, Alice~K. Wolf, Carol Chomsky, and Kenneth Laughery.
 \newblock Baseball: an automatic question-answerer.
@@ -28,10 +32,6 @@ Dan Jurafsky and James~H. Martin.
 Tianyong Hao, Xinxin Li, Yulan He, Fu~Lee Wang, and Yingying Qu.
 \newblock Recent progress in leveraging deep learning methods for question answering.
 \newblock 34(4):2765--2783.
-
-\bibitem{zhu_retrieving_2021}
-Fengbin Zhu, Wenqiang Lei, Chao Wang, Jianming Zheng, Soujanya Poria, and Tat-Seng Chua.
-\newblock Retrieving and reading: A comprehensive survey on open-domain question answering.
 
 \bibitem{etezadi_state_2023}
 Romina Etezadi and Mehrnoush Shamsfard.
@@ -59,5 +59,39 @@ Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and Percy Liang.
 \bibitem{dasigi_dataset_2021}
 Pradeep Dasigi, Kyle Lo, Iz~Beltagy, Arman Cohan, Noah~A. Smith, and Matt Gardner.
 \newblock A dataset of information-seeking questions and answers anchored in research papers.
+
+\bibitem{dimitrakis_survey_2020}
+Eleftherios Dimitrakis, Konstantinos Sgontzos, and Yannis Tzitzikas.
+\newblock A survey on question answering systems over linked data and documents.
+\newblock 55(2):233--259.
+
+\bibitem{roberts_how_2020}
+Adam Roberts, Colin Raffel, and Noam Shazeer.
+\newblock How much knowledge can you pack into the parameters of a language model?
+\newblock In {\em Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing ({EMNLP})}, pages 5418--5426. Association for Computational Linguistics.
+
+\bibitem{harabagiu_open_domain_2003}
+Sanda~M. Harabagiu, Steven~J. Maiorano, and Marius~A. Pasca.
+\newblock Open-domain textual question answering techniques.
+\newblock 9(3):231--267.
+\newblock Publisher: Cambridge University Press.
+
+\bibitem{nassiri_transformer_2023}
+Khalid Nassiri and Moulay Akhloufi.
+\newblock Transformer models used for text-based question answering systems.
+\newblock 53(9):10602--10635.
+
+\bibitem{lewis_retrieval-augmented_2021}
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Küttler, Mike Lewis, Wen-tau Yih, Tim Rocktäschel, Sebastian Riedel, and Douwe Kiela.
+\newblock Retrieval-augmented generation for knowledge-intensive {NLP} tasks.
+
+\bibitem{guu_realm_2020}
+Kelvin Guu, Kenton Lee, Zora Tung, Panupong Pasupat, and Ming-Wei Chang.
+\newblock {REALM}: Retrieval-augmented language model pre-training.
+
+\bibitem{nishida_retrieve-and-read_2018}
+Kyosuke Nishida, Itsumi Saito, Atsushi Otsuka, Hisako Asano, and Junji Tomita.
+\newblock Retrieve-and-read: Multi-task learning of information retrieval and reading comprehension.
+\newblock In {\em Proceedings of the 27th {ACM} International Conference on Information and Knowledge Management}, pages 647--656.
 
 \end{thebibliography}
