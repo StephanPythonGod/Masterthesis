@@ -48,6 +48,14 @@ Amit Mishra and Sanjay~Kumar Jain.
 \newblock A survey on question answering systems with classification.
 \newblock 28(3):345--361.
 
+\bibitem{mcdonald_detect_2022}
+Tavish {McDonald}, Brian Tsan, Amar Saini, Juanita Ordonez, Luis Gutierrez, Phan Nguyen, Blake Mason, and Brenda Ng.
+\newblock Detect, retrieve, comprehend: A flexible framework for zero-shot document-level question answering.
+
+\bibitem{dasigi_dataset_2021}
+Pradeep Dasigi, Kyle Lo, Iz~Beltagy, Arman Cohan, Noah~A. Smith, and Matt Gardner.
+\newblock A dataset of information-seeking questions and answers anchored in research papers.
+
 \bibitem{zamani_conversational_2023}
 Hamed Zamani, Johanne~R. Trippas, Jeff Dalton, and Filip Radlinski.
 \newblock Conversational information seeking.
@@ -55,10 +63,6 @@ Hamed Zamani, Johanne~R. Trippas, Jeff Dalton, and Filip Radlinski.
 \bibitem{rajpurkar_squad_2016}
 Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and Percy Liang.
 \newblock {SQuAD}: 100,000+ questions for machine comprehension of text.
-
-\bibitem{dasigi_dataset_2021}
-Pradeep Dasigi, Kyle Lo, Iz~Beltagy, Arman Cohan, Noah~A. Smith, and Matt Gardner.
-\newblock A dataset of information-seeking questions and answers anchored in research papers.
 
 \bibitem{dimitrakis_survey_2020}
 Eleftherios Dimitrakis, Konstantinos Sgontzos, and Yannis Tzitzikas.
@@ -93,5 +97,47 @@ Kelvin Guu, Kenton Lee, Zora Tung, Panupong Pasupat, and Ming-Wei Chang.
 Kyosuke Nishida, Itsumi Saito, Atsushi Otsuka, Hisako Asano, and Junji Tomita.
 \newblock Retrieve-and-read: Multi-task learning of information retrieval and reading comprehension.
 \newblock In {\em Proceedings of the 27th {ACM} International Conference on Information and Knowledge Management}, pages 647--656.
+
+\bibitem{wang_modern_2022}
+Zhen Wang.
+\newblock Modern question answering datasets and benchmarks: A survey.
+\newblock Publisher: {arXiv} Version Number: 1.
+
+\bibitem{tito_document_2021}
+Rubèn Tito, Dimosthenis Karatzas, and Ernest Valveny.
+\newblock Document collection visual question answering.
+\newblock volume 12822, pages 778--792.
+
+\bibitem{wang_multi-passage_2019}
+Zhiguo Wang, Patrick Ng, Xiaofei Ma, Ramesh Nallapati, and Bing Xiang.
+\newblock Multi-passage {BERT}: A globally normalized {BERT} model for open-domain question answering.
+
+\bibitem{liu_dense_2021}
+Ye~Liu, Kazuma Hashimoto, Yingbo Zhou, Semih Yavuz, Caiming Xiong, and Philip~S. Yu.
+\newblock Dense hierarchical retrieval for open-domain question answering.
+
+\bibitem{mathew_document_2021}
+Minesh Mathew, Ruben Tito, Dimosthenis Karatzas, R.~Manmatha, and C.~V. Jawahar.
+\newblock Document visual question answering challenge 2020.
+
+\bibitem{li_dit_2022}
+Junlong Li, Yiheng Xu, Tengchao Lv, Lei Cui, Cha Zhang, and Furu Wei.
+\newblock {DiT}: Self-supervised pre-training for document image transformer.
+
+\bibitem{meuschke_benchmark_2023}
+Norman Meuschke, Apurva Jagdale, Timo Spinde, Jelena Mitrovic, and Bela Gipp.
+\newblock A benchmark of {PDF} information extraction tools using a multi-task and multi-domain evaluation framework for academic documents.
+\newblock volume 13972, pages 383--405.
+
+\bibitem{noauthor_langchain-ailangchain_nodate}
+langchain-ai/langchain: Building applications with {LLMs} through composability.
+
+\bibitem{noauthor_chatgpt_2023}
+{ChatGPT} retrieval plugin.
+\newblock original-date: 2023-03-23T06:06:22Z.
+
+\bibitem{karpukhin_dense_2020}
+Vladimir Karpukhin, Barlas Oguz, Sewon Min, Patrick Lewis, Ledell Wu, Sergey Edunov, Danqi Chen, and Wen-tau Yih.
+\newblock Dense passage retrieval for open-domain question answering.
 
 \end{thebibliography}

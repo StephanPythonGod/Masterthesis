@@ -18,7 +18,7 @@ Jurafsky and Martin define a \gls{qa}-System as a system \enquote{designed to sa
 
 The research community has yet to establish a universally accepted classification framework for Question Answering (QA) systems. For instance, Hao et al. and Farea et al. \cite{hao_recent_2022, farea_evaluation_2022} take a comprehensive approach to classify QA systems but differ in certain aspects, such as their treatment of question types and knowledge sources. On the other hand, other researchers \cite{zhu_retrieving_2021, jurafsky_speech_2023, etezadi_state_2023, zhang_survey_2023} employ a similar classification methodology but often focus solely on retrieval-based approaches, thereby lacking a holistic perspective.
 
-The classification proposed by Farea et al. \cite{farea_evaluation_2022} goes a step further by distinguishing between the \textbf{QA-Framework} and \textbf{QA-Paradigms}, enhancing its versatility for comparing classical and modern QA systems. An adaptation of this classification will be utilized in this thesis. The originally proposed QA algorithms have been extended to include the Retrieval-based approach, and the Question Types have been revised based on the typology introduced by Mishra et al. in their 2016 survey \cite{mishra_survey_2016}, which was further elaborated upon by Etezadi et al. \cite{etezadi_state_2023}. In this context, a crucial distinction is made between a \textbf{QA} and \textbf{ConvQA} system, guided by the criteria outlined in \cite{zamani_conversational_2023}: a QA system exclusively handles standalone questions, while any inquiry exceeding a single question and involving conversational context falls within the domain of a \textbf{ConvQA} system.
+The classification proposed by Farea et al. \cite{farea_evaluation_2022} goes a step further by distinguishing between the \textbf{QA-Framework} and \textbf{QA-Paradigms}, enhancing its versatility for comparing classical and modern QA systems. An adaptation of this classification will be utilized in this thesis. The originally proposed QA algorithms have been extended to include the Retrieval-based approach, and the Question Types have been revised based on the typology introduced by Mishra et al. in their 2016 survey \cite{mishra_survey_2016}, which was further elaborated upon by Etezadi et al. \cite{etezadi_state_2023}. Also the Answer Types where adjusted to align with the classifications used in \cite{mcdonald_detect_2022,dasigi_dataset_2021}. In this context, a crucial distinction is made between a \textbf{QA} and \textbf{ConvQA} system, guided by the criteria outlined in \cite{zamani_conversational_2023}: a QA system exclusively handles standalone questions, while any inquiry exceeding a single question and involving conversational context falls within the domain of a \textbf{ConvQA} system.
 
 The \textbf{\gls{qa}-Framework} encompasses external factors such as Question and Answer Types, while also considering system-related factors like the \gls{qa} Algorithm and Knowledge Source \cite{farea_evaluation_2022, hao_recent_2022}. Conversely, the \textbf{\gls{qa}-Paradigm} defines the fundamental underlying concept of a system and can be seen as a subset of possible combinations within the \textbf{\gls{qa} Framework}. Currently, three dominant paradigms prevail:
 
@@ -28,6 +28,7 @@ The \textbf{\gls{qa}-Framework} encompasses external factors such as Question an
     \item \textbf{Knowledge Base (KB) QA}: In this approach, a semantic representation of the question is constructed, and a knowledge base is queried using this representation. The returned results are then used to generate an answer.
     
     \item \textbf{Generative Question Answering}: Here, knowledge is fully implicit, and a neural network (NN) generates answers based on its trained parameters.
+
 \end{enumerate}
 
 For visual clarity, a diagram illustrating the adjusted \gls{qa} Framework Classification by Farea et al. is provided in Figure \ref{fig:qa_classification}.
@@ -70,14 +71,16 @@ An alternative perspective for distinguishing \gls{qa}-Systems lies in the \text
    \item \textit{Complex questions} can be further categorized into \textit{answer-retrieval-complex} and \textit{question-understanding-complex}. In the case of question-understanding-complex questions, the complexity arises from nuances like multiple constraints, making the question itself intricate to comprehend. In contrast, answer-retrieval-complex questions involve complexities in finding the correct answer, often requiring the combination of information from multiple documents or similar sources. This is commonly referred to as long-form \gls{qa}.
 \end{itemize}
 
-Lastly, a \gls{qa}-System can be characterized by the \textbf{Answer Types} it offers, a concept closely intertwined with Question Types. Farea et al. \cite{farea_evaluation_2022} delineate three categories of answers: \textit{span, abstractive,} and \textit{agnostic}. 
+Lastly, a \gls{qa}-System can be characterized by the \textbf{Answer Types} it offers, a concept closely intertwined with Question Types. Farea et al. \cite{farea_evaluation_2022} delineate three categories of answers: \textit{extractive, abstractive, boolean} and \textit{reactive}. 
 
 \begin{itemize}
-   \item \textit{Span answers} represent the most common type, where the answer is a specific factual excerpt presented as a span of tokens.
-   
-   \item \textit{Abstractive answers} often arise in response to confirmation questions and can be a system-generated reaction based on the user's provided answer.
-   
-   \item \textit{Agnostic answers} typically correspond to complex questions that necessitate the system to consider multiple documents and information sources to formulate a response. In such cases, no predefined or annotated answer exists.
+   \item \textit{Extractive answers} represent the most common type, where the answer is a specific factual excerpt presented as a span of tokens.
+
+   \item \textit{Abstractive answers} typically correspond to complex questions that necessitate the system to consider multiple documents and information sources to formulate a response. In such cases, no predefined or annotated answer exists.
+
+   \item \textit{Boolean answers} are typically the result of confirmation questions, where the answer is either \textit{yes} or \textit{no}.
+
+   \item \textit{Reactive answers} often arise in response to confirmation questions and can be a system-generated reaction based on the user's provided answer.
 \end{itemize}
 
 % Pushed 1st
@@ -121,10 +124,30 @@ Another end-to-end approach, similar to \gls{rag}, is \gls{realm} \cite{guu_real
 
 It is noteworthy that all these end-to-end approaches have demonstrated competitive performance compared to state-of-the-art methods on specific \gls{qa} datasets.
 
-An essential yet often underestimated question is: What defines textual data, and how should one preprocess formats such as PDFs to extract this textual content? While many datasets already comprise small contextual snippets, it's crucial not to overlook the entire process of extracting snippets from unstructured PDFs, for example. Approaches to tackle this challenge will be explored in detail in the upcomming Section \ref{subsec:qa_indexing}.
+An essential yet often underestimated question is: What defines textual data, and how should one preprocess formats such as PDFs to extract this textual content? While many datasets already comprise small contextual snippets \cite{wang_modern_2022}, it's crucial not to overlook the entire process of extracting snippets from unstructured PDFs, for example. Approaches to tackle this challenge will be explored in detail in the upcomming Section \ref{subsec:qa_indexing}.
 
-\subsection{Indexing Approaches}
+% 2nd push
+
+\subsection{Extraction Approaches}
 \label{subsec:qa_indexing}
+
+As discussed in the previous Section \ref{subsec:qa_basics}, the knowledge source for a \gls{qa}-System can take the form of textual or multimodal data. The specific type of data may necessitate certain requirements or specific adjustments to the Retriever used for \gls{ir}.
+
+In the context of this thesis, the primary knowledge source to be employed is PDF documents. In the research field, three major approaches exist for extracting textual information from unstructured data types like PDFs: \textit{visual} \cite{tito_document_2021}, \textit{direct} \cite{wang_multi-passage_2019}, and \textit{alternative} \cite{dasigi_dataset_2021} extraction methods.
+
+It's important to note upfront that the chosen extraction method is intricately connected to the subsequent retrieval approach. The specifics, including metadata alongside pure textual data and quality requirements, may vary among different extraction and retrieval methods.
+
+The visual approach is closely aligned with the research field of \textit{Document Question Answering}. A well-known example dataset in this field is \gls{docvqa} \cite{tito_document_2021}. The primary concept behind the visual approach to document question answering is to capture not only the text of a PDF but also additional information such as the document's structure, various hierarchies on a page (e.g., sections, subsections), and the ability to analyze tables and figures. These hierarchical structures can be leveraged to create two-stage retrieval approaches. In these approaches, initially, a collection of relevant files is identified based on higher-level attributes like the document's title and abstract. Subsequently, a more granular retrieval process is executed over lower-level attributes such as passages within the relevant files \cite{liu_dense_2021}.
+
+The challenge of \textit{Visual Document Question Answering} typically involves taking images of PDF pages as inputs and mapping question-answer pairs to them. The answers are extracted from either a single paragraph or a combination of multiple paragraphs \cite{mathew_document_2021}. Nonetheless, the extraction pipeline in this case usually resembles the \textit{Retriever-Reader} architecture, where the extracted information from the visual processing is fed into such a system afterward. Researchers in this field often employ a pipeline that includes a \textit{Document Layout Analysis} model, followed by the application of an \gls{ocr} tool to the detected regions \cite{mcdonald_detect_2022}. Examples of a \textit{Document Layout Analysis} model include the Document Image Transformer by Li et al. \cite{li_dit_2022}.
+
+The direct approach is the most prevalent method in the field of Question Answering (\gls{qa}) and Information Retrieval (\gls{ir}). The primary concept behind this approach is to extract textual information from PDFs and store it in a database. The extraction process can be accomplished using various tools such as \textit{PDFMiner} or \textit{Adobe Extract} \cite{meuschke_benchmark_2023}. However, a lingering question is how to effectively split the extracted textual data, especially considering that they are often not cleaned after extraction.
+
+A common practice when employing a Language Model (\gls{llm}) is to optionally cleanse the text corpus and then divide it based on a predefined token size. This approach is evident in two notable open-source LLM projects: \textit{Langchain} and the \textit{Retrieval Plugin for ChatGPT} by OpenAI \cite{noauthor_langchain-ailangchain_nodate,noauthor_chatgpt_2023}. In the original Dense Retrieval paper by Karpukkhin et al., a sliding window of token size 5 was utilized \cite{karpukhin_dense_2020}. Therefore, it can be assumed that for contemporary LLM applications, the precise quality of the data, ensuring that a document contains syntactically correct sentences, may not be as critical.
+
+Apart from modern approaches involving text clipping, previous methods aimed to identify paragraphs and similar structures within the extracted texts \cite{zhu_retrieving_2021}.
+
+An alternative approach involves the methodology employed in constructing the QASPER dataset. In this case, the authors conducted a pre-filtering of scientific papers' PDFs, selecting only those with freely accessible LaTeX files. They then utilized the S2ORC tool to extract cleaned textual data from these LaTeX files \cite{dasigi_dataset_2021}. It's important to note that this approach is highly specific to the QASPER dataset and cannot be universally applied. Nonetheless, it serves as an illustration of alternative methods for extracting textual data from PDFs.
 
 \subsection{Retrieval Approaches}
 \label{subsec:qa_retrieval}
