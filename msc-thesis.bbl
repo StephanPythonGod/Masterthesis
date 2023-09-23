@@ -140,4 +140,33 @@ langchain-ai/langchain: Building applications with {LLMs} through composability.
 Vladimir Karpukhin, Barlas Oguz, Sewon Min, Patrick Lewis, Ledell Wu, Sergey Edunov, Danqi Chen, and Wen-tau Yih.
 \newblock Dense passage retrieval for open-domain question answering.
 
+\bibitem{thakur_beir_2021}
+Nandan Thakur, Nils Reimers, Andreas Rücklé, Abhishek Srivastava, and Iryna Gurevych.
+\newblock {BEIR}: A heterogenous benchmark for zero-shot evaluation of information retrieval models.
+
+\bibitem{robertson_probabilistic_2009}
+Stephen Robertson and Hugo Zaragoza.
+\newblock The probabilistic relevance framework: {BM}25 and beyond.
+\newblock 3:333--389.
+
+\bibitem{devlin_bert_2019}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock {BERT}: Pre-training of deep bidirectional transformers for language understanding.
+
+\bibitem{khattab_colbert_2020}
+Omar Khattab and Matei Zaharia.
+\newblock {ColBERT}: Efficient and effective passage search via contextualized late interaction over {BERT}.
+
+\bibitem{yang_hotpotqa_2018}
+Zhilin Yang, Peng Qi, Saizheng Zhang, Yoshua Bengio, William~W. Cohen, Ruslan Salakhutdinov, and Christopher~D. Manning.
+\newblock {HotpotQA}: A dataset for diverse, explainable multi-hop question answering.
+
+\bibitem{zhang_beam_2023}
+Jiahao Zhang, Haiyang Zhang, Dongmei Zhang, Yong Liu, and Shen Huang.
+\newblock Beam retrieval: General end-to-end retrieval for multi-hop question answering.
+
+\bibitem{he_deberta_2020}
+Pengcheng He, Xiaodong Liu, Jianfeng Gao, and Weizhu Chen.
+\newblock {DEBERTA}: {DECODING}-{ENHANCED} {BERT} {WITH} {DISENTANGLED} {ATTENTION}.
+
 \end{thebibliography}

@@ -137,20 +137,106 @@ In the context of this thesis, the primary knowledge source to be employed is PD
 
 It's important to note upfront that the chosen extraction method is intricately connected to the subsequent retrieval approach. The specifics, including metadata alongside pure textual data and quality requirements, may vary among different extraction and retrieval methods.
 
-The visual approach is closely aligned with the research field of \textit{Document Question Answering}. A well-known example dataset in this field is \gls{docvqa} \cite{tito_document_2021}. The primary concept behind the visual approach to document question answering is to capture not only the text of a PDF but also additional information such as the document's structure, various hierarchies on a page (e.g., sections, subsections), and the ability to analyze tables and figures. These hierarchical structures can be leveraged to create two-stage retrieval approaches. In these approaches, initially, a collection of relevant files is identified based on higher-level attributes like the document's title and abstract. Subsequently, a more granular retrieval process is executed over lower-level attributes such as passages within the relevant files \cite{liu_dense_2021}.
+The visual approach is closely aligned with the research field of \textit{Document Question Answering}. A well-known example dataset in this field is \gls{docvqa} \cite{tito_document_2021}. The primary concept behind the visual approach to document question answering is to capture not only the text of a PDF but also additional information such as the document's structure, various hierarchies on a page (e.g., sections, subsections), and the ability to analyze tables and figures. These hierarchical structures can be leveraged to create two-stage retrieval approaches. In these approaches, initially, a collection of relevant files is identified based on higher-level attributes like the document's title and abstract. Subsequently, a more granular retrieval process is executed over lower-level attributes such as passages within the relevant files. These \textit{Iterative Retrievers} will be further discussed in Section \ref{subsec:qa_retrieval} \cite{liu_dense_2021}.
 
 The challenge of \textit{Visual Document Question Answering} typically involves taking images of PDF pages as inputs and mapping question-answer pairs to them. The answers are extracted from either a single paragraph or a combination of multiple paragraphs \cite{mathew_document_2021}. Nonetheless, the extraction pipeline in this case usually resembles the \textit{Retriever-Reader} architecture, where the extracted information from the visual processing is fed into such a system afterward. Researchers in this field often employ a pipeline that includes a \textit{Document Layout Analysis} model, followed by the application of an \gls{ocr} tool to the detected regions \cite{mcdonald_detect_2022}. Examples of a \textit{Document Layout Analysis} model include the Document Image Transformer by Li et al. \cite{li_dit_2022}.
 
 The direct approach is the most prevalent method in the field of Question Answering (\gls{qa}) and Information Retrieval (\gls{ir}). The primary concept behind this approach is to extract textual information from PDFs and store it in a database. The extraction process can be accomplished using various tools such as \textit{PDFMiner} or \textit{Adobe Extract} \cite{meuschke_benchmark_2023}. However, a lingering question is how to effectively split the extracted textual data, especially considering that they are often not cleaned after extraction.
 
-A common practice when employing a Language Model (\gls{llm}) is to optionally cleanse the text corpus and then divide it based on a predefined token size. This approach is evident in two notable open-source LLM projects: \textit{Langchain} and the \textit{Retrieval Plugin for ChatGPT} by OpenAI \cite{noauthor_langchain-ailangchain_nodate,noauthor_chatgpt_2023}. In the original Dense Retrieval paper by Karpukkhin et al., a sliding window of token size 5 was utilized \cite{karpukhin_dense_2020}. Therefore, it can be assumed that for contemporary LLM applications, the precise quality of the data, ensuring that a document contains syntactically correct sentences, may not be as critical.
+A common practice when employing a Language Model (\gls{llm}) is to optionally cleanse the text corpus and then divide it based on a predefined token size. This approach is evident in two notable open-source LLM projects: \textit{Langchain} and the \textit{Retrieval Plugin for ChatGPT} by OpenAI \cite{noauthor_langchain-ailangchain_nodate,noauthor_chatgpt_2023}. In the original Dense Retrieval paper by Karpukhin et al., a sliding window of token size 5 was utilized \cite{karpukhin_dense_2020}. Therefore, it can be assumed that for contemporary LLM applications, the precise quality of the data, ensuring that a document contains syntactically correct sentences, may not be as critical.
 
 Apart from modern approaches involving text clipping, previous methods aimed to identify paragraphs and similar structures within the extracted texts \cite{zhu_retrieving_2021}.
 
 An alternative approach involves the methodology employed in constructing the QASPER dataset. In this case, the authors conducted a pre-filtering of scientific papers' PDFs, selecting only those with freely accessible LaTeX files. They then utilized the S2ORC tool to extract cleaned textual data from these LaTeX files \cite{dasigi_dataset_2021}. It's important to note that this approach is highly specific to the QASPER dataset and cannot be universally applied. Nonetheless, it serves as an illustration of alternative methods for extracting textual data from PDFs.
 
+% Commit #3
+
 \subsection{Retrieval Approaches}
 \label{subsec:qa_retrieval}
+
+The traditional state-of-the-art in \gls{ir} relies on \textbf{Sparse Retrievers}, with one notable example being BM25. BM25 is renowned as "one of the most empirically successful retrieval models and is widely used in current search engines" \cite{zhu_retrieving_2021}. Nandan et al. even demonstrated that on modern Open-Domain Question Answering (ODQA) datasets, BM25 remains a viable baseline for zero-shot \gls{ir} \cite{thakur_beir_2021}.
+
+BM25 was originally introduced by Robertson et al. \cite{robertson_probabilistic_2009}. It operates by utilizing the TF-IDF token weights between a question $q$ containing tokens $q_1, \ldots, q_T$ and a set of passages $P$, where $p \in P$.
+
+\begin{equation}
+    \mathbf{s}_{q, p}^{\text{BM25}}=\sum_{i=1}^T \log \left(\frac{|\mathcal{P}|}{N\left(q_i, \mathcal{P}\right)}\right) \frac{n\left(q_i, p\right)\left(k_1+1\right)}{k_1\left(1-b+\frac{b|p|}{a v p l}\right)+n\left(q_i, p\right)}
+    \label{eq:bm25}
+\end{equation}
+
+    
+Equation \ref{eq:bm25} illustrates the BM25 score for a question $q$ and a passage $p$. In this equation, $N\left(q_i, \mathcal{P}\right)$ represents the count of passages in $\mathcal{P}$ that contain the token $q_i$, while $n\left(q_i, p\right)$ indicates the frequency of token $q_i$ within the passage $p$. The variable $|p|$ signifies the length of passage $p$, and $avpl$ stands for the average passage length in $\mathcal{P}$. The parameters $k_1$ and $b$ are free parameters, typically set to $k_1 = 0.9$ and $b = 0.4$ \cite{mcdonald_detect_2022,robertson_probabilistic_2009}.
+
+Traditionally, this lexical Information Retrieval (\gls{ir}) approach has been capable of providing satisfactory retrieval results. However, in 2020, Karpukhin et al. demonstrated for the first time that a \textbf{Dense Retrieval} approach could outperform the Sparse Retrieval approach across multiple Open-Domain Question Answering (ODQA) datasets \cite{karpukhin_dense_2020}. Consequently, the search for a general Dense Retrieval model has been ongoing, as these Dense Retrieval approaches offer advantages such as semantic matching and the ability to handle lengthy documents \cite{zhu_retrieving_2021}.
+
+In general, there are three types of Dense Retrieval approaches \cite{zhu_retrieving_2021}: the \textbf{Representation-based Retriever}, often referred to as the \textit{dual-encoder} \cite{karpukhin_dense_2020}; the \textbf{Interaction-based Retriever}, often referred to as the \textit{cross-encoder}; and the \textbf{Representation-interaction Retriever}, often referred to as the \textit{multi-stop retriever}. Figure \ref{fig:types_of_retriever} illustrates the general architecture of these three types of Dense Retrievers.
+
+The \textbf{Dense Passage Retriever (DPR)} by Karpukhin et al. serves as a notable example to explain the \textbf{Representation-Based Retriever}. Given a collection $M$ of text passages $p$ and a question $q$, the objective of DPR is to identify the $k$ most similar passages to the question. To achieve this, DPR employs two distinct \textbf{BERT} \cite{devlin_bert_2019} Encoders. One Encoder, denoted as $E_Q(\cdot)$, encodes the question $q$ into a $d$-dimensional vector, where $d = 768$. The other Encoder, labeled as $E_P(\cdot)$, encodes the passage $p$ into a $d$-dimensional vector at the \verb|[CLS]| token. The similarity between these two vectors is computed using the inner product:
+
+
+\begin{equation}
+    \mathbf{s}_{q, p}^{D P R}=\mathbf{E}_{Q}(q)^{\top} \mathbf{E}_{P}(p)
+    \label{eq:dpr}
+\end{equation}
+
+The choice of the inner product as the similarity function is motivated by its computational efficiency and the demonstrated, comparable performance \cite{karpukhin_dense_2020}. It is crucial for the dot-product to yield a small value for pairs of questions and passages that are genuinely related. The training dataset $D$ comprises $m$ instances, where $q_i$ represents the question, $p_i^+$ denotes the positive passage, and $p_{i,n^-}$ represents the negative passage:
+
+\begin{equation}
+    \mathbf{D}=\left\{\left(q_{i}, p_{i}^{+}, p_{i, 1}^{-}, \ldots, p_{i, n}^{-}\right)\right\}_{i=1}^{m}
+\end{equation}
+
+The loss function is optimized using the negative log likelihood of $p_i^+$:
+
+\begin{equation}
+    \mathcal{L}_{D P R}=-\log \frac{\exp \left(\mathbf{s}_{q_i,p_i^{+}}^{D P R}\right)}{\exp \left(\mathbf{s}_{q_i,p_i^{+}}^{D P R}\right) + \sum_{j=1}^{n} \exp \left(\mathbf{s}_{q_i,p_{i,j}^{-}}^{D P R}\right)}
+\end{equation}
+
+It's important to note that in \cite{karpukhin_dense_2020}, the selection of negative passages was not arbitrary. Instead, two additional approaches were employed: BM25 top passages that do not contain the answer and positive passages paired with other questions.
+
+One significant advantage of the Representation-Based Retriever is that passages can be pre-indexed locally rather than at runtime. This reduction in latency between the question and the response may, however, come with trade-offs in the quality of the retrieved passages.
+
+The \textbf{Interaction-Based Retriever} incorporates both the question $q$ and the passage $p$ within a single model, separated by a \verb|[SEP]| indicator. These models offer various approaches for modeling the relationship between $q$ and $p$. For instance, one common method is to utilize the \verb|[CLS]| classifier as an indicator of whether the passage is relevant to the question. This approach was first introduced with \gls{bert} \cite{devlin_bert_2019}. While these models perform competitively with previous Representation-Based Retrievers, it's important to note that they are 100-1000 times more computationally expensive \cite{khattab_colbert_2020}.
+
+To address this latency issue, models like ColBERT introduced the concept of \textbf{co}ntextualized \textbf{l}ate ineraction \cite{khattab_colbert_2020}. In this thesis and subsequently in research, it is referred to as the \textbf{Representation-Interaction Retriever} \cite{zhu_retrieving_2021}.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Types_of_Retriever.png}
+    \caption{Types of Dense Retriever by Zhu et. al. \cite{zhu_retrieving_2021}.}
+    \label{fig:types_of_retriever}
+\end{figure}
+
+ColBERT, like \gls{dpr}, employs two \gls{bert} Encoders, denoted as $E_Q\left(\cdot\right)$ and $E_P\left(\cdot\right)$. However, it introduces a late interaction mechanism. When provided with a query $q$, it is initially tokenized into BERT-based Wordpiece tokens, resulting in $q_1, \ldots, q_T$. Following the \verb|[CLS]| token, a \verb|[Q]| token is appended to signify the question. If the length of the tokenized question is less than $N_q$, a predetermined token length, the remaining portion of the question is padded with BERT's \verb|[mask]| token. Otherwise, it is truncated. This process, known as *query augmentation*, allows BERT to re-weight existing terms or expand the query, and it is pivotal to ColBERT's performance. The generated embeddings are then passed through a linear layer to reduce the output dimensions to a fixed size $m$, which is smaller than the original dimensions of BERT. The output is subsequently normalized to ensure that the L2 norm of each result equals one.
+
+For each passage $p$, $E_P\left(\cdot\right)$ is employed for encoding. Similar to the question encoding process, $p$ is segmented into its $p_1, \ldots, p_{T_d}$ Wordpiece tokens. The special token \verb|[D]| indicates a passage. Short passages are not padded with a \verb|[mask]| token. After the classical BERT output, a similar post-processing step is applied to the encoded passages, and all embeddings corresponding to punctuation are filtered out.
+
+\begin{equation}
+    \mathbf{E}_{q}:= Normalize(CNN(BERT("[Q] q_0 q_1 \dots q_T [mask] \dots [mask]")))
+\end{equation}
+
+\begin{equation}
+    \mathbf{E}_{p}:= Filter(Normalize(CNN(BERT("[D]p_0 p_1 \dots p_T"))))
+\end{equation}
+
+The late interaction mechanism applied to the encodings involves computing the maximum similarity, which utilizes cosine similarity through dot-products. This is made possible by the earlier normalization applied to the embeddings:
+
+\begin{equation}
+    \mathbf{s}_{q, p}^{C o l B E R T}=\sum_{I\in\left[\left|\mathbf{E}_q\right|\right]}\max _{j\in\left[\left|\mathbf{E}_d\right|\right]} \mathbf{E}_{q, i} \cdot \mathbf{E}_{p, j}^{\top}
+\end{equation}
+
+The interaction mechanism has no trainable parameters. ColBERT is differentiable end-to-end. During training, for example, with a triple $(q, p^+, p^-)$, ColBERT independently produces a score for each passage and is subsequently optimized pairwise using softmax cross-entropy loss over the scores of $p^+$ and $p^-$ \cite{khattab_colbert_2020}.
+
+Another type of Retriever is the \textbf{Iterative Retriever}. Iterative Retrievers are necessary when dealing with questions that are more complex than simple factoid questions, which can be answered by identifying the right passage in the knowledge source. An example is the HotpotQA dataset \cite{yang_hotpotqa_2018}, designed specifically for multi-hop questions. The fundamental concept here is that such questions cannot be answered with just one precise piece of evidence. They require multiple passages from different documents at the very least. Iterative Retrievers encompass three stages in the pipeline: (1) document retrieval, (2) query reformulation, and (3) retrieval stopping.
+
+An example is BEAM, currently holding the title of the highest-performing\footnote{Status as of September 23, 2023, according to https://paperswithcode.com and the authors of \cite{zhang_beam_2023}}, \gls{qa}-System across multi-hop \gls{qa} datasets such as HotpotQA \cite{zhang_beam_2023}. The document retrieval component can take the form of any retrieval model, including options like ColBERT, BM25, or \gls{dpr}. In the case of BEAM, it leverages an Interaction-Based Retriever using DeBERTa. For each candidate passage $p_c$, BEAM calculates a relevance score concerning this passage within the context of all previously identified relevant passages $p_r$ and the question $q$, using the embeddings of the \verb|[CLS]| tokens \cite{he_deberta_2020}. The second step, query reformulation, can be executed explicitly or implicitly, meaning it can either be expressed in natural language or as a dense embedding. The advantage of using natural language lies in its interpretability, while employing dense embeddings operates within a semantic space and does not lack vocabulary interpretability \cite{zhu_retrieving_2021}. BEAM adopts a natural language-based approach. Specifically, after each hop, it appends the newly identified passage to the previously identified ones and feeds this information into DeBERTa.
+
+\begin{equation}
+    \text{s}_{q, p}^{BEAM} = \text{Classifier}(\text{DeBERTa}("[CLS] q \: p_{r_1} \: \ldots \: p_{r_i} \: ")) \quad | \quad p_{c} \in P
+\end{equation}
+
+The nature of query reformulation depends on the type of retriever in use. Lastly retrieval stopping poses its own set of challenges. A common approach involves setting either a fixed number of hops or a maximum limit on the retrieved documents. Alternatively, some methods introduce a new token, such as \verb|[EOE]| (End-of-Evidence), to signal the end of retrieval \cite{zhu_retrieving_2021}. BEAM, for example, employs a fixed number of hops, specifically 2, as determined through empirical evaluation.
+
+The task of \textbf{Document Post-Processing} is to reduce the number of passages forwarded to the Reader, aiming to eliminate irrelevant ones. Traditional Retrievers, like Sparse Retrievers, often required a Document Post-Processor. However, Dense Retrievers often incorporate ranking and retrieval simultaneously, rendering this module unnecessary \cite{zhu_retrieving_2021}. Nevertheless, it remains possible to construct multi-stage Retrievers to, for instance, increase latency. This can be achieved by using a simpler Dense Retriever for pre-filtering passages and subsequently applying a more accurate one \cite{liu_dense_2021}.
 
 \subsection{Reader Approaches}
 \label{subsec:qa_user_interaction}
@@ -162,5 +248,20 @@ An alternative approach involves the methodology employed in constructing the QA
 \section{Conversational Question Answering}
 \label{sec:cqa}
 
+\subsection{Basics}
+\label{subsec:cqa_basics}
+
+\subsection{Query Expansion}
+\label{subsec:cqa_query_expansion}
+
+\subsection{Initiative}
+\label{subsec:cqa_initiative}
+
 \section{Related Work}
 \label{sec:related_work}
+
+\subsection{Document-based Question Answering}
+\label{subsec:related_work_dbqa}
+
+\subsection{Open-domain Conversational Question Answering ???} 
+\label{subsec:related_work_cqa}
