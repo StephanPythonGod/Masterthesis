@@ -8,6 +8,11 @@ Amer Farea, Zhen Yang, Kien Duong, Nadeesha Perera, and Frank Emmert-Streib.
 Fengbin Zhu, Wenqiang Lei, Chao Wang, Jianming Zheng, Soujanya Poria, and Tat-Seng Chua.
 \newblock Retrieving and reading: A comprehensive survey on open-domain question answering.
 
+\bibitem{jurafsky_speech_2023}
+Dan Jurafsky and James~H. Martin.
+\newblock {\em Speech and Language Processing}.
+\newblock 3 edition.
+
 \bibitem{green_baseball_1961}
 Bert~F. Green, Alice~K. Wolf, Carol Chomsky, and Kenneth Laughery.
 \newblock Baseball: an automatic question-answerer.
@@ -22,11 +27,6 @@ D.~A. Ferrucci.
 \newblock Introduction to this is watson.
 \newblock 56(3):1:1--1:15.
 \newblock Conference Name: {IBM} Journal of Research and Development.
-
-\bibitem{jurafsky_speech_2023}
-Dan Jurafsky and James~H. Martin.
-\newblock {\em Speech and Language Processing}.
-\newblock 3 edition.
 
 \bibitem{hao_recent_2022}
 Tianyong Hao, Xinxin Li, Yulan He, Fu~Lee Wang, and Yingying Qu.
@@ -168,5 +168,25 @@ Jiahao Zhang, Haiyang Zhang, Dongmei Zhang, Yong Liu, and Shen Huang.
 \bibitem{he_deberta_2020}
 Pengcheng He, Xiaodong Liu, Jianfeng Gao, and Weizhu Chen.
 \newblock {DEBERTA}: {DECODING}-{ENHANCED} {BERT} {WITH} {DISENTANGLED} {ATTENTION}.
+
+\bibitem{luo_choose_2022}
+Man Luo, Kazuma Hashimoto, Semih Yavuz, Zhiwei Liu, Chitta Baral, and Yingbo Zhou.
+\newblock Choose your {QA} model wisely: A systematic study of generative and extractive readers for question answering.
+
+\bibitem{liu_roberta_2019}
+Yinhan Liu, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer Levy, Mike Lewis, Luke Zettlemoyer, and Veselin Stoyanov.
+\newblock {RoBERTa}: A robustly optimized {BERT} pretraining approach.
+
+\bibitem{raffel_exploring_2023}
+Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang, Michael Matena, Yanqi Zhou, Wei Li, and Peter~J. Liu.
+\newblock Exploring the limits of transfer learning with a unified text-to-text transformer.
+
+\bibitem{lewis_bart_2019}
+Mike Lewis, Yinhan Liu, Naman Goyal, Marjan Ghazvininejad, Abdelrahman Mohamed, Omer Levy, Ves Stoyanov, and Luke Zettlemoyer.
+\newblock {BART}: Denoising sequence-to-sequence pre-training for natural language generation, translation, and comprehension.
+
+\bibitem{pereira_visconde_2022}
+Jayr Pereira, Robson Fidalgo, Roberto Lotufo, and Rodrigo Nogueira.
+\newblock Visconde: Multi-document {QA} with {GPT}-3 and neural reranking.
 
 \end{thebibliography}

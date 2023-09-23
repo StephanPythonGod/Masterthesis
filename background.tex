@@ -238,9 +238,41 @@ The nature of query reformulation depends on the type of retriever in use. Lastl
 
 The task of \textbf{Document Post-Processing} is to reduce the number of passages forwarded to the Reader, aiming to eliminate irrelevant ones. Traditional Retrievers, like Sparse Retrievers, often required a Document Post-Processor. However, Dense Retrievers often incorporate ranking and retrieval simultaneously, rendering this module unnecessary \cite{zhu_retrieving_2021}. Nevertheless, it remains possible to construct multi-stage Retrievers to, for instance, increase latency. This can be achieved by using a simpler Dense Retriever for pre-filtering passages and subsequently applying a more accurate one \cite{liu_dense_2021}.
 
+% Commit #4
+
 \subsection{Reader Approaches}
 \label{subsec:qa_user_interaction}
 
+Readers originally emerged from the field of \gls{mrc}, where the objective is to extract an answer from a given context. A well-known example is the SQuAD \cite{rajpurkar_squad_2016} dataset, which was mentioned in Section \ref{subsec:qa_basics}. However, unlike the original \gls{mrc} task, a Reader in a Retrieval-Reader-System must process multiple passages to determine the relevant information needed to answer a given question \cite{zhu_retrieving_2021}. 
+
+Modern readers rely on \gls{prlm}s since they establish new baselines on well-known datasets \cite{luo_choose_2022}. In general, there are two types of Readers that use \gls{prlm}s: \textbf{Extractive Readers} and \textbf{Generative Readers} \cite{jurafsky_speech_2023,zhu_retrieving_2021,luo_choose_2022}.
+
+In general, an \textbf{Extractive Reader} employs an encoder to identify the token sequence span that is relevant for answering a question. These encoders can be any autoencoder models, such as BERT \cite{devlin_bert_2019}, DeBERTa \cite{he_deberta_2020}, or RoBERTa \cite{liu_roberta_2019}. Luo et al. \cite{luo_choose_2022} even utilized the encoder components of established encoder-decoder models like T5 \cite{raffel_exploring_2023} and BART \cite{lewis_bart_2019}. They demonstrated that, after fine-tuning, these models can outperform encoder-only models on certain tasks.
+
+Figure \ref{fig:extractive_reader} illustrates the span labeling process performed by the extractive reader. The question tokens $q_1, \ldots, q_n$ and the passage tokens $p_1, \ldots, p_m$ are input into the encoder, separated by a \verb|[SEP]| token. The encoder learns two new embeddings, $S$ and $E$, which represent span-start and -end tokens, respectively. To obtain the span start probability for an output token $p_i^{\prime}$, the dot product between the output token and $S$ is computed and then normalized by a softmax function over all output tokens. The process is similar for the span-end token. The score of a span from position $i$ to $j$ is calculated as $S * p_{i}^{\prime} + E * p_{j}^{\prime}$. The span with the highest score, where $j \geq i$, is selected as the answer span. If the total length of tokens in $q$ and $p$ exceeds the maximum input length of the encoder, the passage is split into multiple segments, and the process is repeated for each segment \cite{jurafsky_speech_2023,luo_choose_2022}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Extractive_Reader.png}
+    \caption{Adjusted Graphic of the Extractive Reader by Jurafsky et al. \cite{jurafsky_speech_2023}}
+    \label{fig:extractive_reader}
+\end{figure}
+
+The \textbf{Generative Reader} operates straightforwardly when familiar with a \gls{s2s} encoder-decoder model. Given a dataset containing $(q,p,a)$ tuples, the encoder takes $q$ and $p$ as input and outputs the contextual representation $h$. Then, it is the decoder's task to generate a token sequence based on $h$ and attention. The training objective can be described as minimizing the following loss function:
+
+\begin{equation}
+    \mathbf{\mathcal{L}_{\mathrm{Gen}}=\sum_{i=1}^K \log \mathbf{P}\left(a_i \mid \mathbf{h}, a_{: i}\right)}
+\end{equation}
+
+Here, $K$ represents the length of tokens in $a$, $a_i$ is the $i^{th}$ token in $a$, and $a_0$ is a special beginning of sequence token. In cases where the answer is not contained within the passages, the \verb|[CLS]| token indicates this situation \cite{luo_choose_2022,zhu_retrieving_2021}.
+
+Latest research projects like Visconde \cite{pereira_visconde_2022} even employ \gls{llm} as Generative Readers. The performance and usability of these models remain active topics of research.
+
+Luo et al. conducted the first survey comparing state-of-the-art Extractive and Generative Readers \cite{luo_choose_2022}. They discovered that \enquote{on average, extractive readers perform better than generative ones} \cite{luo_choose_2022}, except in cases involving long context passages, where generative approaches outperform the extractive ones.
+
+The \textbf{Answer Post-Processor} is similar to the Document Post-Processor, serving as an optional component. Its primary task is to provide support for multi-hop complex questions, helping determine the final answer from a set of answers extracted by the reader component \cite{zhu_retrieving_2021}. Depending on the implementation of the Reader, this component may become obsolete.
+
+% Commit #5
 
 \subsection{Limitations}
 \label{subsec:qa_limitations}
@@ -256,6 +288,9 @@ The task of \textbf{Document Post-Processing} is to reduce the number of passage
 
 \subsection{Initiative}
 \label{subsec:cqa_initiative}
+
+\subsection{Large Language Model based Agents / Chain of Thought ???}
+\label{subsec:cqa_llm_agents}
 
 \section{Related Work}
 \label{sec:related_work}

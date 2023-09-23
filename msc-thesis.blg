@@ -7,13 +7,13 @@ Warning--entry type for "noauthor_langchain-ailangchain_nodate" isn't style-file
 --line 514 of file references.bib
 Warning--entry type for "noauthor_chatgpt_2023" isn't style-file defined
 --line 524 of file references.bib
+Warning--empty publisher in jurafsky_speech_2023
+Warning--empty year in jurafsky_speech_2023
 Warning--empty year in green_baseball_1961
 Warning--empty booktitle in voorhees_trec-8_1999
 Warning--empty year in voorhees_trec-8_1999
 Warning--empty journal in ferrucci_introduction_2012
 Warning--empty year in ferrucci_introduction_2012
-Warning--empty publisher in jurafsky_speech_2023
-Warning--empty year in jurafsky_speech_2023
 Warning--empty journal in hao_recent_2022
 Warning--empty year in hao_recent_2022
 Warning--empty journal in etezadi_state_2023
@@ -41,45 +41,45 @@ Warning--empty journal in robertson_probabilistic_2009
 Warning--empty year in robertson_probabilistic_2009
 Warning--empty booktitle in he_deberta_2020
 Warning--empty year in he_deberta_2020
-You've used 38 entries,
+You've used 43 entries,
             1791 wiz_defined-function locations,
-            611 strings with 10757 characters,
-and the built_in function-call counts, 8701 in all, are:
-= -- 629
-> -- 545
+            631 strings with 12005 characters,
+and the built_in function-call counts, 9712 in all, are:
+= -- 669
+> -- 666
 < -- 8
-+ -- 196
-- -- 158
-* -- 580
-:= -- 1292
-add.period$ -- 96
-call.type$ -- 38
-change.case$ -- 38
++ -- 238
+- -- 195
+* -- 649
+:= -- 1468
+add.period$ -- 106
+call.type$ -- 43
+change.case$ -- 43
 chr.to.int$ -- 0
-cite$ -- 72
-duplicate$ -- 344
-empty$ -- 873
-format.name$ -- 158
-if$ -- 1924
+cite$ -- 77
+duplicate$ -- 369
+empty$ -- 963
+format.name$ -- 195
+if$ -- 2133
 int.to.chr$ -- 0
-int.to.str$ -- 38
+int.to.str$ -- 43
 missing$ -- 19
-newline$ -- 172
-num.names$ -- 36
-pop$ -- 205
+newline$ -- 192
+num.names$ -- 41
+pop$ -- 230
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 279
+skip$ -- 314
 stack$ -- 0
 substring$ -- 443
-swap$ -- 93
+swap$ -- 98
 text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 34
-while$ -- 70
-width$ -- 40
-write$ -- 312
+while$ -- 75
+width$ -- 45
+write$ -- 347
 (There were 36 warnings)
