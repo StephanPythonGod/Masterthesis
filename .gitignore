@@ -26,3 +26,4 @@
 # Ignore editor-specific files (e.g., TeXShop's .DS_Store)
 .DS_Store
 .gitignore
+msc-thesis.bbl

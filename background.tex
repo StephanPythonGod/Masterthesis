@@ -154,7 +154,7 @@ An alternative approach involves the methodology employed in constructing the QA
 \subsection{Retrieval Approaches}
 \label{subsec:qa_retrieval}
 
-The traditional state-of-the-art in \gls{ir} relies on \textbf{Sparse Retrievers}, with one notable example being BM25. BM25 is renowned as "one of the most empirically successful retrieval models and is widely used in current search engines" \cite{zhu_retrieving_2021}. Nandan et al. even demonstrated that on modern Open-Domain Question Answering (ODQA) datasets, BM25 remains a viable baseline for zero-shot \gls{ir} \cite{thakur_beir_2021}.
+The traditional state-of-the-art in \gls{ir} relies on \textbf{Sparse Retrievers}, with one notable example being BM25. BM25 is renowned as "one of the most empirically successful retrieval models and is widely used in current search engines" \cite{zhu_retrieving_2021}. Nandan et al. even demonstrated that on modern \gls{odqa} datasets, BM25 remains a viable baseline for zero-shot \gls{ir} \cite{thakur_beir_2021}.
 
 BM25 was originally introduced by Robertson et al. \cite{robertson_probabilistic_2009}. It operates by utilizing the TF-IDF token weights between a question $q$ containing tokens $q_1, \ldots, q_T$ and a set of passages $P$, where $p \in P$.
 
@@ -166,7 +166,7 @@ BM25 was originally introduced by Robertson et al. \cite{robertson_probabilistic
     
 Equation \ref{eq:bm25} illustrates the BM25 score for a question $q$ and a passage $p$. In this equation, $N\left(q_i, \mathcal{P}\right)$ represents the count of passages in $\mathcal{P}$ that contain the token $q_i$, while $n\left(q_i, p\right)$ indicates the frequency of token $q_i$ within the passage $p$. The variable $|p|$ signifies the length of passage $p$, and $avpl$ stands for the average passage length in $\mathcal{P}$. The parameters $k_1$ and $b$ are free parameters, typically set to $k_1 = 0.9$ and $b = 0.4$ \cite{mcdonald_detect_2022,robertson_probabilistic_2009}.
 
-Traditionally, this lexical Information Retrieval (\gls{ir}) approach has been capable of providing satisfactory retrieval results. However, in 2020, Karpukhin et al. demonstrated for the first time that a \textbf{Dense Retrieval} approach could outperform the Sparse Retrieval approach across multiple Open-Domain Question Answering (ODQA) datasets \cite{karpukhin_dense_2020}. Consequently, the search for a general Dense Retrieval model has been ongoing, as these Dense Retrieval approaches offer advantages such as semantic matching and the ability to handle lengthy documents \cite{zhu_retrieving_2021}.
+Traditionally, this lexical Information Retrieval (\gls{ir}) approach has been capable of providing satisfactory retrieval results. However, in 2020, Karpukhin et al. demonstrated for the first time that a \textbf{Dense Retrieval} approach could outperform the Sparse Retrieval approach across multiple \gls{odqa} datasets \cite{karpukhin_dense_2020}. Consequently, the search for a general Dense Retrieval model has been ongoing, as these Dense Retrieval approaches offer advantages such as semantic matching and the ability to handle lengthy documents \cite{zhu_retrieving_2021}.
 
 In general, there are three types of Dense Retrieval approaches \cite{zhu_retrieving_2021}: the \textbf{Representation-based Retriever}, often referred to as the \textit{dual-encoder} \cite{karpukhin_dense_2020}; the \textbf{Interaction-based Retriever}, often referred to as the \textit{cross-encoder}; and the \textbf{Representation-interaction Retriever}, often referred to as the \textit{multi-stop retriever}. Figure \ref{fig:types_of_retriever} illustrates the general architecture of these three types of Dense Retrievers.
 
@@ -276,6 +276,29 @@ The \textbf{Answer Post-Processor} is similar to the Document Post-Processor, se
 
 \subsection{Limitations}
 \label{subsec:qa_limitations}
+
+The evaluation metrics for \gls{ir} systems will be discussed in detail in Section \ref{chap:eval}. In general, selecting the components and models for an \gls{ir} system always involves a trade-off between accuracy, memory consumption, and inference speed \cite{zhang_survey_2023}.
+
+Accuracy is primarily determined by the chosen Retriever-Reader-System. Sparse retrievers often lack a certain degree of semantic understanding, resulting in less accurate retrieved passages. In contrast, Dense Retrievers can achieve higher levels of accuracy but require thorough evaluation and training for the desired use case. Thakur et al. demonstrated that high-accuracy Dense Retrievers like \gls{dpr} can underperform in zero-shot scenarios compared to BM25 by -47.7\% \cite{thakur_beir_2021}. This highlights another crucial limitation of all \gls{nn}-based retrievers and readers: training. These models heavily depend on their training data, while a Sparse Retriever like BM25 can be used without any training. According to experiments conducted by Thakur et al. \cite{thakur_beir_2021}, the best-performing out-of-distribution Retrievers are Representation-Interaction Retrievers like ColBERT.
+
+Constructing a training dataset for a \gls{qa} task can be a tedious task, as these datasets need to consist of tuples in the form of $(\text{question, context, answer})$, which is not always feasible. One established research direction to address this issue is \gls{qg} \cite{serban_generating_2016}. In \gls{qg}, a \gls{s2s} model is employed to generate questions and answers based on a given passage.
+
+Zhang et al. provide an example of \gls{dpr} applied to the Natural Questions dataset in their survey on efficient \gls{odqa} \cite{zhang_survey_2023}. The total processing time for a query is 0.91 seconds\footnote{It's important to mention that \gls{dpr} is a Representation-based Retriever, which allows offline storage of passage embeddings. The result was obtained using an Nvidia GeForce Rtx 2080 Ti GPU, averaged over 1000 examples}. This time is divided into 74.79\% for evidence search and 23.95\% for reading. The total memory cost is 79.32GB, with the index occupying 81.95\%, the raw corpus 16.39\%, and the model 1.66\%. Approaches to optimize this may include:
+
+\begin{enumerate}
+    \item Reducing Processing Time: (1) Accelerating Evidence Search, (2) Accelerating Reading
+    \item Reducing Memory Cost: (1) Reducing Index Size, (2) Reducing Corpus Size, (3) Reducing Model Size
+    \item One-stage Frameworks: (1) Directly Generating Answers, (2) Directly Retrieving Answers
+\end{enumerate}
+
+Techniques used in this context may include:
+
+\begin{enumerate}
+    \item Data-based: (1) Passage Filtering, (2) Dimension Reduction, (3) Product Quantization
+    \item Model-based: (1) Model Pruning, (2) Knowledge Distillation
+\end{enumerate}
+
+For a detailed overview of approaches towards more efficient \gls{odqa} systems, please refer to the comprehensive survey by Zhang et al. \cite{zhang_survey_2023}.
 
 \section{Conversational Question Answering}
 \label{sec:cqa}
