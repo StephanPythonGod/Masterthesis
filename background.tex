@@ -116,7 +116,7 @@ Document Post-Processors can be categorized into \textit{Supervised Learning, Re
 
 In Section \ref{subsec:qa_user_interaction}, we will delve into the finer details of Reader approaches and Answer Post-processing. Broadly speaking, there are two primary types of Readers: \textit{Extractive} and \textit{Generative} Readers. As for Answer Post-processing, it involves two key categories: \textit{Rule-based} and \textit{Learning-based} approaches.
 
-There are also \textit{End-to-End} approaches that employ a single module to execute the entire \gls{qa} task. Excluding generative approaches, two common categories of such approaches are \textbf{Retriever-Reader} and \textbf{Retriever-only} models.
+There are also \textbf{End-to-End} approaches that employ a single module to execute the entire \gls{qa} task. Excluding generative approaches, two common categories of such approaches are \textbf{Retriever-Reader} and \textbf{Retriever-only} models.
 
 An End-to-End Retriever-Reader aims to train both the Retriever and Reader in a single backpropagation step, and in some cases, it introduces additional knowledge sources beyond the traditional \gls{ir} framework. An illustrative example is \gls{rag} \cite{lewis_retrieval-augmented_2021}. \gls{rag} consists of a pre-trained Generator with implicit knowledge encoded in its parameters and a pre-trained Retriever. For each question, the Retriever identifies the most relevant documents and generates a latent vector based on them. This latent vector, along with the original question, is fed into the Generator.
 
@@ -279,9 +279,9 @@ The \textbf{Answer Post-Processor} is similar to the Document Post-Processor, se
 
 The evaluation metrics for \gls{ir} systems will be discussed in detail in Section \ref{chap:eval}. In general, selecting the components and models for an \gls{ir} system always involves a trade-off between accuracy, memory consumption, and inference speed \cite{zhang_survey_2023}.
 
-Accuracy is primarily determined by the chosen Retriever-Reader-System. Sparse retrievers often lack a certain degree of semantic understanding, resulting in less accurate retrieved passages. In contrast, Dense Retrievers can achieve higher levels of accuracy but require thorough evaluation and training for the desired use case. Thakur et al. demonstrated that high-accuracy Dense Retrievers like \gls{dpr} can underperform in zero-shot scenarios compared to BM25 by -47.7\% \cite{thakur_beir_2021}. This highlights another crucial limitation of all \gls{nn}-based retrievers and readers: training. These models heavily depend on their training data, while a Sparse Retriever like BM25 can be used without any training. According to experiments conducted by Thakur et al. \cite{thakur_beir_2021}, the best-performing out-of-distribution Retrievers are Representation-Interaction Retrievers like ColBERT.
+Accuracy is primarily determined by the chosen Retriever-Reader-System. Sparse retrievers often lack a certain degree of semantic understanding, resulting in less accurate retrieved passages. In contrast, Dense Retrievers can achieve higher levels of accuracy but require thorough evaluation and training for the desired use case. Thakur et al. demonstrated that high-accuracy Dense Retrievers like \gls{dpr} can underperform in zero-shot scenarios compared to BM25 by -47.7\% \cite{thakur_beir_2021}. This highlights another crucial limitation of all \gls{nn}-based retrievers and readers: training. BM25 is, by nature, an unsupervised model for \gls{ir}, while common approaches for Dense Retrieval usually belong to the group of supervised models. These models heavily depend on their training data, whereas a Sparse Retriever like BM25 can be used without any training. According to experiments conducted by Thakur et al. \cite{thakur_beir_2021}, the best-performing out-of-distribution Retrievers are Representation-Interaction Retrievers like ColBERT.
 
-Constructing a training dataset for a \gls{qa} task can be a tedious task, as these datasets need to consist of tuples in the form of $(\text{question, context, answer})$, which is not always feasible. One established research direction to address this issue is \gls{qg} \cite{serban_generating_2016}. In \gls{qg}, a \gls{s2s} model is employed to generate questions and answers based on a given passage.
+Constructing a training dataset for a \gls{qa} task can be a tedious process, as these datasets must consist of tuples in the form of $(\text{question, context, answer})$, which is not always feasible. One established research direction to address this issue is \gls{qg} \cite{serban_generating_2016}. In \gls{qg}, a \gls{s2s} model is employed to generate questions and answers based on a given passage.
 
 Zhang et al. provide an example of \gls{dpr} applied to the Natural Questions dataset in their survey on efficient \gls{odqa} \cite{zhang_survey_2023}. The total processing time for a query is 0.91 seconds\footnote{It's important to mention that \gls{dpr} is a Representation-based Retriever, which allows offline storage of passage embeddings. The result was obtained using an Nvidia GeForce Rtx 2080 Ti GPU, averaged over 1000 examples}. This time is divided into 74.79\% for evidence search and 23.95\% for reading. The total memory cost is 79.32GB, with the index occupying 81.95\%, the raw corpus 16.39\%, and the model 1.66\%. Approaches to optimize this may include:
 
@@ -295,10 +295,11 @@ Techniques used in this context may include:
 
 \begin{enumerate}
     \item Data-based: (1) Passage Filtering, (2) Dimension Reduction, (3) Product Quantization
-    \item Model-based: (1) Model Pruning, (2) Knowledge Distillation
+    \item Model-based: (1) Model Pruning, (2) Knowledge Distillation, (3) Knowledge Source 
 \end{enumerate}
 
 For a detailed overview of approaches towards more efficient \gls{odqa} systems, please refer to the comprehensive survey by Zhang et al. \cite{zhang_survey_2023}.
+
 
 \section{Conversational Question Answering}
 \label{sec:cqa}
@@ -318,8 +319,29 @@ For a detailed overview of approaches towards more efficient \gls{odqa} systems,
 \section{Related Work}
 \label{sec:related_work}
 
-\subsection{Document-based Question Answering}
+\subsection{Question Answering based on PDFs}
 \label{subsec:related_work_dbqa}
+
+\textbf{PDF Question Answering} is the task of providing answers to questions related to the content of one or multiple documents \cite{mathew_document_2021}. This field of research actively explores the development of an IR-QA system that operates on images of documents. An exemplary architecture and a general pipeline for transforming PDFs into an IR-QA system is presented by McDonald et al. \cite{mcdonald_detect_2022}. They developed their zero-shot framework around the QASPER dataset but used the original PDFs instead of extracted text via LaTeX. Moreover, readily available open-source tools like V-Doc \cite{ding_v-doc_2022} simplify the deployment and testing of datasets, models, and IR-QA systems.
+
+More recently, the open-source framework \textit{Langchain} has gained tremendous attention\footnote{As of September 24, 2023, Langchain has received 63k stars on GitHub}. Langchain focuses on harnessing LLMs using chains, which are essentially prompts for an LLM that can be chained together \cite{noauthor_langchain-ailangchain_nodate}. They also provide documentation on building a QA system based on PDFs \cite{noauthor_question_nodate}. Similarly, \textit{OpenAI} offers a Retrieval Plugin for \textit{ChatGPT} \cite{noauthor_chatgpt_2023}, also an open-source repository. These QA systems adhere to the paradigms established in previous works such as \cite{karpukhin_dense_2020,ni_large_2021,neelakantan_text_2022,lewis_retrieval-augmented_2021}. Specifically, this entails:
+
+\begin{itemize}
+    \item Given a text corpus, documents can be retrieved by extracting relevant passages. Data cleaning of the corpus is optional but can be integrated. Therefore, these systems employ a \textit{direct extraction} approach, especially when dealing with PDFs.
+    \item Utilizing large-scale, diversely trained encoders. Representation-based Retrievers, when equipped with sufficient trainable parameters and diverse training datasets, often yield comparable results to fine-tuned, more complex retrieval models \cite{ni_large_2021,neelakantan_text_2022}.
+    \item Using the LLM as a generative reader for QA, as demonstrated in the work of Izacard et al. \cite{izacard_leveraging_2021}.
+\end{itemize}
+
+Non-LLM research for \gls{qa} based on PDFs is notably scarce. In the field of ODQA, discussions regarding applicable frameworks that encompass the entire pipeline from PDFs to \gls{qa} are infrequent. Instead, the focus often revolves around constructing \gls{qa} systems using predefined and well-supervised datasets. However, there is some research that explores the feasibility of deploying high-performing \gls{qa} systems in out-of-domain scenarios, bypassing the initial stage of data preprocessing (from PDFs to passages). This research strives to outline possibilities for using a \gls{qa} system in real-world applications.
+
+\noindent \textbf{Out-of-Domain QA}: As emphasized by Thakur et al. in their \enquote{Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models} (BEIR) \cite{thakur_beir_2021}, dense retrievers exhibit weak out-of-domain performance. Lyu et al. \cite{farea_evaluation_2022} also demonstrate the limited generality of dense retrievers when trained in one subdomain and subsequently applied in a different one. This underscores the conclusion that there are two approaches to employing retrievers in out-of-domain scenarios: (1) fine-tuning or (2) zero-shot, but with large encoders that have been trained on diverse datasets \cite{ni_large_2021}.
+
+The challenge with fine-tuning lies in the unavailability of labeled data, which is typically required for supervised models in the form of tuples such as $(\text{question, answer, context})$. Several diverse approaches have been developed to address this issue. One approach employs \gls{qg} techniques, as exemplified by Promptagator \cite{dai_promptagator_2022}, which utilizes LLMs. Another strategy involves the use of Mixture-of-Experts and meta-learning algorithms \cite{chen_improving_2021}. Some researchers have explored semi-supervised training datasets, as demonstrated by Sachan et al. \cite{sachan_questions_2023}, who developed ART, a training framework for dense retrievers that only requires questions and surpasses the standard \gls{dpr} training implementation.
+
+Gholami et al. \cite{gholami_zero-shot_2021} experimented with non-fine-tuned dense retrievers on a non-\gls{qa} dataset, specifically a basic collection of AWS documentations. Their results, particularly for the retrieval component, were inconclusive, aligning with the findings of benchmark studies by Thakur et al. \cite{thakur_beir_2021} and Lyu et al. \cite{farea_evaluation_2022}.
+
+On the other hand, there exist reader components with a high degree of generalizability, as demonstrated by UnifiedQA-v2 \cite{khashabi_unifiedqa-v2_2022}, an extractive reader, and T5 \cite{raffel_exploring_2023}, a generative reader.
+
 
 \subsection{Open-domain Conversational Question Answering ???} 
 \label{subsec:related_work_cqa}
