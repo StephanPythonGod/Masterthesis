@@ -1,1 +1,134 @@
-This chapter is the main achievment of the Thesis. It consits of laying out different possible solutions to the given problem.
+This chapter outlines the methods and techniques employed in the development of a conversational question-answering system designed for PDFs. The chapter is structured as follows: Section \ref{sec:overview} provides an overview of the system and its objectives. As previously discussed in Chapters \ref{chap:intro} and \ref{chap:grundlagen}, the system is divided into two main components: an \gls{ir}-\gls{qa} System and a \gls{convqa} System. Section \ref{sec:qa-over-pdfs} delves into the presented approaches for an out-of-domain adoption pipeline for \gls{qa} systems tailored to PDFs, while Section \ref{sec:conv-qa-system} details the \gls{convqa} System built upon the presented \gls{qa} System.
+
+\section{Overview and Objective}
+\label{sec:overview}
+
+The primary use-case addressed in this thesis can be summarized as follows: Suppose there is a collection of PDF files, and we aim to create a chatbot capable of engaging in conversations about the knowledge within these PDFs. This chatbot should provide accurate answers to our questions based on the content of the PDFs and furnish supporting evidence from these documents. Furthermore, it should enable users to have a conversational query experience, allowing them to ask follow-up questions and engage in dialogue with the chatbot based on its previous responses. Figure \ref{fig:use-case} illustrates an example of this use-case.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Grafiken/Use_Case.png}
+    \caption{Overview of the Example Use-Case}
+    \label{fig:use-case}
+\end{figure}
+
+Presently, there is no scientific paper or similar resource that offers a comprehensive framework or pipeline to address this use-case. This thesis aims to bridge this gap by presenting a framework and pipeline designed to tackle this specific scenario. An overview of the system architecture is provided in Figure \ref{fig:overview-system-architecture}. Concerning the QA-System, the system developed in this thesis follows a typical Retriever-Reader architecture, with an additional \textit{extract} module in the pipeline. The \textit{extract} module's role is to extract passages from unstructured PDFs, prepare them for the QA-System by performing cleaning and \gls{qg} in order to generate traings data, which is detailed in Section \ref{subsec:extract} and \ref{subsec:qa_limitations}. This component sets this research apart from others in the field, as many studies rely on existing supervised datasets and skip this crucial step. The \textit{retrieve} component, described in Section \ref{subsec:qa_retrieval}, functions as a Retriever, aiming to provide evidence for the provided answers, thus relying on explicit knowledge. The \textit{read} component will be implemented as a Reader, as outlined in Section \ref{subsec:qa_reader}. The \gls{convqa}-System will follow the typical \gls{convqa}-System characteristics, as explained in Section \ref{sec:cqa}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Grafiken/System_Architecture.png}
+    \caption{Overview of the System Architecture}
+    \label{fig:overview-system-architecture}
+\end{figure}
+
+To summarize, the objectives of the QA-System are as follows:
+
+\begin{enumerate}
+    \item Utilize PDFs as the primary knowledge source.
+    \item Enable the QA-System to handle a variety of question types, including extractive, abstractive, and boolean questions.
+    \item Ensure the pipeline's generalizability, allowing it to adapt to new domains or knowledge sources with minimal or no supervision.
+    \item Design the pipeline to be feasible without the need for datacenter-grade hardware resources, making it accessible for development on standard research hardware.
+    \item Prioritize accuracy as the primary objective, as constraining memory consumption is indirectly covered in point (4). Latency is not a primary concern, as the system is not intended for real-time use.
+\end{enumerate}
+
+Regarding the ConvQA-System, the objectives are as follows:
+
+\begin{enumerate}
+    \item Enable the ConvQA-System to handle follow-up questions effectively.
+    \item Allow the ConvQA-System to manage multiple questions within a single conversation seamlessly.
+\end{enumerate}
+
+\section{Question Answering over PDFs}
+\label{sec:qa-over-pdfs}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Grafiken/Possible_Systems.png}
+    \caption{Possible Combinations of Modules to Create an Adapted QA-System}
+    \label{fig:qa-system-combinations}
+\end{figure}
+
+The possible combinations of modules to create an adapted \gls{qa}-System can be seen in Figure \ref{fig:qa-system-combinations}.
+
+
+\subsection{Extract}
+\label{subsec:extract}
+
+\textbf{Information Extraction:} When it comes to extracting text from PDFs, you have two approaches to choose from: the \textit{visual} approach and the \textit{direct} approach, each with its own advantages. In the \textit{visual} approach, you can create a model for document layout analysis combined with an OCR tool. Ideally, this approach yields a collection, denoted as $M$, comprising paragraphs $m$. These paragraphs vary in length but represent self-contained semantic units from the underlying PDF. On the other hand, the \textit{direct} approach is suitable only for digitally-born PDFs. For such PDFs, you can employ a tool like Py2PDF \cite{noauthor_welcome_nodate}. This results in a corpus $M$ that requires processing to achieve the desired granularity.
+
+\textbf{Indexing:} The implementation of indexing depends on the nature of $M$ and the desired granularity of the output. In general, there are three approaches to constructing passages $p$ in the index $P$:
+
+\begin{enumerate}
+    \item \textit{Paragraphs:} In this approach, $P$ comprises passages $p_i$ such as $P = \{p_1, p_2, \ldots, p_n\}$, where each $p_i$ is derived from $M$ and represents semantic paragraphs from the original document. The length $l$ of each $p_i$ is not fixed, and the number of paragraphs $|P|$ can also vary.
+    \item \textit{Snippets:} When you have a fixed passage length $l$, the concatenated text corpus $M$ is divided into $|M|\bmod{l} + 1$ passages $p$. Alternative approaches may involve specifying minimum and maximum lengths, denoted as $l_{\text{min}}$ and $l_{\text{max}}$. The exact point of division depends on whether a sentence ends within the specified window or not. If a sentence ending is found within the window, the snippet concludes at that point; otherwise, it concludes at the end of the window.
+    \item \textit{Sliding Windows:} This approach utilizes a window size $l$, a concatenated text corpus $M$, and a step size $s$. The window slides over the text corpus $M$, and the text within the window is used as a passage $p$. This results in $\frac{|M| - l}{s}$ passages, denoted as $P = \{p_1, p_2, \ldots, p_n\}$.
+\end{enumerate}
+
+\textit{Paragraphs} may seem like the most intuitive choice, but the indefinite length of passages, denoted as $p$, can be an issue. \textit{Snippets} have the advantage of having almost uniform lengths. However, a downside could be that important connections between sentences are lost, potentially leading to the loss of information. \textit{Sliding Windows} offer the advantage of uniform lengths and the ability to capture connections between sentences. However, the downside is the high number of passages, denoted as $p$, that need to be indexed, along with potential issues related to data cleanliness.
+
+\textbf{Synthetic Training Data Generation:} In this pipeline, the prompt-based \gls{qg} method known as PROMPTAGATOR \cite{dai_promptagator_2022} is used to generate a synthetic \gls{qa} dataset for ColBERTv2 \cite{santhanam_colbertv2_2022} based on $P$. The goal is to create triples of $(q, p^{+}, p^{-})$, similar to those found in datasets like MS MACRO \cite{bajaj_ms_2018}. For the task of $E_{qg}(p) := q$, a \gls{s2s} model, specifically a \gls{llm}, will be employed. This technique can be interpreted as knowledge distilation from the LLM to the later trained retriever. Similar to PROMPTAGATOR, there are two approaches to consider:
+
+\begin{enumerate}
+    \item \textit{Zero-Shot:} In this approach, a single prompt is executed to generate a question $q_i$ corresponding to a passage $p_i$, all without the need for any supervised dataset.
+    
+    \item \textit{Few-Shot:} This approach uses $k$ supervised pairs $(q_j, p^{+}_{j})^{k}$ to generate a question $q_i$ corresponding to a passage $p_i \in P$.
+\end{enumerate}
+
+The prompt used for \textbf{zero-shot \gls{qg}}, where $p_i$ represents a passage from $P$, is:
+
+\verb|f'{p_i} Read the passage and generate a corresponding query.'|
+
+The prompt used for \textbf{few-shot \gls{qg}}, where $q_j$ represents a question, $p_j$ the corresponding passage, and $p$ the passage for which a question is being generated, is:
+
+\verb|f'Passage: {p_1} Question: {q_1} XXX Passage: {p_2} Question: {q_2}|
+
+\verb|XXX ... XXX Passage: {p} Question:'|
+
+The result of either of these approaches will be a synthetic training dataset of $(q_s, p^{+})$ tuples. This dataset can be used for fine-tuning the retriever.
+
+A major issue associated with this form of \textbf{\gls{qg}} is its strict limitation to extractive questions, where the evidence can be derived from a single passage only. This limitation significantly constrains this pipeline. However, it does not necessarily prevent the system from answering more complex questions, such as multi-hop questions. These can be addressed by the \textit{retriever} and \textit{reader} modules.
+
+%%%%%
+
+\subsection{Retrieve}
+\label{subsec:retrieve}
+
+\textbf{Out-of-Domain Retrievers:} The easiest implementation is the out-of-domain usage of retrievers without fine-tuning and the need for generating a training dataset. Three major retrievers seem promising due to their performance on the BEIR \cite{thakur_beir_2021} out-of-domain benchmark for retrievers:
+
+\begin{enumerate}
+    \item \textit{BM25} is the standard Sparse Retriever based on lexical probabilistic matching between the query $q$ and passages $p$.
+    \item \textit{Large DPRs} are Dense Retrievers based on large encoders. They utilize typical dense retrieval paradigms and are a primary approach in open-source projects like \textit{Langchain} \cite{noauthor_langchain-ailangchain_nodate}.
+    \item \textit{LaPraDoR} is a hybrid retriever based on a broadly trained Representation-based Retriever, similar to (2), combined with lexical weighting (1).
+\end{enumerate}
+
+The \gls{laprador} utilizes the advantages of both lexical and semantic search. Given a question $q$ and a passage $p$, the semantic similarity $\text{sim}(q,d)$ is calculated using a \gls{dpr} model. In addition, the lexical similarity $\text{BM25}(q,d)$ is calculated. The final score $\text{score}(q,d)$ is computed as follows:
+
+\begin{equation}
+    \mathbf{score}(q, d) = \mathbf{sim}(q, d) \cdot \mathbf{BM25}(q, d)
+\end{equation}
+
+This approach achieves state-of-the-art performance on the BEIR benchmark without the need for fine-tuning. It serves as the ideal off-the-shelf component for the desired \gls{qa}-System.
+
+\noindent\textbf{Fine-Tuning Retrievers:} Fine-tuning is a challenging task in the absence of a supervised dataset, especially when dealing with a Representation-Interaction Retriever like ColBERTv2. Currently, there is no clear reference on how to fine-tune a Representation-Interaction Retriever like ColBERTv2 on synthetic data. To address this gap, this thesis proposes the approach depicted in Figure \ref{fig:retriever-fine-tuning}, which combines elements from the training processes of PROMPTAGATOR \cite{dai_promptagator_2022}, the original \gls{dpr} \cite{karpukhin_dense_2020}, and ColBERTv2 \cite{santhanam_colbertv2_2022}.
+
+\begin{figure}
+   \centering
+    \includegraphics[width=0.8\textwidth]{Grafiken/Training.png}
+    \caption{Fine-Tuning Process for Retriever}
+    \label{fig:retriever-fine-tuning} 
+\end{figure}
+
+A crucial aspect of this fine-tuning approach is the utilization of an already well-performing out-of-domain retriever as a baseline. This baseline retriever can distill its knowledge into the retriever undergoing training. For example, \gls{dpr} used BM25, while ColBERTv2 employed MiniLM \cite{wang_multi-passage_2019}, a 22M-parameter Interaction-based retriever. A useful guideline for selecting the model is to consult the BEIR leaderboard.
+
+In the first step, the \gls{ood} model must retrieve the top $k$ passages, denoted as $p_i$, for each synthetic $(q_s,p^{+})$ pair. To generate numerous high-quality negative triples, denoted as $(q_s, p^{+}, p^{-})$, for every retrieved passage $p_i$ (where $p_i \neq p^{+}$), the triple $(q_s, p^{+}, p_i)$ is added to the training dataset.
+
+In the second step, the target retriever is trained for $s$ iterations. The loss function employed is the negative log likelihood, as defined in Section \ref{subsec:qa_retrieval}. During training, in-batch negatives are utilized. Let $Q$ and $P$ represent the $(B \times d)$ matrices of question and passage embeddings in a batch of size $B$. The matrix $S = Q P^{T}$ contains rows where each corresponds to a question paired with all other passages in the batch. The passages from all the other data points act as negatives for the question $q$.
+
+In the third step, the synthetic dataset is subjected to filtering. PROMPTAGATOR demonstrated promising results of filtering data by a network trained on the data. For this filtering process, retrieval is performed using both the newly trained model and the \gls{ood} model for a question $q_s$. If neither model retrieves the corresponding passage $p^{+}$ for the synthetic question within their top $k$, that question is removed from the dataset.
+
+Steps two and three are repeated once during fine-tuning.
+\subsection{Read}
+\label{subsec:read}
+
+\section{Conversational Question Answering System}
+\label{sec:conv-qa-system}

@@ -114,7 +114,7 @@ Conceptually, there are three distinct approaches to the Retriever itself: \text
 
 Document Post-Processors can be categorized into \textit{Supervised Learning, Reinforcement Learning,} and \textit{Transfer Learning}-based approaches. A detailed discussion of these approaches is also provided in Section \ref{subsec:qa_retrieval}.
 
-In Section \ref{subsec:qa_user_interaction}, we will delve into the finer details of Reader approaches and Answer Post-processing. Broadly speaking, there are two primary types of Readers: \textit{Extractive} and \textit{Generative} Readers. As for Answer Post-processing, it involves two key categories: \textit{Rule-based} and \textit{Learning-based} approaches.
+In Section \ref{subsec:qa_reader}, we will delve into the finer details of Reader approaches and Answer Post-processing. Broadly speaking, there are two primary types of Readers: \textit{Extractive} and \textit{Generative} Readers. As for Answer Post-processing, it involves two key categories: \textit{Rule-based} and \textit{Learning-based} approaches.
 
 There are also \textbf{End-to-End} approaches that employ a single module to execute the entire \gls{qa} task. Excluding generative approaches, two common categories of such approaches are \textbf{Retriever-Reader} and \textbf{Retriever-only} models.
 
@@ -241,7 +241,7 @@ The task of \textbf{Document Post-Processing} is to reduce the number of passage
 % Commit #4
 
 \subsection{Reader Approaches}
-\label{subsec:qa_user_interaction}
+\label{subsec:qa_reader}
 
 Readers originally emerged from the field of \gls{mrc}, where the objective is to extract an answer from a given context. A well-known example is the SQuAD \cite{rajpurkar_squad_2016} dataset, which was mentioned in Section \ref{subsec:qa_basics}. However, unlike the original \gls{mrc} task, a Reader in a Retrieval-Reader-System must process multiple passages to determine the relevant information needed to answer a given question \cite{zhu_retrieving_2021}. 
 

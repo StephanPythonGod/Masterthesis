@@ -189,4 +189,74 @@ Mike Lewis, Yinhan Liu, Naman Goyal, Marjan Ghazvininejad, Abdelrahman Mohamed, 
 Jayr Pereira, Robson Fidalgo, Roberto Lotufo, and Rodrigo Nogueira.
 \newblock Visconde: Multi-document {QA} with {GPT}-3 and neural reranking.
 
+\bibitem{serban_generating_2016}
+Iulian~Vlad Serban, Alberto García-Durán, Caglar Gulcehre, Sungjin Ahn, Sarath Chandar, Aaron Courville, and Yoshua Bengio.
+\newblock Generating factoid questions with recurrent neural networks: The 30m factoid question-answer corpus.
+\newblock In {\em Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 588--598. Association for Computational Linguistics.
+
+\bibitem{johnson_billion-scale_2017}
+Jeff Johnson, Matthijs Douze, and Hervé Jégou.
+\newblock Billion-scale similarity search with {GPUs}.
+
+\bibitem{ding_v-doc_2022}
+Yihao Ding, Zhe Huang, Runlin Wang, Yanhang Zhang, Xianru Chen, Yuzhong Ma, Hyunsuk Chung, and Soyeon~Caren Han.
+\newblock V-doc : Visual questions answers with documents.
+
+\bibitem{noauthor_question_nodate}
+Question answering {\textbar} langchain.
+
+\bibitem{ni_large_2021}
+Jianmo Ni, Chen Qu, Jing Lu, Zhuyun Dai, Gustavo~Hernandez Abrego, Ji~Ma, Vincent~Y. Zhao, Yi~Luan, Keith~B. Hall, Ming-Wei Chang, and Yinfei Yang.
+\newblock Large dual encoders are generalizable retrievers.
+
+\bibitem{neelakantan_text_2022}
+Arvind Neelakantan, Tao Xu, Raul Puri, Alec Radford, Jesse~Michael Han, Jerry Tworek, Qiming Yuan, Nikolas Tezak, Jong~Wook Kim, Chris Hallacy, Johannes Heidecke, Pranav Shyam, Boris Power, Tyna~Eloundou Nekoul, Girish Sastry, Gretchen Krueger, David Schnurr, Felipe~Petroski Such, Kenny Hsu, Madeleine Thompson, Tabarak Khan, Toki Sherbakov, Joanne Jang, Peter Welinder, and Lilian Weng.
+\newblock Text and code embeddings by contrastive pre-training.
+
+\bibitem{izacard_leveraging_2021}
+Gautier Izacard and Edouard Grave.
+\newblock Leveraging passage retrieval with generative models for open domain question answering.
+\newblock In {\em Proceedings of the 16th Conference of the European Chapter of the Association for Computational Linguistics: Main Volume}, pages 874--880. Association for Computational Linguistics.
+
+\bibitem{dai_promptagator_2022}
+Zhuyun Dai, Vincent~Y. Zhao, Ji~Ma, Yi~Luan, Jianmo Ni, Jing Lu, Anton Bakalov, Kelvin Guu, Keith~B. Hall, and Ming-Wei Chang.
+\newblock Promptagator: Few-shot dense retrieval from 8 examples.
+
+\bibitem{chen_improving_2021}
+Haofeng Chen.
+\newblock Improving out-of-domain question answering with mixture of experts.
+
+\bibitem{sachan_questions_2023}
+Devendra~Singh Sachan, Mike Lewis, Dani Yogatama, Luke Zettlemoyer, Joelle Pineau, and Manzil Zaheer.
+\newblock Questions are all you need to train a dense passage retriever.
+
+\bibitem{reddy_synthetic_2022}
+Revanth~Gangi Reddy, Bhavani Iyer, Md~Arafat Sultan, Rong Zhang, Avirup Sil, Vittorio Castelli, Radu Florian, and Salim Roukos.
+\newblock Synthetic target domain supervision for open retrieval {QA}.
+
+\bibitem{gururangan_dont_2020}
+Suchin Gururangan, Ana Marasovic, Swabha Swayamdipta, Kyle Lo, Iz~Beltagy, Doug Downey, and Noah~A. Smith.
+\newblock Don't stop pretraining: Adapt language models to domains and tasks.
+\newblock pages 8342--8360.
+\newblock Conference Name: Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics Place: Online Publisher: Association for Computational Linguistics.
+
+\bibitem{gholami_zero-shot_2021}
+Sia Gholami and Mehdi Noori.
+\newblock Zero-shot open-book question answering.
+
+\bibitem{khashabi_unifiedqa-v2_2022}
+Daniel Khashabi, Yeganeh Kordi, and Hannaneh Hajishirzi.
+\newblock {UnifiedQA}-v2: Stronger generalization via broader cross-format training.
+
+\bibitem{noauthor_welcome_nodate}
+Welcome to pypdf2: Pypdf2 documentation.
+
+\bibitem{santhanam_colbertv2_2022}
+Keshav Santhanam, Omar Khattab, Jon Saad-Falcon, Christopher Potts, and Matei Zaharia.
+\newblock {ColBERTv}2: Effective and efficient retrieval via lightweight late interaction.
+
+\bibitem{bajaj_ms_2018}
+Payal Bajaj, Daniel Campos, Nick Craswell, Li~Deng, Jianfeng Gao, Xiaodong Liu, Rangan Majumder, Andrew {McNamara}, Bhaskar Mitra, Tri Nguyen, Mir Rosenberg, Xia Song, Alina Stoica, Saurabh Tiwary, and Tong Wang.
+\newblock {MS} {MARCO}: A human generated {MAchine} reading {COmprehension} dataset.
+
 \end{thebibliography}
