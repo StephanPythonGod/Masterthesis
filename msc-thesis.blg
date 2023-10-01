@@ -21,45 +21,45 @@ Warning--empty booktitle in voorhees_trec-8_1999
 Warning--empty journal in wang_modern_2022
 Warning--empty booktitle in xu_laprador_2022
 Warning--empty journal in yang_query_2019
-You've used 90 entries,
+You've used 91 entries,
             1935 wiz_defined-function locations,
-            876 strings with 29208 characters,
-and the built_in function-call counts, 48169 in all, are:
-= -- 4288
-> -- 4011
+            880 strings with 29474 characters,
+and the built_in function-call counts, 48666 in all, are:
+= -- 4331
+> -- 4059
 < -- 34
-+ -- 1525
-- -- 1500
-* -- 4578
-:= -- 8853
-add.period$ -- 270
-call.type$ -- 90
-change.case$ -- 1200
-chr.to.int$ -- 87
-cite$ -- 108
-duplicate$ -- 1238
-empty$ -- 1981
-format.name$ -- 1608
-if$ -- 8793
++ -- 1543
+- -- 1518
+* -- 4627
+:= -- 8950
+add.period$ -- 273
+call.type$ -- 91
+change.case$ -- 1214
+chr.to.int$ -- 88
+cite$ -- 109
+duplicate$ -- 1248
+empty$ -- 1996
+format.name$ -- 1627
+if$ -- 8879
 int.to.chr$ -- 4
 int.to.str$ -- 0
 missing$ -- 37
-newline$ -- 444
-num.names$ -- 270
-pop$ -- 1129
+newline$ -- 449
+num.names$ -- 273
+pop$ -- 1141
 preamble$ -- 1
-purify$ -- 1200
+purify$ -- 1214
 quote$ -- 0
-skip$ -- 980
+skip$ -- 988
 stack$ -- 0
-substring$ -- 1858
+substring$ -- 1870
 swap$ -- 164
 text.length$ -- 16
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 538
+type$ -- 544
 warning$ -- 18
-while$ -- 240
+while$ -- 242
 width$ -- 0
-write$ -- 1106
+write$ -- 1118
 (There were 18 warnings)

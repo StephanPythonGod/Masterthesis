@@ -408,7 +408,7 @@ Efficient fine-tuning of \gls{llm}s can be categorized into three distinct appro
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{Grafiken/fine_tuning_approaches.png}
+    \includegraphics[width=0.8\textwidth]{Grafiken/fine_tuning_approaches.png}
     \caption{Adapted Fine-Tuning Approaches for \gls{llm} by Treviso et al. \cite{treviso_efficient_2023}}
     \label{fig:llm_fine_tuning}
 \end{figure}
@@ -441,8 +441,7 @@ In summary, \textbf{$\text{(IA)}^3$} is a \gls{peft} approach specifically desig
 
 \textbf{Multi-task Learning} refers to the concept of fine-tuning a \gls{prlm} on various tasks to achieve better zero-shot and fine-tuning performance. One of the most prominent \gls{prlm}s trained on multiple NLP tasks is T5 \cite{raffel_exploring_2023}. Liu et al. \cite{liu_few-shot_2022} demonstrated that a generically trained T5 model can be few-shot fine-tuned with approximately 10\% of the parameters of \gls{lora}, at a lower computational cost, while achieving higher accuracy in classification tasks\footnote{Currently, there is no experiment comparing LoRa and $\text{(IA)}^3$ on QA tasks}. This is made possible, due to using $\text{(IA)}^3$ as \gls{peft}.
 
-\textbf{Prompting} refers to the general concept of presenting a task as a textual instruction to a \gls{llm} \cite{brown_language_2020}. Recent advances have even led to the development of a new sub-task and job role called \textit{Prompt Engineering} \cite{white_prompt_2023}. It's worth noting that different prompts with the same intent can yield different results, making the selection of the right prompt a challenge in itself \cite{liu_gpt_2021}.
-
+\textbf{Prompting} refers to the general concept of presenting a task as a textual instruction to a \gls{llm} \cite{brown_language_2020}. Recent advances have even led to the development of a new sub-task and job role called \textit{Prompt Engineering} \cite{white_prompt_2023}. It's worth noting that different prompts with the same intent can yield different results, making the selection of the right prompt a challenge in itself \cite{liu_gpt_2021}. Furthermore, concepts like \gls{cot} prompts have been developed. In \gls{cot} prompts, the given example in a Few-shot prompt is redesigned to mimic step-by-step reasoning and conclusions known from the way humans think, aiming to achieve higher performance in Zero- and Few-shot scenarios simply by adjusting the explicit natural language prompt \cite{wei_chain--thought_2023}.
 
 \begin{figure}
     \centering

@@ -392,6 +392,11 @@ Wang, Z., Ng, P., Ma, X., Nallapati, R., and Xiang, B. (2019).
 \newblock Multi-passage {BERT}: {A} {Globally} {Normalized} {BERT} {Model} for {Open}-domain {Question} {Answering}.
 \newblock arXiv:1908.08167 [cs].
 
+\bibitem[Wei et~al., 2023]{wei_chain--thought_2023}
+Wei, J., Wang, X., Schuurmans, D., Bosma, M., Ichter, B., Xia, F., Chi, E., Le, Q., and Zhou, D. (2023).
+\newblock Chain-of-{Thought} {Prompting} {Elicits} {Reasoning} in {Large} {Language} {Models}.
+\newblock arXiv:2201.11903 [cs].
+
 \bibitem[White et~al., 2023]{white_prompt_2023}
 White, J., Fu, Q., Hays, S., Sandborn, M., Olea, C., Gilbert, H., Elnashar, A., Spencer-Smith, J., and Schmidt, D.~C. (2023).
 \newblock A {Prompt} {Pattern} {Catalog} to {Enhance} {Prompt} {Engineering} with {ChatGPT}.
