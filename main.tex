@@ -56,7 +56,7 @@ The possible combinations of modules to create an adapted \gls{qa}-System can be
 
 \textbf{Information Extraction:} When it comes to extracting text from PDFs, you have two approaches to choose from: the \textit{visual} approach and the \textit{direct} approach, each with its own advantages. In the \textit{visual} approach, you can create a model for document layout analysis combined with an OCR tool. Ideally, this approach yields a collection, denoted as $M$, comprising paragraphs $m$. These paragraphs vary in length but represent self-contained semantic units from the underlying PDF. On the other hand, the \textit{direct} approach is suitable only for digitally-born PDFs. For such PDFs, you can employ a tool like Py2PDF \cite{noauthor_welcome_nodate}. This results in a corpus $M$ that requires processing to achieve the desired granularity.
 
-\textbf{Indexing:} The implementation of indexing depends on the nature of $M$ and the desired granularity of the output. In general, there are three approaches to constructing passages $p$ in the index $P$:
+\noindent\textbf{Indexing:} The implementation of indexing depends on the nature of $M$ and the desired granularity of the output. In general, there are three approaches to constructing passages $p$ in the index $P$:
 
 \begin{enumerate}
     \item \textit{Paragraphs:} In this approach, $P$ comprises passages $p_i$ such as $P = \{p_1, p_2, \ldots, p_n\}$, where each $p_i$ is derived from $M$ and represents semantic paragraphs from the original document. The length $l$ of each $p_i$ is not fixed, and the number of paragraphs $|P|$ can also vary.
@@ -66,7 +66,7 @@ The possible combinations of modules to create an adapted \gls{qa}-System can be
 
 \textit{Paragraphs} may seem like the most intuitive choice, but the indefinite length of passages, denoted as $p$, can be an issue. \textit{Snippets} have the advantage of having almost uniform lengths. However, a downside could be that important connections between sentences are lost, potentially leading to the loss of information. \textit{Sliding Windows} offer the advantage of uniform lengths and the ability to capture connections between sentences. However, the downside is the high number of passages, denoted as $p$, that need to be indexed, along with potential issues related to data cleanliness.
 
-\textbf{Synthetic Training Data Generation:} In this pipeline, the prompt-based \gls{qg} method known as PROMPTAGATOR \cite{dai_promptagator_2022} is used to generate a synthetic \gls{qa} dataset for ColBERTv2 \cite{santhanam_colbertv2_2022} based on $P$. The goal is to create triples of $(q, p^{+}, p^{-})$, similar to those found in datasets like MS MACRO \cite{bajaj_ms_2018}. For the task of $E_{qg}(p) := q$, a \gls{s2s} model, specifically a \gls{llm}, will be employed. This technique can be interpreted as knowledge distilation from the LLM to the later trained retriever. Similar to PROMPTAGATOR, there are two approaches to consider:
+\noindent\textbf{Synthetic Training Data Generation:} In this pipeline, the prompt-based \gls{qg} method known as PROMPTAGATOR \cite{dai_promptagator_2022} is used to generate a synthetic \gls{qa} dataset for ColBERTv2 \cite{santhanam_colbertv2_2022} based on $P$. The goal is to create triples of $(q, p^{+}, p^{-})$, similar to those found in datasets like MS MACRO \cite{bajaj_ms_2018}. For the task of $E_{qg}(p) := q$, a \gls{s2s} model, specifically a \gls{llm}, will be employed. This technique can be interpreted as knowledge distilation from the LLM to the later trained retriever. Similar to PROMPTAGATOR, there are two approaches to consider:
 
 \begin{enumerate}
     \item \textit{Zero-Shot:} In this approach, a single prompt is executed to generate a question $q_i$ corresponding to a passage $p_i$, all without the need for any supervised dataset.
@@ -129,6 +129,22 @@ In the third step, the synthetic dataset is subjected to filtering. PROMPTAGATOR
 Steps two and three are repeated once during fine-tuning.
 \subsection{Read}
 \label{subsec:read}
+
+\textbf{Out-of-Domain Readers:} There exists no benchmark for the application of zero-shot or \gls{ood} Readers. As Pereira et. al. \cite{pereira_visconde_2022} point out in their experimental results, the zero-shot performance of \gls{llm}s as Generative Readers is state-of-the-art and thus needs no fine-tuning and can even perform in a zero-shot setting. Luo et. al. \cite{luo_choose_2022} also pointed out, that the \gls{ood} performance of Extractive Readers is higher than the of Generative ones, when it comes to \gls{prlm}. Threfore a good \gls{ood} model choice is UnifiedQA-v2 \cite{khashabi_unifiedqa-v2_2022}, which is based on T5 \cite{raffel_exploring_2023} and was trained on 20 diverse datasets.
+
+\noindent\textbf{Fine-Tuning Readers:} Extractive Readers depend on datasets of the form $(q, c, a_span)$, whereas $q$ is a question, $c$ the context and $a_span$ an indication of which tokens of $c$ correspond to the desired answer. Similar for Generative Readers, which need $(q, c, a)$ datasets, whreas $a$ is just a text based answer to question $q$. The training process for the reader is easier and more straightforward as for the retriever. Given the already filtered synthetic trainings dataset, this can be used for training of the reader.
+
+\subsection{Orchestration}
+\label{subsec:qa_orchestration}
+
+Similar to \gls{r2d2}\cite{fajcik_r2-d2_2021} and LaPraDoR \cite{xu_laprador_2022} and others, an orchestration of retrievers and readers will be adopted in order to achieve highest \gls{ood} performance. This involves the following steps:
+
+\begin{enumerate}
+    \item \textit{Retrieval:} The $k$-top identified passages $P = \{p_1, p_2, \ldots, p_k\}$ are retrieved for a given question $q$ receive a similarity indication $\text{sim}(q,p_k)$ by the retriever. Next to this score, the BM25 score is calculated $BM25(q,p_k)$. The final score is calculated as the weighting of the similarity by BM25:     $score(q, d) = sim(q, d) \cdot BM25(q, d)$
+    \item \textit{Reader:} As for the Reader two readers will be executed at the same time: An extractive and one generative reader. Both 
+
+\end{enumerate}
+
 
 \section{Conversational Question Answering System}
 \label{sec:conv-qa-system}

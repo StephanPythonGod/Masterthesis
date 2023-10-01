@@ -102,7 +102,7 @@ Generative \gls{qa} is often denoted as \textit{Retriever-free} or \textit{Neura
     \label{fig:rr_architecture}
 \end{figure}
 
-Figure \ref{fig:rr_architecture} depicts the general architecture of a \textbf{Retriever-Reader-System}, as defined by Zhu et al. \cite{zhu_retrieving_2021}. This architecture serves as the foundational framework for \gls{ir}-Based \gls{qa} systems and was initially introduced by Harabagiu et al. \cite{harabagiu_open_domain_2003}. In this framework, all modules operate independently, can be trained separately, and are subject to independent evaluation.
+Figure \ref{fig:rr_architecture} depicts the general architecture of a \textbf{Retriever-Reader-System}, as defined by Zhu et al. \cite{zhu_retrieving_2021}. This architecture serves as the foundational framework for \gls{ir}-Based \gls{qa} systems and was initially introduced by Harabagiu et al. \cite{harabagiu_open-domain_2003}. In this framework, all modules operate independently, can be trained separately, and are subject to independent evaluation.
 
 The \textbf{Retriever} module's primary role is to retrieve relevant documents, passages, or other pertinent information from a knowledge source and rank them based on their relevance to answering the user's query. Subsequently, the \textbf{Reader} module extracts the answer from the retrieved documents and presents it to the user. This task bears a close resemblance to \gls{mrc}, with the key distinction that in \gls{ir}-Based \gls{qa}, the system must handle multiple documents and comprehend them to formulate a response, unlike classical \gls{mrc} tasks, which typically involve only one context document.
 
@@ -302,21 +302,158 @@ A common technique, which is used in nearly every experimental setup for \gls{qa
 
 For a detailed overview of approaches towards more efficient \gls{odqa} systems, please refer to the comprehensive survey by Zhang et al. \cite{zhang_survey_2023}.
 
+% Commit #6
 
 \section{Conversational Question Answering}
 \label{sec:cqa}
 
+The differentiation of \gls{convqa} towards \gls{qa} will be discussed in Section \ref{subsec:cqa_basics}. This Section also introduces the fundamental concepts of \gls{convqa} which are necessary to understand challenges and necessary components compared to a regular \gls{qa}-System. Section \ref{subsec:cqa_contextual_query_understanding} will cover approaches towards the concept of query expansion. Section \ref{subsec:cqa_initiative} will clampse on the concept of initative and further approaches towards a Conversation Manager. Lastly Section \ref{subsec:cqa_llm_agents} will cover the usability of \gls{llm}s and especially the concept of Chain of Thoughts for \gls{convqa}.
+
 \subsection{Basics}
 \label{subsec:cqa_basics}
 
-\subsection{Query Expansion}
-\label{subsec:cqa_query_expansion}
+Core concepts in the field of \gls{odcqa} towards a conversation in terms of \gls{convqa} are: \textit{Turns}, \textit{Hisotry}, \textit{Memory}, \textit{Session} and \textit{Dialog Features} and \textit{Dialog State} \cite{zamani_conversational_2023}. It's important to mention, that in other subdomains/-tasks of \gls{cis} more concepts are introduced, such as \textit{State}, those are not necessary or applicable for \gls{odcqa} \cite{zaib_conversational_2021}.
+
+Figure \ref{fig:conversation_explain} shows the core concepts based on a chat. Firstly, a \textbf{Turn} is a question-response pair. Whereas a conversation usually consists of multiple turns (multi-turn). \gls{coqa} is a dataset published in 2019 by researchers at Stanford in order to extend the known \gls{qa} dataset SQuAD towards a conversational dataset, whereas on average one conversation session consists of 15 turns \cite{reddy_coqa_2018}. Multi-turns are the main distinguisher betwenn the in Section \ref{sec:qa} introduced task, to a \gls{convqa} task. In a multi-turn scenario natural language phenomena like \textit{coreference} (multiple expressions refereing to the same thing) or \textit{ellipsis} (omitting words or topics implied by the context) can occur. While in regular \gls{qa} the System will only be challenged with single-turn scenarios, so only one question, which needs an answer, in \gls{convqa} the systems have to face multi-turn scenarios, where a user might also ask followup question or in general mutliple questions aftereachother. A \textbf{Hisotry} is consequently a set of turns which belong to one conversation session. A \textbf{Session} is a in it completed conversation. Lastly, the \textbf{Memory} is the abstract entity in which the \gls{convqa}-System stores knowledge related to a history, session or even user in general \cite{zamani_conversational_2023,gao_neural_2022}. This depends of the implementation of memory in the \gls{convqa} pipeline, which will be discussed in Section \ref{subsec:cqa_contextual_query_understanding}.
+
+\textbf{Dialog Features} need to be assesed extra to the other mentioned concepts. While the other concepts tackle the conversations frame, the dialog feature evaluates the user questions themself. Possible dialog features may include: \textit{drilling-down} questions, \textit{topic-shift}, \textit{clarification} or \textit{definition}. Different dialog features call for different responses by the system \cite{gupta_conversational_2020}. The \textbf{Dialog State} has to be assesed similar. The dialog state represents the relation between turns. In cases of pre-defined domains methods like state slots are used, e.g. \verb |Date _, Location _, Artist _| have to be filled during the conversation in order to retrieve the correct information from the \gls{kb} \cite{rastogi_schema-guided_2020}. Open-Domain \gls{convqa} usually don't track the state \textit{explicitly}, but rather track it \textit{implicitly} via the type of implementation of the \textit{Contextual Query Understanding} unit.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Conversation_Explain.png}
+    \caption{Concepts of a Conversation in regards to a \gls{cis}}
+    \label{fig:conversation_explain}
+\end{figure}
+
+Regarding the System architecture of a \gls{convqa} there is no one fits them all solution at the moment, but Gao et. al. \cite{gao_neural_2022} presented a modern system architecture, which represents commonly used appraoches and their corresponding components in a genral fashion. This general architecture can be observed in Figure \ref{fig:convqa_system_architecture}. Modern \gls{convqa} systems are closely realted to \gls{qa} systems, but lag certain generalizing components in order to be full \gls{cis} systems \cite{zamani_conversational_2023}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/System_Architecture_ConQA.png}
+    \caption{General System Architecture of a \gls{convqa} System by Gao et. al. \cite{gao_neural_2022}}
+    \label{fig:convqa_system_architecture}
+\end{figure}
+
+Similar to the retriever-reader architecture introduced in Section \ref{subsec:qa_architectures}, a \gls{convqa} is made up of those two components as well, whereas in the case of a \gls{convqa} the retrieval as also the reader component have to handle more. The retriever has to understand the context, so the history of a conversation and retrieve based on that the most relevant documents. The reader on the other hand is close related to the reader of a classic retriever-reader architecture \cite{zamani_conversational_2023,gao_neural_2022}. Some implementations even feed into the reader component the context in order to rank the retrieved passages better and generate a more accurate answer \cite{owoicho_trec_2022}.
+
+\subsection{Contextual Query Understanding}
+\label{subsec:cqa_contextual_query_understanding}
+
+How do we implement \textit{Memory}? Is the core question of this Section \ref{subsec:cqa_contextual_query_understanding}. 
+
+There are two main distinguishing appraoches towards history implementation. The first is a simple heuristic of using the last-$k$ turns for \textbf{Query Expansion}, \textbf{Query Rewriting} or \textbf{Conversational Retrievers}. The second is to extract the important parts of the history in regards to a question and use them for Query Expansion or Rewriting \cite{gao_neural_2022}.
+
+A good example to explain the appraoch of the second approach towards extracting improtant parts of the history $H = {(q_1, a_1), \dots , (q_i, a_i)}$ given a new question $q_{i+1}$ is \gls{quretec}\cite{voskarides_query_2020}. \gls{quretec} consits of two components essentially: one BERT-based model and a trainable classification layer. The $H$ is being passed through the BERT model, whereas the following structur of concatination is being used: 
+
+\begin{equation}
+    \text{BERT}([CLS],H,[SEP],q_{i+1}) 
+\end{equation}
+
+On every first sub-token of a term of the $H$ the term classification layer is applied, which is a network consisting of a dropout layer, a linear layer and a sigmoid function. The term classification layer predicts a label between $0-1$ indicating it's importance for answering the new question $q_i$. This leads to a set of terms $I$ which need to be incorporated into the retrieval \cite{voskarides_query_2020}. This is generaly also known as \textbf{Query Expansion}, whereas we add terms to a given query for retrieval. Next to this supervised, trained approach, there are also implementations which work unsupervised like Historical Query Expansion (HQExp) \cite{yang_query_2019}, which was one of the best performing models in the TREC CAsT 2019 \cite{dalton_trec_2020}.
+
+Modern neural appraoches more often implement a \textbf{Query Rewriting} module which is build on top of \gls{s2s}-models to rewrite a query $q_{i+1}$ given a history $H$ in order to use the generated new query for retrieval using an established \gls{qa} retriever \cite{owoicho_trec_2022}. The main advantage of this appraoch is the abscence of the need of large supervised datasets as for Conversational Retrievers \cite{dai_dialog_2022}. One of the top performing models in the TREC CAsT 2022 was HEATWAVE by a Team of the University of Cambridge England \cite{liusie_university_nodate}. HEATWAVE utilized a query rewriter and a classical lexical BM25 retriever in combination with a BERT-based re-ranker. The rewriter uses a T5-based Transformer model and gives as input $ctx-n-m$, where $n$ referes to the last $n$-many user utterances and $m$ to the $m$-many system responses. In general the task can be simply broken down to the follwoing:
+
+\begin{equation}
+    q_{rewritten} = \text{Rewriter}(ctx-n-m)
+\end{equation}
+
+For training of this model they used the among others the canard dataset \cite{elgohary_can_2019} a manually annotated version of the QuAC dataset, specifically for the task of query rewriting given a conversation history $H$.
+
+State-of-the-art reasearch utilizes more and more \gls{llm} for the task of Query Rewriting, as they can handle long context histories $H$ and are in general strong zero- or few-shot models \cite{mao_large_2023}. This is also the main approach frameworks like \textit{Langchain} \cite{noauthor_question_nodate} or \textit{ChatGPT by OpenAI} \cite{noauthor_chatgpt_2023} use. 
+
+
+Lastly the appraoch of \textbf{Conversational Retrievers} exists. Those use compared to classical \gls{qa} retrievers not a pair of $(q,p)$ in order to calculate a similarity $sim(q,p)$ between the question $q$ and the passage $p$, but use \gls{convqa} datapoints from conversational interactions like $(q_1, a_1, \dots, q_i, a_i, q_{i+1}, p)$, in short $(H, q_{i+1}, p)$, so combining a conversation history $H$ with a new question $q_{i+1}$ and the relevant passage $p$ to answer this question given the history $H$ \cite{gao_neural_2022,dai_dialog_2022}. High performing zero-shot or subdomain-adapted Conversational Retrievers do not exist, as it is extremly time consuming to create a dataset for this type of Retriever. To close this gap in researchers proposed sufficient data augmentation techniques to generate those datasets, given a document. One example is the work of Dai et. al. \cite{dai_dialog_2022} which introduced the technique of \enquote{Dialog Inpainting} \cite{dai_dialog_2022}.  
 
 \subsection{Initiative}
 \label{subsec:cqa_initiative}
 
+All modern human-computer interactions follow a one-sided initative model, where either the user- or the system-initative is given. In mixed-initative scenarios of \gls{convqa} the system can take initative without explicit comands of the user. Examples for initative are: \textit{Topic Shifts}, \textit{Clarification Questions} or \textit{Question Recommendations} \cite{zamani_conversational_2023}. In this thesis we will focus on \textit{Clarification Questions} only.
+
+
+
 \subsection{Large Language Model based Agents / Chain of Thought ???}
 \label{subsec:cqa_llm_agents}
+
+\section{Efficient Large Language Models}
+\label{sec:efficient_llm}
+
+With the increasing size of large language models (\gls{llm}), \gls{llama} 2 offers models ranging from 7 billion to 70 billion parameters \cite{touvron_llama_2023}. Even these models are considered relatively small compared to the largest models like PaLM 2 \cite{anil_palm_2023} with 340 billion parameters. The challenge arises when running such models in scenarios with limited computational resources, especially on smaller domains or tasks. This challenge is particularly relevant to the task presented in this thesis, which involves building a \gls{convqa} system for a custom set of PDFs.
+
+While several surveys \cite{ling_domain_2023, zhao_survey_2023} have explored the topic of efficient \gls{llm} usage in resource-constrained systems, Treviso et al. \cite{treviso_efficient_2023} present the most comprehensive taxonomy of methods and approaches in this context. Figure \ref{fig:llm_taxonomy} provides a high-level overview of the stages at which efficiency-improving methods can be implemented in \gls{llm}s. Given the specific focus of this thesis, not all stages will be discussed in detail. For more comprehensive insights, please refer to the original survey by Treviso et al. \cite{treviso_efficient_2023}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Efficient_Survey_Steps.png}
+    \caption{Adapted Stages of Efficiency Improvement for \gls{llm} by Treviso et al. \cite{treviso_efficient_2023}}
+    \label{fig:llm_taxonomy}
+\end{figure}
+
+Section \ref{subsec:llm_fine_tuning} will explore possibilities to enhance efficiency during the fine-tuning process, while Section \ref{subsec:llm_compression} will delve into the topic of model compression, which is applicable to the \textit{Inference} step in Figure \ref{fig:llm_taxonomy}.
+
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Efficient_Survey_Taxonomy.png}
+%     \caption{Adjusted Taxonomy of efficiency improvement for \gls{llm} by Treviso et. al. \cite{treviso_efficient_2023}}
+%     \label{fig:llm_taxonomy_2}
+% \end{figure}
+
+\subsection{Fine-Tuning}
+\label{subsec:llm_fine_tuning}
+
+Hu et al. \cite{hu_lora_nodate} demonstrated the significant benefits of fine-tuning GPT-3 for few-shot applications, highlighting the remarkable improvements it can achieve. This is further supported by the experiments conducted by Chung et al. \cite{chung_scaling_2022}.
+
+Efficient fine-tuning of \gls{llm}s can be categorized into three distinct approaches: \textit{Parameter Efficiency}, \textit{Multi-task Learning}, and \textit{Prompting}. Figure \ref{fig:llm_fine_tuning} provides an overview of these approaches along with their corresponding methods.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Grafiken/fine_tuning_approaches.png}
+    \caption{Adapted Fine-Tuning Approaches for \gls{llm} by Treviso et al. \cite{treviso_efficient_2023}}
+    \label{fig:llm_fine_tuning}
+\end{figure}
+
+\textbf{Parameter Efficiency} is commonly referred to as \textbf{\gls{peft}} \cite{noauthor_peft_nodate}. A notable \gls{peft} approach is \gls{lora}, developed by Hu et al. \cite{hu_lora_nodate}. \gls{lora} falls under the category of Adapters, a term coined because it revolves around the concept of freezing the parameters of the \gls{llm} and fine-tuning only a small set of task-specific parameters, which can be swapped depending on the desired downstream task. Unlike some other Adapter-based methods \cite{houlsby_parameter-efficient_2019}, \gls{lora} does not introduce additional inference latency due to the merging of trainable matrices with frozen weights. Moreover, \gls{lora} can be seamlessly combined with many other \gls{peft} methods.
+
+In practice, given a pre-trained weight matrix \(W_0 \in \mathbb{R}^{d \times k}\), which is typically full-rank between layers, the update can be constrained to be a low-rank composition: \(W_0 + \triangle W = W_0 + BA\), where \(B \in \mathbb{R}^{d \times r}\), \(A \in \mathbb{R}^{r \times k}\), and the rank \(r \ll \min(d, k)\). While \(W_0\) remains frozen during training, \(A\) and \(B\) become trainable parameters. The forward pass \(h = W_0x\) can be represented as the following sum:
+
+\begin{equation}
+    h = W_0x + \triangle Wx = W_0x + BAx
+\end{equation}
+
+Figure \ref{fig:lora} illustrates the architecture and initialization during training. The parameters of \(A\) are randomly sampled using Gaussian initialization, while \(B\) is initialized to 0.
+
+Other \gls{peft} techniques include \textbf{prompt-tuning} \cite{lester_power_2021} and \textbf{prefix-tuning} \cite{li_prefix-tuning_2021}. Both approaches are similar in the way they leverage task-specific modifications to the input to guide the model's behavior. They involve concatenating learned vectors to activations or embedding sequences, making them activation-modifying \gls{peft} methods.
+
+A \gls{peft} approach that can be considered a hybrid between \gls{lora} and activation-modifying techniques is \textbf{$\text{(IA)}^3$} \cite{liu_few-shot_2022}. What sets $\text{(IA)}^3$ apart is its focus on \gls{llm}s designed explicitly for multi-task learning, as all existing \gls{peft} techniques significantly underperformed in experiments conducted by Liu et al. \cite{liu_few-shot_2022}. In $\text{(IA)}^3$, the model's activations are rescaled using element-wise multiplication with learned vectors, known as adaptors. Specifically, $\text{(IA)}^3$ employs three learned vectors: \(l_k \in \mathbb{R}^{d_k}\) for keys and \(l_v \in \mathbb{R}^{d_v}\) for values in self-attention and encoder-decoder attention mechanisms, as well as \(l_{ff} \in \mathbb{R}^{d_{ff}}\) for the feed-forward network. The rescaling is incorporated into the attention mechanism as follows:
+
+\begin{equation}
+    \operatorname{softmax}\left(\frac{Q\left(l_{k} \odot K^T\right)}{\sqrt{d_k}}\right)\left(l_{v} \odot V\right)
+\end{equation}
+
+For the feed-forward network, the rescaling is implemented as follows, where \(\gamma\) represents the feed-forward activation:
+
+\begin{equation}
+    (l_{ff} \odot \gamma (W_1x))W_2
+\end{equation}
+
+In summary, \textbf{$\text{(IA)}^3$} is a \gls{peft} approach specifically designed for multi-task learning, and it appears to outperform \gls{lora} in terms of the number of parameters added and training computation costs.
+
+\textbf{Multi-task Learning} refers to the concept of fine-tuning a \gls{prlm} on various tasks to achieve better zero-shot and fine-tuning performance. One of the most prominent \gls{prlm}s trained on multiple NLP tasks is T5 \cite{raffel_exploring_2023}. Liu et al. \cite{liu_few-shot_2022} demonstrated that a generically trained T5 model can be few-shot fine-tuned with approximately 10\% of the parameters of \gls{lora}, at a lower computational cost, while achieving higher accuracy in classification tasks\footnote{Currently, there is no experiment comparing LoRa and $\text{(IA)}^3$ on QA tasks}. This is made possible, due to using $\text{(IA)}^3$ as \gls{peft}.
+
+\textbf{Prompting} refers to the general concept of presenting a task as a textual instruction to a \gls{llm} \cite{brown_language_2020}. Recent advances have even led to the development of a new sub-task and job role called \textit{Prompt Engineering} \cite{white_prompt_2023}. It's worth noting that different prompts with the same intent can yield different results, making the selection of the right prompt a challenge in itself \cite{liu_gpt_2021}.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Grafiken/Lora.png}
+    \caption{\gls{lora} by Hu et. al. \cite{hu_lora_nodate}}
+    \label{fig:lora}
+\end{figure}
+
+
+\subsection{Compression}
+\label{subsec:llm_compression}
 
 \section{Related Work}
 \label{sec:related_work}
@@ -351,3 +488,8 @@ On the other hand, there exist reader components with a high degree of generaliz
 
 \subsection{Open-domain Conversational Question Answering ???} 
 \label{subsec:related_work_cqa}
+
+\textbf{From single-turn Question Answering to Conversation}
+
+\textbf{Synthetic Datageneration}
+

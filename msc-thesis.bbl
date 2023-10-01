@@ -1,262 +1,444 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{}
 
-\bibitem{farea_evaluation_2022}
-Amer Farea, Zhen Yang, Kien Duong, Nadeesha Perera, and Frank Emmert-Streib.
-\newblock Evaluation of question answering systems: Complexity of judging a natural language.
+\bibitem[Anil et~al., 2023]{anil_palm_2023}
+Anil, R., Dai, A.~M., Firat, O., Johnson, M., Lepikhin, D., Passos, A., Shakeri, S., Taropa, E., Bailey, P., Chen, Z., Chu, E., Clark, J.~H., Shafey, L.~E., Huang, Y., Meier-Hellstern, K., Mishra, G., Moreira, E., Omernick, M., Robinson, K., Ruder, S., Tay, Y., Xiao, K., Xu, Y., Zhang, Y., Abrego, G.~H., Ahn, J., Austin, J., Barham, P., Botha, J., Bradbury, J., Brahma, S., Brooks, K., Catasta, M., Cheng, Y., Cherry, C., Choquette-Choo, C.~A., Chowdhery, A., Crepy, C., Dave, S., Dehghani, M., Dev, S., Devlin, J., Díaz, M., Du, N., Dyer, E., Feinberg, V., Feng, F., Fienber, V., Freitag, M., Garcia, X., Gehrmann, S., Gonzalez, L., Gur-Ari, G., Hand, S., Hashemi, H., Hou, L., Howland, J., Hu, A., Hui, J., Hurwitz, J., Isard, M., Ittycheriah, A., Jagielski, M., Jia, W., Kenealy, K., Krikun, M., Kudugunta, S., Lan, C., Lee, K., Lee, B., Li, E., Li, M., Li, W., Li, Y., Li, J., Lim, H., Lin, H., Liu, Z., Liu, F., Maggioni, M., Mahendru, A., Maynez, J., Misra, V., Moussalem, M., Nado, Z., Nham, J., Ni, E., Nystrom, A., Parrish, A., Pellat, M., Polacek, M., Polozov, A., Pope, R., Qiao, S., Reif, E., Richter, B., Riley, P., Ros, A.~C., Roy, A., Saeta, B., Samuel, R., Shelby, R., Slone, A., Smilkov, D., So, D.~R., Sohn, D., Tokumine, S., Valter, D., Vasudevan, V., Vodrahalli, K., Wang, X., Wang, P., Wang, Z., Wang, T., Wieting, J., Wu, Y., Xu, K., Xu, Y., Xue, L., Yin, P., Yu, J., Zhang, Q., Zheng, S., Zheng, C., Zhou, W., Zhou, D., Petrov, S., and Wu, Y. (2023).
+\newblock {PaLM} 2 {Technical} {Report}.
+\newblock arXiv:2305.10403 [cs].
 
-\bibitem{zhu_retrieving_2021}
-Fengbin Zhu, Wenqiang Lei, Chao Wang, Jianming Zheng, Soujanya Poria, and Tat-Seng Chua.
-\newblock Retrieving and reading: A comprehensive survey on open-domain question answering.
+\bibitem[Bajaj et~al., 2018]{bajaj_ms_2018}
+Bajaj, P., Campos, D., Craswell, N., Deng, L., Gao, J., Liu, X., Majumder, R., McNamara, A., Mitra, B., Nguyen, T., Rosenberg, M., Song, X., Stoica, A., Tiwary, S., and Wang, T. (2018).
+\newblock {MS} {MARCO}: {A} {Human} {Generated} {MAchine} {Reading} {COmprehension} {Dataset}.
+\newblock arXiv:1611.09268 [cs].
 
-\bibitem{jurafsky_speech_2023}
-Dan Jurafsky and James~H. Martin.
-\newblock {\em Speech and Language Processing}.
-\newblock 3 edition.
+\bibitem[Brown et~al., 2020]{brown_language_2020}
+Brown, T.~B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D.~M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., and Amodei, D. (2020).
+\newblock Language {Models} are {Few}-{Shot} {Learners}.
+\newblock arXiv:2005.14165 [cs].
 
-\bibitem{green_baseball_1961}
-Bert~F. Green, Alice~K. Wolf, Carol Chomsky, and Kenneth Laughery.
-\newblock Baseball: an automatic question-answerer.
-\newblock In {\em Papers presented at the May 9-11, 1961, western joint {IRE}-{AIEE}-{ACM} computer conference}, {IRE}-{AIEE}-{ACM} '61 (Western), pages 219--224. Association for Computing Machinery.
+\bibitem[Chen, 2021]{chen_improving_2021}
+Chen, H. (2021).
+\newblock Improving {Out}-of-{Domain} {Question} {Answering} with {Mixture} of {Experts}.
 
-\bibitem{voorhees_trec-8_1999}
-E.~Voorhees.
-\newblock The {TREC}-8 question answering track report.
+\bibitem[Chung et~al., 2022]{chung_scaling_2022}
+Chung, H.~W., Hou, L., Longpre, S., Zoph, B., Tay, Y., Fedus, W., Li, Y., Wang, X., Dehghani, M., Brahma, S., Webson, A., Gu, S.~S., Dai, Z., Suzgun, M., Chen, X., Chowdhery, A., Castro-Ros, A., Pellat, M., Robinson, K., Valter, D., Narang, S., Mishra, G., Yu, A., Zhao, V., Huang, Y., Dai, A., Yu, H., Petrov, S., Chi, E.~H., Dean, J., Devlin, J., Roberts, A., Zhou, D., Le, Q.~V., and Wei, J. (2022).
+\newblock Scaling {Instruction}-{Finetuned} {Language} {Models}.
+\newblock arXiv:2210.11416 [cs].
 
-\bibitem{ferrucci_introduction_2012}
-D.~A. Ferrucci.
-\newblock Introduction to this is watson.
-\newblock 56(3):1:1--1:15.
-\newblock Conference Name: {IBM} Journal of Research and Development.
+\bibitem[Dai et~al., 2022a]{dai_dialog_2022}
+Dai, Z., Chaganty, A.~T., Zhao, V., Amini, A., Rashid, Q.~M., Green, M., and Guu, K. (2022a).
+\newblock Dialog {Inpainting}: {Turning} {Documents} into {Dialogs}.
+\newblock Publisher: arXiv Version Number: 2.
 
-\bibitem{hao_recent_2022}
-Tianyong Hao, Xinxin Li, Yulan He, Fu~Lee Wang, and Yingying Qu.
-\newblock Recent progress in leveraging deep learning methods for question answering.
-\newblock 34(4):2765--2783.
+\bibitem[Dai et~al., 2022b]{dai_promptagator_2022}
+Dai, Z., Zhao, V.~Y., Ma, J., Luan, Y., Ni, J., Lu, J., Bakalov, A., Guu, K., Hall, K.~B., and Chang, M.-W. (2022b).
+\newblock Promptagator: {Few}-shot {Dense} {Retrieval} {From} 8 {Examples}.
+\newblock arXiv:2209.11755 [cs].
 
-\bibitem{etezadi_state_2023}
-Romina Etezadi and Mehrnoush Shamsfard.
-\newblock The state of the art in open domain complex question answering: a survey.
-\newblock 53(4):4124--4144.
+\bibitem[Dalton et~al., 2020]{dalton_trec_2020}
+Dalton, J., Xiong, C., and Callan, J. (2020).
+\newblock {TREC} {CAsT} 2019: {The} {Conversational} {Assistance} {Track} {Overview}.
+\newblock arXiv:2003.13624 [cs].
 
-\bibitem{zhang_survey_2023}
-Qin Zhang, Shangsi Chen, Dongkuan Xu, Qingqing Cao, Xiaojun Chen, Trevor Cohn, and Meng Fang.
-\newblock A survey for efficient open domain question answering.
-\newblock In {\em Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 14447--14465. Association for Computational Linguistics.
+\bibitem[Dasigi et~al., 2021]{dasigi_dataset_2021}
+Dasigi, P., Lo, K., Beltagy, I., Cohan, A., Smith, N.~A., and Gardner, M. (2021).
+\newblock A {Dataset} of {Information}-{Seeking} {Questions} and {Answers} {Anchored} in {Research} {Papers}.
+\newblock arXiv:2105.03011 [cs].
 
-\bibitem{mishra_survey_2016}
-Amit Mishra and Sanjay~Kumar Jain.
-\newblock A survey on question answering systems with classification.
-\newblock 28(3):345--361.
+\bibitem[Devlin et~al., 2019]{devlin_bert_2019}
+Devlin, J., Chang, M.-W., Lee, K., and Toutanova, K. (2019).
+\newblock {BERT}: {Pre}-training of {Deep} {Bidirectional} {Transformers} for {Language} {Understanding}.
+\newblock arXiv:1810.04805 [cs].
 
-\bibitem{mcdonald_detect_2022}
-Tavish {McDonald}, Brian Tsan, Amar Saini, Juanita Ordonez, Luis Gutierrez, Phan Nguyen, Blake Mason, and Brenda Ng.
-\newblock Detect, retrieve, comprehend: A flexible framework for zero-shot document-level question answering.
-
-\bibitem{dasigi_dataset_2021}
-Pradeep Dasigi, Kyle Lo, Iz~Beltagy, Arman Cohan, Noah~A. Smith, and Matt Gardner.
-\newblock A dataset of information-seeking questions and answers anchored in research papers.
-
-\bibitem{zamani_conversational_2023}
-Hamed Zamani, Johanne~R. Trippas, Jeff Dalton, and Filip Radlinski.
-\newblock Conversational information seeking.
-
-\bibitem{rajpurkar_squad_2016}
-Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and Percy Liang.
-\newblock {SQuAD}: 100,000+ questions for machine comprehension of text.
-
-\bibitem{dimitrakis_survey_2020}
-Eleftherios Dimitrakis, Konstantinos Sgontzos, and Yannis Tzitzikas.
+\bibitem[Dimitrakis et~al., 2020]{dimitrakis_survey_2020}
+Dimitrakis, E., Sgontzos, K., and Tzitzikas, Y. (2020).
 \newblock A survey on question answering systems over linked data and documents.
-\newblock 55(2):233--259.
+\newblock {\em Journal of Intelligent Information Systems}, 55(2):233--259.
 
-\bibitem{roberts_how_2020}
-Adam Roberts, Colin Raffel, and Noam Shazeer.
-\newblock How much knowledge can you pack into the parameters of a language model?
-\newblock In {\em Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing ({EMNLP})}, pages 5418--5426. Association for Computational Linguistics.
+\bibitem[Ding et~al., 2022]{ding_v-doc_2022}
+Ding, Y., Huang, Z., Wang, R., Zhang, Y., Chen, X., Ma, Y., Chung, H., and Han, S.~C. (2022).
+\newblock V-{Doc} : {Visual} questions answers with {Documents}.
+\newblock arXiv:2205.13724 [cs].
 
-\bibitem{harabagiu_open_domain_2003}
-Sanda~M. Harabagiu, Steven~J. Maiorano, and Marius~A. Pasca.
-\newblock Open-domain textual question answering techniques.
-\newblock 9(3):231--267.
-\newblock Publisher: Cambridge University Press.
+\bibitem[Elgohary et~al., 2019]{elgohary_can_2019}
+Elgohary, A., Peskov, D., and Boyd-Graber, J. (2019).
+\newblock Can {You} {Unpack} {That}? {Learning} to {Rewrite} {Questions}-in-{Context}.
+\newblock In {\em Proceedings of the 2019 {Conference} on {Empirical} {Methods} in {Natural} {Language} {Processing} and the 9th {International} {Joint} {Conference} on {Natural} {Language} {Processing} ({EMNLP}-{IJCNLP})}, pages 5918--5924, Hong Kong, China. Association for Computational Linguistics.
 
-\bibitem{nassiri_transformer_2023}
-Khalid Nassiri and Moulay Akhloufi.
-\newblock Transformer models used for text-based question answering systems.
-\newblock 53(9):10602--10635.
+\bibitem[Etezadi and Shamsfard, 2023]{etezadi_state_2023}
+Etezadi, R. and Shamsfard, M. (2023).
+\newblock The state of the art in open domain complex question answering: a survey.
+\newblock {\em Applied Intelligence}, 53(4):4124--4144.
 
-\bibitem{lewis_retrieval-augmented_2021}
-Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Küttler, Mike Lewis, Wen-tau Yih, Tim Rocktäschel, Sebastian Riedel, and Douwe Kiela.
-\newblock Retrieval-augmented generation for knowledge-intensive {NLP} tasks.
+\bibitem[Fajcik et~al., 2021]{fajcik_r2-d2_2021}
+Fajcik, M., Docekal, M., Ondrej, K., and Smrz, P. (2021).
+\newblock R2-{D2}: {A} {Modular} {Baseline} for {Open}-{Domain} {Question} {Answering}.
+\newblock In {\em Findings of the {Association} for {Computational} {Linguistics}: {EMNLP} 2021}, pages 854--870, Punta Cana, Dominican Republic. Association for Computational Linguistics.
 
-\bibitem{guu_realm_2020}
-Kelvin Guu, Kenton Lee, Zora Tung, Panupong Pasupat, and Ming-Wei Chang.
-\newblock {REALM}: Retrieval-augmented language model pre-training.
+\bibitem[Farea et~al., 2022]{farea_evaluation_2022}
+Farea, A., Yang, Z., Duong, K., Perera, N., and Emmert-Streib, F. (2022).
+\newblock Evaluation of {Question} {Answering} {Systems}: {Complexity} of judging a natural language.
+\newblock arXiv:2209.12617 [cs].
 
-\bibitem{nishida_retrieve-and-read_2018}
-Kyosuke Nishida, Itsumi Saito, Atsushi Otsuka, Hisako Asano, and Junji Tomita.
-\newblock Retrieve-and-read: Multi-task learning of information retrieval and reading comprehension.
-\newblock In {\em Proceedings of the 27th {ACM} International Conference on Information and Knowledge Management}, pages 647--656.
+\bibitem[Ferrucci, 2012]{ferrucci_introduction_2012}
+Ferrucci, D.~A. (2012).
+\newblock Introduction to “{This} is {Watson}”.
+\newblock {\em IBM Journal of Research and Development}, 56(3.4):1:1--1:15.
+\newblock Conference Name: IBM Journal of Research and Development.
 
-\bibitem{wang_modern_2022}
-Zhen Wang.
-\newblock Modern question answering datasets and benchmarks: A survey.
-\newblock Publisher: {arXiv} Version Number: 1.
+\bibitem[Gao et~al., 2022]{gao_neural_2022}
+Gao, J., Xiong, C., Bennett, P., and Craswell, N. (2022).
+\newblock Neural {Approaches} to {Conversational} {Information} {Retrieval}.
+\newblock arXiv:2201.05176 [cs].
 
-\bibitem{tito_document_2021}
-Rubèn Tito, Dimosthenis Karatzas, and Ernest Valveny.
-\newblock Document collection visual question answering.
-\newblock volume 12822, pages 778--792.
+\bibitem[Gholami and Noori, 2021]{gholami_zero-shot_2021}
+Gholami, S. and Noori, M. (2021).
+\newblock Zero-{Shot} {Open}-{Book} {Question} {Answering}.
+\newblock arXiv:2111.11520 [cs].
 
-\bibitem{wang_multi-passage_2019}
-Zhiguo Wang, Patrick Ng, Xiaofei Ma, Ramesh Nallapati, and Bing Xiang.
-\newblock Multi-passage {BERT}: A globally normalized {BERT} model for open-domain question answering.
+\bibitem[Green et~al., 1961]{green_baseball_1961}
+Green, B.~F., Wolf, A.~K., Chomsky, C., and Laughery, K. (1961).
+\newblock Baseball: an automatic question-answerer.
+\newblock In {\em Papers presented at the {May} 9-11, 1961, western joint {IRE}-{AIEE}-{ACM} computer conference}, {IRE}-{AIEE}-{ACM} '61 ({Western}), pages 219--224, New York, NY, USA. Association for Computing Machinery.
 
-\bibitem{liu_dense_2021}
-Ye~Liu, Kazuma Hashimoto, Yingbo Zhou, Semih Yavuz, Caiming Xiong, and Philip~S. Yu.
-\newblock Dense hierarchical retrieval for open-domain question answering.
+\bibitem[Gupta et~al., 2020]{gupta_conversational_2020}
+Gupta, S., Rawat, B. P.~S., and Yu, H. (2020).
+\newblock Conversational {Machine} {Comprehension}: a {Literature} {Review}.
+\newblock In {\em Proceedings of the 28th {International} {Conference} on {Computational} {Linguistics}}, pages 2739--2753, Barcelona, Spain (Online). International Committee on Computational Linguistics.
 
-\bibitem{mathew_document_2021}
-Minesh Mathew, Ruben Tito, Dimosthenis Karatzas, R.~Manmatha, and C.~V. Jawahar.
-\newblock Document visual question answering challenge 2020.
-
-\bibitem{li_dit_2022}
-Junlong Li, Yiheng Xu, Tengchao Lv, Lei Cui, Cha Zhang, and Furu Wei.
-\newblock {DiT}: Self-supervised pre-training for document image transformer.
-
-\bibitem{meuschke_benchmark_2023}
-Norman Meuschke, Apurva Jagdale, Timo Spinde, Jelena Mitrovic, and Bela Gipp.
-\newblock A benchmark of {PDF} information extraction tools using a multi-task and multi-domain evaluation framework for academic documents.
-\newblock volume 13972, pages 383--405.
-
-\bibitem{noauthor_langchain-ailangchain_nodate}
-langchain-ai/langchain: Building applications with {LLMs} through composability.
-
-\bibitem{noauthor_chatgpt_2023}
-{ChatGPT} retrieval plugin.
-\newblock original-date: 2023-03-23T06:06:22Z.
-
-\bibitem{karpukhin_dense_2020}
-Vladimir Karpukhin, Barlas Oguz, Sewon Min, Patrick Lewis, Ledell Wu, Sergey Edunov, Danqi Chen, and Wen-tau Yih.
-\newblock Dense passage retrieval for open-domain question answering.
-
-\bibitem{thakur_beir_2021}
-Nandan Thakur, Nils Reimers, Andreas Rücklé, Abhishek Srivastava, and Iryna Gurevych.
-\newblock {BEIR}: A heterogenous benchmark for zero-shot evaluation of information retrieval models.
-
-\bibitem{robertson_probabilistic_2009}
-Stephen Robertson and Hugo Zaragoza.
-\newblock The probabilistic relevance framework: {BM}25 and beyond.
-\newblock 3:333--389.
-
-\bibitem{devlin_bert_2019}
-Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
-\newblock {BERT}: Pre-training of deep bidirectional transformers for language understanding.
-
-\bibitem{khattab_colbert_2020}
-Omar Khattab and Matei Zaharia.
-\newblock {ColBERT}: Efficient and effective passage search via contextualized late interaction over {BERT}.
-
-\bibitem{yang_hotpotqa_2018}
-Zhilin Yang, Peng Qi, Saizheng Zhang, Yoshua Bengio, William~W. Cohen, Ruslan Salakhutdinov, and Christopher~D. Manning.
-\newblock {HotpotQA}: A dataset for diverse, explainable multi-hop question answering.
-
-\bibitem{zhang_beam_2023}
-Jiahao Zhang, Haiyang Zhang, Dongmei Zhang, Yong Liu, and Shen Huang.
-\newblock Beam retrieval: General end-to-end retrieval for multi-hop question answering.
-
-\bibitem{he_deberta_2020}
-Pengcheng He, Xiaodong Liu, Jianfeng Gao, and Weizhu Chen.
-\newblock {DEBERTA}: {DECODING}-{ENHANCED} {BERT} {WITH} {DISENTANGLED} {ATTENTION}.
-
-\bibitem{luo_choose_2022}
-Man Luo, Kazuma Hashimoto, Semih Yavuz, Zhiwei Liu, Chitta Baral, and Yingbo Zhou.
-\newblock Choose your {QA} model wisely: A systematic study of generative and extractive readers for question answering.
-
-\bibitem{liu_roberta_2019}
-Yinhan Liu, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer Levy, Mike Lewis, Luke Zettlemoyer, and Veselin Stoyanov.
-\newblock {RoBERTa}: A robustly optimized {BERT} pretraining approach.
-
-\bibitem{raffel_exploring_2023}
-Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang, Michael Matena, Yanqi Zhou, Wei Li, and Peter~J. Liu.
-\newblock Exploring the limits of transfer learning with a unified text-to-text transformer.
-
-\bibitem{lewis_bart_2019}
-Mike Lewis, Yinhan Liu, Naman Goyal, Marjan Ghazvininejad, Abdelrahman Mohamed, Omer Levy, Ves Stoyanov, and Luke Zettlemoyer.
-\newblock {BART}: Denoising sequence-to-sequence pre-training for natural language generation, translation, and comprehension.
-
-\bibitem{pereira_visconde_2022}
-Jayr Pereira, Robson Fidalgo, Roberto Lotufo, and Rodrigo Nogueira.
-\newblock Visconde: Multi-document {QA} with {GPT}-3 and neural reranking.
-
-\bibitem{serban_generating_2016}
-Iulian~Vlad Serban, Alberto García-Durán, Caglar Gulcehre, Sungjin Ahn, Sarath Chandar, Aaron Courville, and Yoshua Bengio.
-\newblock Generating factoid questions with recurrent neural networks: The 30m factoid question-answer corpus.
-\newblock In {\em Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 588--598. Association for Computational Linguistics.
-
-\bibitem{johnson_billion-scale_2017}
-Jeff Johnson, Matthijs Douze, and Hervé Jégou.
-\newblock Billion-scale similarity search with {GPUs}.
-
-\bibitem{ding_v-doc_2022}
-Yihao Ding, Zhe Huang, Runlin Wang, Yanhang Zhang, Xianru Chen, Yuzhong Ma, Hyunsuk Chung, and Soyeon~Caren Han.
-\newblock V-doc : Visual questions answers with documents.
-
-\bibitem{noauthor_question_nodate}
-Question answering {\textbar} langchain.
-
-\bibitem{ni_large_2021}
-Jianmo Ni, Chen Qu, Jing Lu, Zhuyun Dai, Gustavo~Hernandez Abrego, Ji~Ma, Vincent~Y. Zhao, Yi~Luan, Keith~B. Hall, Ming-Wei Chang, and Yinfei Yang.
-\newblock Large dual encoders are generalizable retrievers.
-
-\bibitem{neelakantan_text_2022}
-Arvind Neelakantan, Tao Xu, Raul Puri, Alec Radford, Jesse~Michael Han, Jerry Tworek, Qiming Yuan, Nikolas Tezak, Jong~Wook Kim, Chris Hallacy, Johannes Heidecke, Pranav Shyam, Boris Power, Tyna~Eloundou Nekoul, Girish Sastry, Gretchen Krueger, David Schnurr, Felipe~Petroski Such, Kenny Hsu, Madeleine Thompson, Tabarak Khan, Toki Sherbakov, Joanne Jang, Peter Welinder, and Lilian Weng.
-\newblock Text and code embeddings by contrastive pre-training.
-
-\bibitem{izacard_leveraging_2021}
-Gautier Izacard and Edouard Grave.
-\newblock Leveraging passage retrieval with generative models for open domain question answering.
-\newblock In {\em Proceedings of the 16th Conference of the European Chapter of the Association for Computational Linguistics: Main Volume}, pages 874--880. Association for Computational Linguistics.
-
-\bibitem{dai_promptagator_2022}
-Zhuyun Dai, Vincent~Y. Zhao, Ji~Ma, Yi~Luan, Jianmo Ni, Jing Lu, Anton Bakalov, Kelvin Guu, Keith~B. Hall, and Ming-Wei Chang.
-\newblock Promptagator: Few-shot dense retrieval from 8 examples.
-
-\bibitem{chen_improving_2021}
-Haofeng Chen.
-\newblock Improving out-of-domain question answering with mixture of experts.
-
-\bibitem{sachan_questions_2023}
-Devendra~Singh Sachan, Mike Lewis, Dani Yogatama, Luke Zettlemoyer, Joelle Pineau, and Manzil Zaheer.
-\newblock Questions are all you need to train a dense passage retriever.
-
-\bibitem{reddy_synthetic_2022}
-Revanth~Gangi Reddy, Bhavani Iyer, Md~Arafat Sultan, Rong Zhang, Avirup Sil, Vittorio Castelli, Radu Florian, and Salim Roukos.
-\newblock Synthetic target domain supervision for open retrieval {QA}.
-
-\bibitem{gururangan_dont_2020}
-Suchin Gururangan, Ana Marasovic, Swabha Swayamdipta, Kyle Lo, Iz~Beltagy, Doug Downey, and Noah~A. Smith.
-\newblock Don't stop pretraining: Adapt language models to domains and tasks.
-\newblock pages 8342--8360.
+\bibitem[Gururangan et~al., 2020]{gururangan_dont_2020}
+Gururangan, S., Marasović, A., Swayamdipta, S., Lo, K., Beltagy, I., Downey, D., and Smith, N.~A. (2020).
+\newblock Don’t {Stop} {Pretraining}: {Adapt} {Language} {Models} to {Domains} and {Tasks}.
+\newblock {\em Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics}, pages 8342--8360.
 \newblock Conference Name: Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics Place: Online Publisher: Association for Computational Linguistics.
 
-\bibitem{gholami_zero-shot_2021}
-Sia Gholami and Mehdi Noori.
-\newblock Zero-shot open-book question answering.
+\bibitem[Guu et~al., 2020]{guu_realm_2020}
+Guu, K., Lee, K., Tung, Z., Pasupat, P., and Chang, M.-W. (2020).
+\newblock {REALM}: {Retrieval}-{Augmented} {Language} {Model} {Pre}-{Training}.
+\newblock arXiv:2002.08909 [cs].
 
-\bibitem{khashabi_unifiedqa-v2_2022}
-Daniel Khashabi, Yeganeh Kordi, and Hannaneh Hajishirzi.
-\newblock {UnifiedQA}-v2: Stronger generalization via broader cross-format training.
+\bibitem[Hao et~al., 2022]{hao_recent_2022}
+Hao, T., Li, X., He, Y., Wang, F.~L., and Qu, Y. (2022).
+\newblock Recent progress in leveraging deep learning methods for question answering.
+\newblock {\em Neural Computing and Applications}, 34(4):2765--2783.
 
-\bibitem{noauthor_welcome_nodate}
-Welcome to pypdf2: Pypdf2 documentation.
+\bibitem[Harabagiu et~al., 2003]{harabagiu_open-domain_2003}
+Harabagiu, S.~M., Maiorano, S.~J., and Paşca, M.~A. (2003).
+\newblock Open-domain textual question answering techniques.
+\newblock {\em Natural Language Engineering}, 9(3):231--267.
+\newblock Publisher: Cambridge University Press.
 
-\bibitem{santhanam_colbertv2_2022}
-Keshav Santhanam, Omar Khattab, Jon Saad-Falcon, Christopher Potts, and Matei Zaharia.
-\newblock {ColBERTv}2: Effective and efficient retrieval via lightweight late interaction.
+\bibitem[He et~al., 2020]{he_deberta_2020}
+He, P., Liu, X., Gao, J., and Chen, W. (2020).
+\newblock {DEBERTA}: {DECODING}-{ENHANCED} {BERT} {WITH} {DISENTANGLED} {ATTENTION}.
 
-\bibitem{bajaj_ms_2018}
-Payal Bajaj, Daniel Campos, Nick Craswell, Li~Deng, Jianfeng Gao, Xiaodong Liu, Rangan Majumder, Andrew {McNamara}, Bhaskar Mitra, Tri Nguyen, Mir Rosenberg, Xia Song, Alina Stoica, Saurabh Tiwary, and Tong Wang.
-\newblock {MS} {MARCO}: A human generated {MAchine} reading {COmprehension} dataset.
+\bibitem[Houlsby et~al., 2019]{houlsby_parameter-efficient_2019}
+Houlsby, N., Giurgiu, A., Jastrzebski, S., Morrone, B., de~Laroussilhe, Q., Gesmundo, A., Attariyan, M., and Gelly, S. (2019).
+\newblock Parameter-{Efficient} {Transfer} {Learning} for {NLP}.
+\newblock arXiv:1902.00751 [cs, stat].
+
+\bibitem[Hu et~al., 2021]{hu_lora_nodate}
+Hu, E., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., and Chen, W. (2021).
+\newblock {LORA}: {LOW}-{RANK} {ADAPTATION} {OF} {LARGE} {LAN}- {GUAGE} {MODELS}.
+
+\bibitem[Huggingface, 2023]{noauthor_peft_nodate}
+Huggingface (2023).
+\newblock {PEFT}.
+
+\bibitem[Izacard and Grave, 2021]{izacard_leveraging_2021}
+Izacard, G. and Grave, E. (2021).
+\newblock Leveraging {Passage} {Retrieval} with {Generative} {Models} for {Open} {Domain} {Question} {Answering}.
+\newblock In {\em Proceedings of the 16th {Conference} of the {European} {Chapter} of the {Association} for {Computational} {Linguistics}: {Main} {Volume}}, pages 874--880, Online. Association for Computational Linguistics.
+
+\bibitem[Johnson et~al., 2017]{johnson_billion-scale_2017}
+Johnson, J., Douze, M., and Jégou, H. (2017).
+\newblock Billion-scale similarity search with {GPUs}.
+\newblock arXiv:1702.08734 [cs].
+
+\bibitem[Jurafsky and Martin, 2023]{jurafsky_speech_2023}
+Jurafsky, D. and Martin, J.~H. (2023).
+\newblock {\em Speech and {Language} {Processing}}.
+\newblock Palo Alto, 3 edition.
+
+\bibitem[Karpukhin et~al., 2020]{karpukhin_dense_2020}
+Karpukhin, V., Oğuz, B., Min, S., Lewis, P., Wu, L., Edunov, S., Chen, D., and Yih, W.-t. (2020).
+\newblock Dense {Passage} {Retrieval} for {Open}-{Domain} {Question} {Answering}.
+\newblock arXiv:2004.04906 [cs].
+
+\bibitem[Khashabi et~al., 2022]{khashabi_unifiedqa-v2_2022}
+Khashabi, D., Kordi, Y., and Hajishirzi, H. (2022).
+\newblock {UnifiedQA}-v2: {Stronger} {Generalization} via {Broader} {Cross}-{Format} {Training}.
+\newblock arXiv:2202.12359 [cs].
+
+\bibitem[Khattab and Zaharia, 2020]{khattab_colbert_2020}
+Khattab, O. and Zaharia, M. (2020).
+\newblock {ColBERT}: {Efficient} and {Effective} {Passage} {Search} via {Contextualized} {Late} {Interaction} over {BERT}.
+\newblock arXiv:2004.12832 [cs].
+
+\bibitem[{Langchain}, 2023]{noauthor_langchain-ailangchain_nodate}
+{Langchain} (2023).
+\newblock langchain-ai/langchain: {Building} applications with {LLMs} through composability.
+
+\bibitem[Langchain, 2023]{noauthor_question_nodate}
+Langchain (2023).
+\newblock Question {Answering} {\textbar} {Langchain}.
+
+\bibitem[Lester et~al., 2021]{lester_power_2021}
+Lester, B., Al-Rfou, R., and Constant, N. (2021).
+\newblock The {Power} of {Scale} for {Parameter}-{Efficient} {Prompt} {Tuning}.
+\newblock In {\em Proceedings of the 2021 {Conference} on {Empirical} {Methods} in {Natural} {Language} {Processing}}, pages 3045--3059, Online and Punta Cana, Dominican Republic. Association for Computational Linguistics.
+
+\bibitem[Lewis et~al., 2019]{lewis_bart_2019}
+Lewis, M., Liu, Y., Goyal, N., Ghazvininejad, M., Mohamed, A., Levy, O., Stoyanov, V., and Zettlemoyer, L. (2019).
+\newblock {BART}: {Denoising} {Sequence}-to-{Sequence} {Pre}-training for {Natural} {Language} {Generation}, {Translation}, and {Comprehension}.
+
+\bibitem[Lewis et~al., 2021]{lewis_retrieval-augmented_2021}
+Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W.-t., Rocktäschel, T., Riedel, S., and Kiela, D. (2021).
+\newblock Retrieval-{Augmented} {Generation} for {Knowledge}-{Intensive} {NLP} {Tasks}.
+\newblock arXiv:2005.11401 [cs].
+
+\bibitem[Li et~al., 2022]{li_dit_2022}
+Li, J., Xu, Y., Lv, T., Cui, L., Zhang, C., and Wei, F. (2022).
+\newblock {DiT}: {Self}-supervised {Pre}-training for {Document} {Image} {Transformer}.
+\newblock arXiv:2203.02378 [cs].
+
+\bibitem[Li and Liang, 2021]{li_prefix-tuning_2021}
+Li, X.~L. and Liang, P. (2021).
+\newblock Prefix-{Tuning}: {Optimizing} {Continuous} {Prompts} for {Generation}.
+\newblock arXiv:2101.00190 [cs].
+
+\bibitem[Ling et~al., 2023]{ling_domain_2023}
+Ling, C., Zhao, X., Lu, J., Deng, C., Zheng, C., Wang, J., Chowdhury, T., Li, Y., Cui, H., Zhang, X., Zhao, T., Panalkar, A., Cheng, W., Wang, H., Liu, Y., Chen, Z., Chen, H., White, C., Gu, Q., Pei, J., and Zhao, L. (2023).
+\newblock Domain {Specialization} as the {Key} to {Make} {Large} {Language} {Models} {Disruptive}: {A} {Comprehensive} {Survey}.
+\newblock arXiv:2305.18703 [cs].
+
+\bibitem[Liu et~al., 2022]{liu_few-shot_2022}
+Liu, H., Tam, D., Muqeeth, M., Mohta, J., Huang, T., Bansal, M., and Raffel, C. (2022).
+\newblock Few-{Shot} {Parameter}-{Efficient} {Fine}-{Tuning} is {Better} and {Cheaper} than {In}-{Context} {Learning}.
+\newblock Publisher: arXiv Version Number: 2.
+
+\bibitem[Liu et~al., 2021a]{liu_gpt_2021}
+Liu, X., Zheng, Y., Du, Z., Ding, M., Qian, Y., Yang, Z., and Tang, J. (2021a).
+\newblock {GPT} {Understands}, {Too}.
+\newblock arXiv:2103.10385 [cs].
+
+\bibitem[Liu et~al., 2021b]{liu_dense_2021}
+Liu, Y., Hashimoto, K., Zhou, Y., Yavuz, S., Xiong, C., and Yu, P.~S. (2021b).
+\newblock Dense {Hierarchical} {Retrieval} for {Open}-{Domain} {Question} {Answering}.
+\newblock arXiv:2110.15439 [cs].
+
+\bibitem[Liu et~al., 2019]{liu_roberta_2019}
+Liu, Y., Ott, M., Goyal, N., Du, J., Joshi, M., Chen, D., Levy, O., Lewis, M., Zettlemoyer, L., and Stoyanov, V. (2019).
+\newblock {RoBERTa}: {A} {Robustly} {Optimized} {BERT} {Pretraining} {Approach}.
+
+\bibitem[Liusie et~al., 2022]{liusie_university_nodate}
+Liusie, A., Qian, M., Li, X., and Gales, M. (2022).
+\newblock {UNIVERSITY} {OF} {CAMBRIDGE} {AT} {TREC} {CAST} 2022.
+
+\bibitem[Luo et~al., 2022]{luo_choose_2022}
+Luo, M., Hashimoto, K., Yavuz, S., Liu, Z., Baral, C., and Zhou, Y. (2022).
+\newblock Choose {Your} {QA} {Model} {Wisely}: {A} {Systematic} {Study} of {Generative} and {Extractive} {Readers} for {Question} {Answering}.
+\newblock arXiv:2203.07522 [cs].
+
+\bibitem[Mao et~al., 2023]{mao_large_2023}
+Mao, K., Dou, Z., Chen, H., Mo, F., and Qian, H. (2023).
+\newblock Large {Language} {Models} {Know} {Your} {Contextual} {Search} {Intent}: {A} {Prompting} {Framework} for {Conversational} {Search}.
+\newblock Publisher: arXiv Version Number: 1.
+
+\bibitem[Mathew et~al., 2021]{mathew_document_2021}
+Mathew, M., Tito, R., Karatzas, D., Manmatha, R., and Jawahar, C.~V. (2021).
+\newblock Document {Visual} {Question} {Answering} {Challenge} 2020.
+\newblock arXiv:2008.08899 [cs].
+
+\bibitem[McDonald et~al., 2022]{mcdonald_detect_2022}
+McDonald, T., Tsan, B., Saini, A., Ordonez, J., Gutierrez, L., Nguyen, P., Mason, B., and Ng, B. (2022).
+\newblock Detect, {Retrieve}, {Comprehend}: {A} {Flexible} {Framework} for {Zero}-{Shot} {Document}-{Level} {Question} {Answering}.
+\newblock arXiv:2210.01959 [cs].
+
+\bibitem[Meuschke et~al., 2023]{meuschke_benchmark_2023}
+Meuschke, N., Jagdale, A., Spinde, T., Mitrović, J., and Gipp, B. (2023).
+\newblock A {Benchmark} of {PDF} {Information} {Extraction} {Tools} using a {Multi}-{Task} and {Multi}-{Domain} {Evaluation} {Framework} for {Academic} {Documents}.
+\newblock volume 13972, pages 383--405.
+\newblock arXiv:2303.09957 [cs].
+
+\bibitem[Mishra and Jain, 2016]{mishra_survey_2016}
+Mishra, A. and Jain, S.~K. (2016).
+\newblock A survey on question answering systems with classification.
+\newblock {\em Journal of King Saud University - Computer and Information Sciences}, 28(3):345--361.
+
+\bibitem[Nassiri and Akhloufi, 2023]{nassiri_transformer_2023}
+Nassiri, K. and Akhloufi, M. (2023).
+\newblock Transformer models used for text-based question answering systems.
+\newblock {\em Applied Intelligence}, 53(9):10602--10635.
+
+\bibitem[Neelakantan et~al., 2022]{neelakantan_text_2022}
+Neelakantan, A., Xu, T., Puri, R., Radford, A., Han, J.~M., Tworek, J., Yuan, Q., Tezak, N., Kim, J.~W., Hallacy, C., Heidecke, J., Shyam, P., Power, B., Nekoul, T.~E., Sastry, G., Krueger, G., Schnurr, D., Such, F.~P., Hsu, K., Thompson, M., Khan, T., Sherbakov, T., Jang, J., Welinder, P., and Weng, L. (2022).
+\newblock Text and {Code} {Embeddings} by {Contrastive} {Pre}-{Training}.
+\newblock arXiv:2201.10005 [cs].
+
+\bibitem[Ni et~al., 2021]{ni_large_2021}
+Ni, J., Qu, C., Lu, J., Dai, Z., Ábrego, G.~H., Ma, J., Zhao, V.~Y., Luan, Y., Hall, K.~B., Chang, M.-W., and Yang, Y. (2021).
+\newblock Large {Dual} {Encoders} {Are} {Generalizable} {Retrievers}.
+\newblock arXiv:2112.07899 [cs].
+
+\bibitem[Nishida et~al., 2018]{nishida_retrieve-and-read_2018}
+Nishida, K., Saito, I., Otsuka, A., Asano, H., and Tomita, J. (2018).
+\newblock Retrieve-and-{Read}: {Multi}-task {Learning} of {Information} {Retrieval} and {Reading} {Comprehension}.
+\newblock In {\em Proceedings of the 27th {ACM} {International} {Conference} on {Information} and {Knowledge} {Management}}, pages 647--656.
+\newblock arXiv:1808.10628 [cs].
+
+\bibitem[{OpenAI}, 2023]{noauthor_chatgpt_2023}
+{OpenAI} (2023).
+\newblock {ChatGPT} {Retrieval} {Plugin}.
+\newblock original-date: 2023-03-23T06:06:22Z.
+
+\bibitem[Owoicho et~al., 2022]{owoicho_trec_2022}
+Owoicho, P., Dalton, J., Aliannejadi, M., Azzopardi, L., Trippas, J.~R., and Vakulenko, S. (2022).
+\newblock {TREC} {CAsT} 2022: {Going} {Beyond} {User} {Ask} and {System} {Retrieve} with {Initiative} and {Response} {Generation}.
+
+\bibitem[Pereira et~al., 2022]{pereira_visconde_2022}
+Pereira, J., Fidalgo, R., Lotufo, R., and Nogueira, R. (2022).
+\newblock Visconde: {Multi}-document {QA} with {GPT}-3 and {Neural} {Reranking}.
+
+\bibitem[PyPDF2, ]{noauthor_welcome_nodate}
+PyPDF2.
+\newblock Welcome to {PyPDF2} — {PyPDF2} documentation.
+
+\bibitem[Raffel et~al., 2023]{raffel_exploring_2023}
+Raffel, C., Shazeer, N., Roberts, A., Lee, K., Narang, S., Matena, M., Zhou, Y., Li, W., and Liu, P.~J. (2023).
+\newblock Exploring the {Limits} of {Transfer} {Learning} with a {Unified} {Text}-to-{Text} {Transformer}.
+\newblock arXiv:1910.10683 [cs, stat].
+
+\bibitem[Rajpurkar et~al., 2016]{rajpurkar_squad_2016}
+Rajpurkar, P., Zhang, J., Lopyrev, K., and Liang, P. (2016).
+\newblock {SQuAD}: 100,000+ {Questions} for {Machine} {Comprehension} of {Text}.
+\newblock arXiv:1606.05250 [cs].
+
+\bibitem[Rastogi et~al., 2020]{rastogi_schema-guided_2020}
+Rastogi, A., Zang, X., Sunkara, S., Gupta, R., and Khaitan, P. (2020).
+\newblock Schema-{Guided} {Dialogue} {State} {Tracking} {Task} at {DSTC8}.
+
+\bibitem[Reddy et~al., 2022]{reddy_synthetic_2022}
+Reddy, R.~G., Iyer, B., Sultan, M.~A., Zhang, R., Sil, A., Castelli, V., Florian, R., and Roukos, S. (2022).
+\newblock Synthetic {Target} {Domain} {Supervision} for {Open} {Retrieval} {QA}.
+\newblock arXiv:2204.09248 [cs].
+
+\bibitem[Reddy et~al., 2018]{reddy_coqa_2018}
+Reddy, S., Chen, D., and Manning, C.~D. (2018).
+\newblock {CoQA}: {A} {Conversational} {Question} {Answering} {Challenge}.
+
+\bibitem[Roberts et~al., 2020]{roberts_how_2020}
+Roberts, A., Raffel, C., and Shazeer, N. (2020).
+\newblock How {Much} {Knowledge} {Can} {You} {Pack} {Into} the {Parameters} of a {Language} {Model}?
+\newblock In {\em Proceedings of the 2020 {Conference} on {Empirical} {Methods} in {Natural} {Language} {Processing} ({EMNLP})}, pages 5418--5426, Online. Association for Computational Linguistics.
+
+\bibitem[Robertson and Zaragoza, 2009]{robertson_probabilistic_2009}
+Robertson, S. and Zaragoza, H. (2009).
+\newblock The {Probabilistic} {Relevance} {Framework}: {BM25} and {Beyond}.
+\newblock {\em Foundations and Trends in Information Retrieval}, 3:333--389.
+
+\bibitem[Sachan et~al., 2023]{sachan_questions_2023}
+Sachan, D.~S., Lewis, M., Yogatama, D., Zettlemoyer, L., Pineau, J., and Zaheer, M. (2023).
+\newblock Questions {Are} {All} {You} {Need} to {Train} a {Dense} {Passage} {Retriever}.
+\newblock arXiv:2206.10658 [cs].
+
+\bibitem[Santhanam et~al., 2022]{santhanam_colbertv2_2022}
+Santhanam, K., Khattab, O., Saad-Falcon, J., Potts, C., and Zaharia, M. (2022).
+\newblock {ColBERTv2}: {Effective} and {Efficient} {Retrieval} via {Lightweight} {Late} {Interaction}.
+\newblock arXiv:2112.01488 [cs].
+
+\bibitem[Serban et~al., 2016]{serban_generating_2016}
+Serban, I.~V., García-Durán, A., Gulcehre, C., Ahn, S., Chandar, S., Courville, A., and Bengio, Y. (2016).
+\newblock Generating {Factoid} {Questions} {With} {Recurrent} {Neural} {Networks}: {The} {30M} {Factoid} {Question}-{Answer} {Corpus}.
+\newblock In {\em Proceedings of the 54th {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} ({Volume} 1: {Long} {Papers})}, pages 588--598, Berlin, Germany. Association for Computational Linguistics.
+
+\bibitem[Thakur et~al., 2021]{thakur_beir_2021}
+Thakur, N., Reimers, N., Rücklé, A., Srivastava, A., and Gurevych, I. (2021).
+\newblock {BEIR}: {A} {Heterogenous} {Benchmark} for {Zero}-shot {Evaluation} of {Information} {Retrieval} {Models}.
+\newblock arXiv:2104.08663 [cs].
+
+\bibitem[Tito et~al., 2021]{tito_document_2021}
+Tito, R., Karatzas, D., and Valveny, E. (2021).
+\newblock Document {Collection} {Visual} {Question} {Answering}.
+\newblock volume 12822, pages 778--792.
+\newblock arXiv:2104.14336 [cs].
+
+\bibitem[Touvron et~al., 2023]{touvron_llama_2023}
+Touvron, H., Martin, L., Stone, K., Albert, P., Almahairi, A., Babaei, Y., Bashlykov, N., Batra, S., Bhargava, P., Bhosale, S., Bikel, D., Blecher, L., Ferrer, C.~C., Chen, M., Cucurull, G., Esiobu, D., Fernandes, J., Fu, J., Fu, W., Fuller, B., Gao, C., Goswami, V., Goyal, N., Hartshorn, A., Hosseini, S., Hou, R., Inan, H., Kardas, M., Kerkez, V., Khabsa, M., Kloumann, I., Korenev, A., Koura, P.~S., Lachaux, M.-A., Lavril, T., Lee, J., Liskovich, D., Lu, Y., Mao, Y., Martinet, X., Mihaylov, T., Mishra, P., Molybog, I., Nie, Y., Poulton, A., Reizenstein, J., Rungta, R., Saladi, K., Schelten, A., Silva, R., Smith, E.~M., Subramanian, R., Tan, X.~E., Tang, B., Taylor, R., Williams, A., Kuan, J.~X., Xu, P., Yan, Z., Zarov, I., Zhang, Y., Fan, A., Kambadur, M., Narang, S., Rodriguez, A., Stojnic, R., Edunov, S., and Scialom, T. (2023).
+\newblock Llama 2: {Open} {Foundation} and {Fine}-{Tuned} {Chat} {Models}.
+\newblock arXiv:2307.09288 [cs].
+
+\bibitem[Treviso et~al., 2023]{treviso_efficient_2023}
+Treviso, M., Lee, J.-U., Ji, T., Aken, B.~V., Cao, Q., Ciosici, M.~R., Hassid, M., Heafield, K., Hooker, S., Raffel, C., Martins, P.~H., Martins, A. F.~T., Forde, J.~Z., Milder, P., Simpson, E., Slonim, N., Dodge, J., Strubell, E., Balasubramanian, N., Derczynski, L., Gurevych, I., and Schwartz, R. (2023).
+\newblock Efficient {Methods} for {Natural} {Language} {Processing}: {A} {Survey}.
+\newblock {\em Transactions of the Association for Computational Linguistics}, 11:826--860.
+
+\bibitem[Voorhees, 1999]{voorhees_trec-8_1999}
+Voorhees, E. (1999).
+\newblock The {TREC}-8 {Question} {Answering} {Track} {Report}.
+
+\bibitem[Voskarides et~al., 2020]{voskarides_query_2020}
+Voskarides, N., Li, D., Ren, P., Kanoulas, E., and de~Rijke, M. (2020).
+\newblock Query {Resolution} for {Conversational} {Search} with {Limited} {Supervision}.
+\newblock In {\em Proceedings of the 43rd {International} {ACM} {SIGIR} {Conference} on {Research} and {Development} in {Information} {Retrieval}}, pages 921--930.
+\newblock arXiv:2005.11723 [cs].
+
+\bibitem[Wang, 2022]{wang_modern_2022}
+Wang, Z. (2022).
+\newblock Modern {Question} {Answering} {Datasets} and {Benchmarks}: {A} {Survey}.
+\newblock Publisher: arXiv Version Number: 1.
+
+\bibitem[Wang et~al., 2019]{wang_multi-passage_2019}
+Wang, Z., Ng, P., Ma, X., Nallapati, R., and Xiang, B. (2019).
+\newblock Multi-passage {BERT}: {A} {Globally} {Normalized} {BERT} {Model} for {Open}-domain {Question} {Answering}.
+\newblock arXiv:1908.08167 [cs].
+
+\bibitem[White et~al., 2023]{white_prompt_2023}
+White, J., Fu, Q., Hays, S., Sandborn, M., Olea, C., Gilbert, H., Elnashar, A., Spencer-Smith, J., and Schmidt, D.~C. (2023).
+\newblock A {Prompt} {Pattern} {Catalog} to {Enhance} {Prompt} {Engineering} with {ChatGPT}.
+\newblock arXiv:2302.11382 [cs].
+
+\bibitem[Xu et~al., 2022]{xu_laprador_2022}
+Xu, C., Guo, D., Duan, N., and McAuley, J. (2022).
+\newblock {LaPraDoR}: {Unsupervised} {Pretrained} {Dense} {Retriever} for {Zero}-{Shot} {Text} {Retrieval}.
+\newblock arXiv.
+\newblock Version Number: 2.
+
+\bibitem[Yang et~al., 2019]{yang_query_2019}
+Yang, J.-H., Lin, S.-C., Lin, J., Tsai, M.-F., and Wang, C.-J. (2019).
+\newblock Query and {Answer} {Expansion} from {Conversation} {History}.
+
+\bibitem[Yang et~al., 2018]{yang_hotpotqa_2018}
+Yang, Z., Qi, P., Zhang, S., Bengio, Y., Cohen, W.~W., Salakhutdinov, R., and Manning, C.~D. (2018).
+\newblock {HotpotQA}: {A} {Dataset} for {Diverse}, {Explainable} {Multi}-hop {Question} {Answering}.
+\newblock arXiv:1809.09600 [cs].
+
+\bibitem[Zaib et~al., 2021]{zaib_conversational_2021}
+Zaib, M., Zhang, W.~E., Sheng, Q.~Z., Mahmood, A., and Zhang, Y. (2021).
+\newblock Conversational {Question} {Answering}: {A} {Survey}.
+
+\bibitem[Zamani et~al., 2023]{zamani_conversational_2023}
+Zamani, H., Trippas, J.~R., Dalton, J., and Radlinski, F. (2023).
+\newblock Conversational {Information} {Seeking}.
+\newblock arXiv:2201.08808 [cs].
+
+\bibitem[Zhang et~al., 2023a]{zhang_beam_2023}
+Zhang, J., Zhang, H., Zhang, D., Liu, Y., and Huang, S. (2023a).
+\newblock Beam {Retrieval}: {General} {End}-to-{End} {Retrieval} for {Multi}-{Hop} {Question} {Answering}.
+\newblock arXiv:2308.08973 [cs].
+
+\bibitem[Zhang et~al., 2023b]{zhang_survey_2023}
+Zhang, Q., Chen, S., Xu, D., Cao, Q., Chen, X., Cohn, T., and Fang, M. (2023b).
+\newblock A {Survey} for {Efficient} {Open} {Domain} {Question} {Answering}.
+\newblock In {\em Proceedings of the 61st {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} ({Volume} 1: {Long} {Papers})}, pages 14447--14465, Toronto, Canada. Association for Computational Linguistics.
+
+\bibitem[Zhao et~al., 2023]{zhao_survey_2023}
+Zhao, W.~X., Zhou, K., Li, J., Tang, T., Wang, X., Hou, Y., Min, Y., Zhang, B., Zhang, J., Dong, Z., Du, Y., Yang, C., Chen, Y., Chen, Z., Jiang, J., Ren, R., Li, Y., Tang, X., Liu, Z., Liu, P., Nie, J.-Y., and Wen, J.-R. (2023).
+\newblock A {Survey} of {Large} {Language} {Models}.
+\newblock arXiv:2303.18223 [cs].
+
+\bibitem[Zhu et~al., 2021]{zhu_retrieving_2021}
+Zhu, F., Lei, W., Wang, C., Zheng, J., Poria, S., and Chua, T.-S. (2021).
+\newblock Retrieving and {Reading}: {A} {Comprehensive} {Survey} on {Open}-domain {Question} {Answering}.
+\newblock arXiv:2101.00774 [cs].
 
 \end{thebibliography}
