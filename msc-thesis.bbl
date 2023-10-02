@@ -1,5 +1,14 @@
 \begin{thebibliography}{}
 
+\bibitem[noa, 2023a]{noauthor_deepsparse_2023}
+ (2023a).
+\newblock {DeepSparse}.
+\newblock original-date: 2020-12-14T17:40:38Z.
+
+\bibitem[noa, 2023b]{noauthor_quantize_nodate}
+ (2023b).
+\newblock Quantize {Transformers} models.
+
 \bibitem[Anil et~al., 2023]{anil_palm_2023}
 Anil, R., Dai, A.~M., Firat, O., Johnson, M., Lepikhin, D., Passos, A., Shakeri, S., Taropa, E., Bailey, P., Chen, Z., Chu, E., Clark, J.~H., Shafey, L.~E., Huang, Y., Meier-Hellstern, K., Mishra, G., Moreira, E., Omernick, M., Robinson, K., Ruder, S., Tay, Y., Xiao, K., Xu, Y., Zhang, Y., Abrego, G.~H., Ahn, J., Austin, J., Barham, P., Botha, J., Bradbury, J., Brahma, S., Brooks, K., Catasta, M., Cheng, Y., Cherry, C., Choquette-Choo, C.~A., Chowdhery, A., Crepy, C., Dave, S., Dehghani, M., Dev, S., Devlin, J., Díaz, M., Du, N., Dyer, E., Feinberg, V., Feng, F., Fienber, V., Freitag, M., Garcia, X., Gehrmann, S., Gonzalez, L., Gur-Ari, G., Hand, S., Hashemi, H., Hou, L., Howland, J., Hu, A., Hui, J., Hurwitz, J., Isard, M., Ittycheriah, A., Jagielski, M., Jia, W., Kenealy, K., Krikun, M., Kudugunta, S., Lan, C., Lee, K., Lee, B., Li, E., Li, M., Li, W., Li, Y., Li, J., Lim, H., Lin, H., Liu, Z., Liu, F., Maggioni, M., Mahendru, A., Maynez, J., Misra, V., Moussalem, M., Nado, Z., Nham, J., Ni, E., Nystrom, A., Parrish, A., Pellat, M., Polacek, M., Polozov, A., Pope, R., Qiao, S., Reif, E., Richter, B., Riley, P., Ros, A.~C., Roy, A., Saeta, B., Samuel, R., Shelby, R., Slone, A., Smilkov, D., So, D.~R., Sohn, D., Tokumine, S., Valter, D., Vasudevan, V., Vodrahalli, K., Wang, X., Wang, P., Wang, Z., Wang, T., Wieting, J., Wu, Y., Xu, K., Xu, Y., Xue, L., Yin, P., Yu, J., Zhang, Q., Zheng, S., Zheng, C., Zhou, W., Zhou, D., Petrov, S., and Wu, Y. (2023).
 \newblock {PaLM} 2 {Technical} {Report}.
@@ -85,10 +94,29 @@ Ferrucci, D.~A. (2012).
 \newblock {\em IBM Journal of Research and Development}, 56(3.4):1:1--1:15.
 \newblock Conference Name: IBM Journal of Research and Development.
 
+\bibitem[Frantar and Alistarh, 2023]{frantar_sparsegpt_2023}
+Frantar, E. and Alistarh, D. (2023).
+\newblock {SparseGPT}: {Massive} {Language} {Models} {Can} {Be} {Accurately} {Pruned} in {One}-{Shot}.
+
+\bibitem[Frantar et~al., 2023a]{frantar_gptq_2023}
+Frantar, E., Ashkboos, S., Hoefler, T., and Alistarh, D. (2023a).
+\newblock {GPTQ}: {Accurate} {Post}-{Training} {Quantization} for {Generative} {Pre}-trained {Transformers}.
+\newblock arXiv:2210.17323 [cs].
+
+\bibitem[Frantar et~al., 2023b]{frantar_optimal_2023}
+Frantar, E., Singh, S.~P., and Alistarh, D. (2023b).
+\newblock Optimal {Brain} {Compression}: {A} {Framework} for {Accurate} {Post}-{Training} {Quantization} and {Pruning}.
+\newblock arXiv:2208.11580 [cs].
+
 \bibitem[Gao et~al., 2022]{gao_neural_2022}
 Gao, J., Xiong, C., Bennett, P., and Craswell, N. (2022).
 \newblock Neural {Approaches} to {Conversational} {Information} {Retrieval}.
 \newblock arXiv:2201.05176 [cs].
+
+\bibitem[Gholami et~al., 2021]{gholami_survey_2021}
+Gholami, A., Kim, S., Dong, Z., Yao, Z., Mahoney, M.~W., and Keutzer, K. (2021).
+\newblock A {Survey} of {Quantization} {Methods} for {Efficient} {Neural} {Network} {Inference}.
+\newblock arXiv:2103.13630 [cs].
 
 \bibitem[Gholami and Noori, 2021]{gholami_zero-shot_2021}
 Gholami, S. and Noori, M. (2021).
@@ -99,6 +127,11 @@ Gholami, S. and Noori, M. (2021).
 Green, B.~F., Wolf, A.~K., Chomsky, C., and Laughery, K. (1961).
 \newblock Baseball: an automatic question-answerer.
 \newblock In {\em Papers presented at the {May} 9-11, 1961, western joint {IRE}-{AIEE}-{ACM} computer conference}, {IRE}-{AIEE}-{ACM} '61 ({Western}), pages 219--224, New York, NY, USA. Association for Computing Machinery.
+
+\bibitem[Gu et~al., 2023]{gu_knowledge_2023}
+Gu, Y., Dong, L., Wei, F., and Huang, M. (2023).
+\newblock Knowledge {Distillation} of {Large} {Language} {Models}.
+\newblock arXiv:2306.08543 [cs].
 
 \bibitem[Gupta et~al., 2020]{gupta_conversational_2020}
 Gupta, S., Rawat, B. P.~S., and Yu, H. (2020).
@@ -131,6 +164,11 @@ Harabagiu, S.~M., Maiorano, S.~J., and Paşca, M.~A. (2003).
 He, P., Liu, X., Gao, J., and Chen, W. (2020).
 \newblock {DEBERTA}: {DECODING}-{ENHANCED} {BERT} {WITH} {DISENTANGLED} {ATTENTION}.
 
+\bibitem[Hinton et~al., 2015]{hinton_distilling_2015}
+Hinton, G., Vinyals, O., and Dean, J. (2015).
+\newblock Distilling the {Knowledge} in a {Neural} {Network}.
+\newblock arXiv:1503.02531 [cs, stat].
+
 \bibitem[Houlsby et~al., 2019]{houlsby_parameter-efficient_2019}
 Houlsby, N., Giurgiu, A., Jastrzebski, S., Morrone, B., de~Laroussilhe, Q., Gesmundo, A., Attariyan, M., and Gelly, S. (2019).
 \newblock Parameter-{Efficient} {Transfer} {Learning} for {NLP}.
@@ -140,6 +178,11 @@ Houlsby, N., Giurgiu, A., Jastrzebski, S., Morrone, B., de~Laroussilhe, Q., Gesm
 Hu, E., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., and Chen, W. (2021).
 \newblock {LORA}: {LOW}-{RANK} {ADAPTATION} {OF} {LARGE} {LAN}- {GUAGE} {MODELS}.
 
+\bibitem[Huang et~al., 2022]{huang_-context_2022}
+Huang, Y., Chen, Y., Yu, Z., and McKeown, K. (2022).
+\newblock In-context {Learning} {Distillation}: {Transferring} {Few}-shot {Learning} {Ability} of {Pre}-trained {Language} {Models}.
+\newblock arXiv:2212.10670 [cs].
+
 \bibitem[Huggingface, 2023]{noauthor_peft_nodate}
 Huggingface (2023).
 \newblock {PEFT}.
@@ -148,6 +191,11 @@ Huggingface (2023).
 Izacard, G. and Grave, E. (2021).
 \newblock Leveraging {Passage} {Retrieval} with {Generative} {Models} for {Open} {Domain} {Question} {Answering}.
 \newblock In {\em Proceedings of the 16th {Conference} of the {European} {Chapter} of the {Association} for {Computational} {Linguistics}: {Main} {Volume}}, pages 874--880, Online. Association for Computational Linguistics.
+
+\bibitem[Jiang et~al., 2023]{jiang_lion_2023}
+Jiang, Y., Chan, C., Chen, M., and Wang, W. (2023).
+\newblock Lion: {Adversarial} {Distillation} of {Closed}-{Source} {Large} {Language} {Model}.
+\newblock arXiv:2305.12870 [cs].
 
 \bibitem[Johnson et~al., 2017]{johnson_billion-scale_2017}
 Johnson, J., Douze, M., and Jégou, H. (2017).
@@ -196,10 +244,15 @@ Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttle
 \newblock Retrieval-{Augmented} {Generation} for {Knowledge}-{Intensive} {NLP} {Tasks}.
 \newblock arXiv:2005.11401 [cs].
 
-\bibitem[Li et~al., 2022]{li_dit_2022}
-Li, J., Xu, Y., Lv, T., Cui, L., Zhang, C., and Wei, F. (2022).
+\bibitem[Li et~al., 2022a]{li_dit_2022}
+Li, J., Xu, Y., Lv, T., Cui, L., Zhang, C., and Wei, F. (2022a).
 \newblock {DiT}: {Self}-supervised {Pre}-training for {Document} {Image} {Transformer}.
 \newblock arXiv:2203.02378 [cs].
+
+\bibitem[Li et~al., 2022b]{li_explanations_2022}
+Li, S., Chen, J., Shen, Y., Chen, Z., Zhang, X., Li, Z., Wang, H., Qian, J., Peng, B., Mao, Y., Chen, W., and Yan, X. (2022b).
+\newblock Explanations from {Large} {Language} {Models} {Make} {Small} {Reasoners} {Better}.
+\newblock arXiv:2210.06726 [cs].
 
 \bibitem[Li and Liang, 2021]{li_prefix-tuning_2021}
 Li, X.~L. and Liang, P. (2021).
@@ -230,6 +283,11 @@ Liu, Y., Hashimoto, K., Zhou, Y., Yavuz, S., Xiong, C., and Yu, P.~S. (2021b).
 Liu, Y., Ott, M., Goyal, N., Du, J., Joshi, M., Chen, D., Levy, O., Lewis, M., Zettlemoyer, L., and Stoyanov, V. (2019).
 \newblock {RoBERTa}: {A} {Robustly} {Optimized} {BERT} {Pretraining} {Approach}.
 
+\bibitem[Liu et~al., 2023]{liu_llm-qat_2023}
+Liu, Z., Oguz, B., Zhao, C., Chang, E., Stock, P., Mehdad, Y., Shi, Y., Krishnamoorthi, R., and Chandra, V. (2023).
+\newblock {LLM}-{QAT}: {Data}-{Free} {Quantization} {Aware} {Training} for {Large} {Language} {Models}.
+\newblock arXiv:2305.17888 [cs].
+
 \bibitem[Liusie et~al., 2022]{liusie_university_nodate}
 Liusie, A., Qian, M., Li, X., and Gales, M. (2022).
 \newblock {UNIVERSITY} {OF} {CAMBRIDGE} {AT} {TREC} {CAST} 2022.
@@ -238,6 +296,11 @@ Liusie, A., Qian, M., Li, X., and Gales, M. (2022).
 Luo, M., Hashimoto, K., Yavuz, S., Liu, Z., Baral, C., and Zhou, Y. (2022).
 \newblock Choose {Your} {QA} {Model} {Wisely}: {A} {Systematic} {Study} of {Generative} and {Extractive} {Readers} for {Question} {Answering}.
 \newblock arXiv:2203.07522 [cs].
+
+\bibitem[Ma et~al., 2023]{ma_llm-pruner_2023}
+Ma, X., Fang, G., and Wang, X. (2023).
+\newblock {LLM}-{Pruner}: {On} the {Structural} {Pruning} of {Large} {Language} {Models}.
+\newblock arXiv:2305.11627 [cs].
 
 \bibitem[Mao et~al., 2023]{mao_large_2023}
 Mao, K., Dou, Z., Chen, H., Mo, F., and Qian, H. (2023).
@@ -402,6 +465,11 @@ White, J., Fu, Q., Hays, S., Sandborn, M., Olea, C., Gilbert, H., Elnashar, A., 
 \newblock A {Prompt} {Pattern} {Catalog} to {Enhance} {Prompt} {Engineering} with {ChatGPT}.
 \newblock arXiv:2302.11382 [cs].
 
+\bibitem[William, 2023]{william_autogptq_2023}
+William (2023).
+\newblock {AutoGPTQ}.
+\newblock original-date: 2023-04-13T02:18:11Z.
+
 \bibitem[Xu et~al., 2022]{xu_laprador_2022}
 Xu, C., Guo, D., Duan, N., and McAuley, J. (2022).
 \newblock {LaPraDoR}: {Unsupervised} {Pretrained} {Dense} {Retriever} for {Zero}-{Shot} {Text} {Retrieval}.
@@ -445,5 +513,13 @@ Zhao, W.~X., Zhou, K., Li, J., Tang, T., Wang, X., Hou, Y., Min, Y., Zhang, B., 
 Zhu, F., Lei, W., Wang, C., Zheng, J., Poria, S., and Chua, T.-S. (2021).
 \newblock Retrieving and {Reading}: {A} {Comprehensive} {Survey} on {Open}-domain {Question} {Answering}.
 \newblock arXiv:2101.00774 [cs].
+
+\bibitem[Zhu et~al., 2023]{zhu_survey_2023}
+Zhu, X., Li, J., Liu, Y., Ma, C., and Wang, W. (2023).
+\newblock A {Survey} on {Model} {Compression} for {Large} {Language} {Models}.
+
+\bibitem[Zhu et~al., 2022]{zhu_teach_nodate}
+Zhu, Y., Liu, N., Xu, Z., Liu, X., Meng, W., and Wang, Y. (2022).
+\newblock Teach {Less}, {Learn} {More}: {On} the {Undistillable} {Classes} in {Knowledge} {Distillation}.
 
 \end{thebibliography}

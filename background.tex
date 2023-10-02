@@ -402,7 +402,7 @@ Section \ref{subsec:llm_fine_tuning} will explore possibilities to enhance effic
 \subsection{Fine-Tuning}
 \label{subsec:llm_fine_tuning}
 
-Hu et al. \cite{hu_lora_nodate} demonstrated the significant benefits of fine-tuning GPT-3 for few-shot applications, highlighting the remarkable improvements it can achieve. This is further supported by the experiments conducted by Chung et al. \cite{chung_scaling_2022}.
+Hu et al. \cite{hu_lora_nodate} demonstrated the significant benefits of fine-tuning GPT-3 for few-shot applications, highlighting the remarkable improvements fine-tuning can achieve. This is further supported by the experiments conducted by Chung et al. \cite{chung_scaling_2022}.
 
 Efficient fine-tuning of \gls{llm}s can be categorized into three distinct approaches: \textit{Parameter Efficiency}, \textit{Multi-task Learning}, and \textit{Prompting}. Figure \ref{fig:llm_fine_tuning} provides an overview of these approaches along with their corresponding methods.
 
@@ -439,7 +439,7 @@ For the feed-forward network, the rescaling is implemented as follows, where \(\
 
 In summary, \textbf{$\text{(IA)}^3$} is a \gls{peft} approach specifically designed for multi-task learning, and it appears to outperform \gls{lora} in terms of the number of parameters added and training computation costs.
 
-\textbf{Multi-task Learning} refers to the concept of fine-tuning a \gls{prlm} on various tasks to achieve better zero-shot and fine-tuning performance. One of the most prominent \gls{prlm}s trained on multiple NLP tasks is T5 \cite{raffel_exploring_2023}. Liu et al. \cite{liu_few-shot_2022} demonstrated that a generically trained T5 model can be few-shot fine-tuned with approximately 10\% of the parameters of \gls{lora}, at a lower computational cost, while achieving higher accuracy in classification tasks\footnote{Currently, there is no experiment comparing LoRa and $\text{(IA)}^3$ on QA tasks}. This is made possible, due to using $\text{(IA)}^3$ as \gls{peft}.
+\textbf{Multi-task Learning} refers to the concept of fine-tuning a \gls{prlm} on various tasks to achieve better zero-shot and fine-tuning performance. One of the most prominent \gls{prlm}s trained on multiple NLP tasks is T5 \cite{raffel_exploring_2023}. Liu et al. \cite{liu_few-shot_2022} demonstrated that a generically trained T5 model (T0) can be few-shot fine-tuned with approximately 10\% of the parameters of \gls{lora}, at a lower computational cost, while achieving higher accuracy in classification tasks\footnote{Currently, there is no experiment comparing LoRa and $\text{(IA)}^3$ on QA tasks}. This is made possible, due to using $\text{(IA)}^3$ as \gls{peft} and the multi-task pre-training of the used model. Still this also includes the drawback of having in general a larger model.
 
 \textbf{Prompting} refers to the general concept of presenting a task as a textual instruction to a \gls{llm} \cite{brown_language_2020}. Recent advances have even led to the development of a new sub-task and job role called \textit{Prompt Engineering} \cite{white_prompt_2023}. It's worth noting that different prompts with the same intent can yield different results, making the selection of the right prompt a challenge in itself \cite{liu_gpt_2021}. Furthermore, concepts like \gls{cot} prompts have been developed. In \gls{cot} prompts, the given example in a Few-shot prompt is redesigned to mimic step-by-step reasoning and conclusions known from the way humans think, aiming to achieve higher performance in Zero- and Few-shot scenarios simply by adjusting the explicit natural language prompt \cite{wei_chain--thought_2023}.
 
@@ -453,6 +453,88 @@ In summary, \textbf{$\text{(IA)}^3$} is a \gls{peft} approach specifically desig
 
 \subsection{Compression}
 \label{subsec:llm_compression}
+
+Compression aims to reduce the size of a model, whether it's the number of parameters, while maintaining the same level of accuracy on the downstream task, or the actual storage required for the model. There are three primary approaches to this task: \textit{Pruning}, \textit{Knowledge Distillation}, and \textit{Quantization} \cite{treviso_efficient_2023, zhu_survey_2023}. Figure \ref{fig:llm_compression} provides an overview of these approaches and their corresponding methods.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{Grafiken/compression_approaches.png}
+    \caption{Adapted Compression Approaches for \gls{llm} by Treviso et al. \cite{treviso_efficient_2023}}
+    \label{fig:llm_compression}
+\end{figure}
+
+\textbf{Pruning} can be further categorized into \textit{structured} and \textit{unstructured} pruning. Structured pruning involves removing specific patterns of weights or activations from a model, with the goal of maintaining a dense matrix representation to ensure compatibility with existing implementations and hardware. One notable example of a structured pruner for \gls{llm}s is LLM-Pruner \cite{ma_llm-pruner_2023}. On the other hand, unstructured pruning entails removing individual weights or activations from a model, resulting in a sparse matrix representation. This approach may require specialized hardware or software implementations to efficiently compute and achieve speed improvements of 1.5$\times$ to 2.16$\times$, while reducing up to 60\% of the parameters \cite{frantar_sparsegpt_2023}. Examples of engines designed specifically for unstructured pruning include NVIDIA's CUTLASS library for GPUs \cite{frantar_sparsegpt_2023} and DeepSparse \cite{noauthor_deepsparse_2023} for CPUs.
+
+\textbf{Knowledge Distillation} is an approach that involves using a generally well-performing \gls{llm} as a teacher to instruct a significantly smaller student model \cite{hinton_distilling_2015}. Zhu et al. distinguish between \textit{White-box} and \textit{Black-box} knowledge distillation. In the former, the student has full access to the teacher's parameters, while in the latter, only the teacher's predictions are accessible to the student \cite{zhu_survey_2023}. An example of white-box knowledge distillation is MiniLLM \cite{gu_knowledge_2023}, where the distribution of the final layer's outputs for both the teacher and the student, given a prompt, is compared using the Kullback-Leibler divergence. This comparison is used in a loss function for backpropagation in the student model.
+
+Black-box approaches are more commonly used in knowledge distillation. In these cases, a \gls{llm} is employed to either directly provide its predictions based on a prompt \cite{huang_-context_2022}, offer assisting explanations \cite{li_explanations_2022}, or sort the training data by difficulty and artificially generate more data points \cite{jiang_lion_2023}, among other techniques. For a comprehensive overview, please refer to Section 2.2 \textit{Knowledge Distillation} in Zhu et al.'s survey \cite{zhu_survey_2023}. Experiments with different distillation approaches have shown that distillation has its limitations, and for specific downstream tasks, fine-tuning can outperform knowledge distillation \cite{zhu_teach_nodate}.
+
+\textbf{Quantization} is an approach that involves reducing the datatype representation of weights or activations, which are typically floating-point numbers, to smaller representations in terms of bits, such as 8-bit integers or even smaller discrete formats \cite{gholami_survey_2021}. Generally, there is a distinction between \textit{Quantization-aware Training} and \textit{Post-Training Quantization}. The names are self-explanatory; the former involves applying and adjusting quantization during the training process (either pre-training or fine-tuning) \cite{liu_llm-qat_2023}, while the latter pertains to quantization after the training is completed \cite{frantar_gptq_2023}. In both cases, numerous approaches and methods exist, applying different paradigms and quantization techniques, including decisions regarding which parameters to quantize, structured vs. unstructured quantization, quantization strength, and many others. It's not possible to discuss all of these here, but for a comprehensive overview, please refer to Section 2.3 \textit{Quantization} in Zhu et al.'s survey \cite{zhu_survey_2023}.
+
+The most prominent example of Post-Training Quantization is GPTQ, which is the only ready-to-use implementation available in the Huggingface Transformer Library \cite{noauthor_quantize_nodate}, and for a good reason. GPTQ was the first method to achieve high compression for \gls{llm}s with over 175 billion parameters, while maintaining high accuracy compared to prior state-of-the-art algorithms. Specifically, with a 4-bit quantization of the weights, GPTQ achieved approximately 5$\times$ compression for BLOOM-176B and OPT-175B, two openly available \gls{llm}s, while experiencing only a $\leq$ 0.25 decrease in perplexity compared to the original model. Therefore, the following section will explain the Post-Training Quantization approach of GPTQ in detail.
+
+\textbf{GPTQ} builds upon \gls{obq}, the previous work by Frantar et al. on Post-Training Quantization \cite{frantar_optimal_2023}. With GPTQ, their objective was to reduce the runtime complexity of \gls{obq}, which is $O(d_{row} * d_{col}^{3})$, making it compatible with \gls{llm}s containing billions of parameters. The central idea behind GPTQ is a layer-wise optimization approach. The aim is to discover quantized weights $\widehat{\mathbf{W}}$ that minimize the squared error compared to the full-precision layer $\mathbf{W}$ output, using a given set of input data points $\mathbf{X}$:
+
+\begin{equation}
+    \operatorname{argmin}_{\widehat{\mathbf{W}}}\|\mathbf{W} \mathbf{X}-\widehat{\mathbf{W}} \mathbf{X}\|_2^2
+\end{equation}
+
+In \gls{obq}, we denote the next weight to be quantized as $w_q$. We define the function $\text{quant}(w)$, which rounds a weight $w$ to the nearest value on the quantization grid.
+
+\begin{equation}
+    w_q=\operatorname{argmin}_{w_q} \frac{\left(\text { quant }\left(w_q\right)-w_q\right)^2}{\left[\mathbf{H}_F^{-1}\right]_{q q}}
+\end{equation}
+
+In the context of \textbf{GPTQ}, a column of weights is always updated simultaneously. Therefore, $\text{quant}(W_{:,j})$ refers to the following:
+
+\begin{equation}
+    \text{quant}(W_{:,j}) := \operatorname \forall w_q \in W_{:,j} 
+\end{equation}
+
+The Hessian matrix $\mathbf{H_F} = 2X_FX_F^T$ is utilized for both weight updates and quantization error calculations. Once all columns within a block $B$ are quantized, the weight update is computed as follows, where $Q$ represents the set of indices corresponding to quantized weights:
+
+\begin{equation}
+    \boldsymbol{\delta}_F = -\left(\mathbf{w}_Q-\text { quant }\left(\mathbf{w}_Q\right)\right)\left(\left[\mathbf{H}_F^{-1}\right]_{Q Q}\right)^{-1}\left(\mathbf{H}_F^{-1}\right)_{:, Q} \\
+    \label{eq:weight_update}
+\end{equation}
+
+Furthermore, the Hessian is updated in the following manner, avoiding the need for recomputation; instead, columns corresponding to quantized weights are simply dropped from the Hessian.
+
+\begin{equation}
+    \mathbf{H}_{-Q}^{-1} = \left(\mathbf{H}^{-1} - \mathbf{H}_{:, Q}^{-1}\left[\left(\mathbf{H}^{-1}\right)_{Q Q}\right]^{-1} \mathbf{H}_{Q,:}^{-1}\right)_{-Q}.
+    \label{eq:hessian_upadte}
+\end{equation}
+
+This leads to the following algorithm:
+
+\begin{algorithm}
+    \caption{Quantize $W$ given inverse Hessian $H^{-1} = (2XX^T + \lambda I)^{-1}$ and blocksize $B$ by Frantar et. al. \cite{frantar_gptq_2023}}
+    \label{alg:quantize_W}
+    \begin{algorithmic}[1]
+    \State $Q \gets \mathbf{0}_{d_{\text{row}} \times d_{\text{col}}}$ \Comment{Quantized output}
+    \State $E \gets \mathbf{0}_{d_{\text{row}} \times B}$ \Comment{Block quantization errors}
+    \State $H^{-1} \gets \text{Cholesky}(H^{-1})^T$ \Comment{Hessian inverse information}
+    
+    \For{$i \gets 0, B, 2B, \ldots$}
+        \For{$j \gets i, \ldots, i + B - 1$}
+            \State $Q_{:,\,j} \gets \text{quant}(W_{:,\,j})$ \Comment{Quantize column}
+            \State $E_{:,\,j-i} \gets \frac{W_{:,\,j} - Q_{:,\,j}}{[H^{-1}]_{j,j}}$ \Comment{Quantization error}
+            \State $W_{:,\,j:(i+B)} \gets W_{:,\,j:(i+B)} - E_{:,\,j-i} \cdot H^{-1}_{j,j:(i+B)}$ \Comment{Update weights in block}
+        \EndFor
+        \State $W_{:,(i+B):} \gets W_{:,(i+B):} - E \cdot H^{-1}_{i:(i+B),(i+B):}$ \Comment{Update all remaining weights}
+    \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+To enable GPTQ to be applicable to \gls{llm}s with billions of parameters, the authors have introduced three key optimizations:
+
+\begin{enumerate}
+    \item \textit{Arbitrary Order:} In the case of large models, the order in which weights are quantized becomes irrelevant. Therefore, GPTQ updates all weights in the same order for all rows. This means that the set of unquantized weights, denoted as $F$, and $H_F^{-1}$, the Cholesky Form - Inverse Layer Hessian, remain constant across all rows. This is because $H_F$ depends solely on $X_F$ and is independent of the weights. This reduction in the number of times $H$ needs to be updated simplifies the process from $d_{col} \times d_{row}$ updates to just $d_{col}$ updates.
+    \item \textit{Lazy Batch-Updates:} Quantization of a column depends solely on updates to that particular column. Therefore, GPTQ employs batches of columns (with a batch size of $B = 128$). Equations \ref{eq:weight_update} and \ref{eq:hessian_upadte} can be executed after the computation of a full batch $B$. The set of indices $Q$ corresponds to the indices of quantized weights in the batch.
+    \item \textit{Cholesky Reformulation:} To address numerical errors that arise from repeated application of equation \ref{eq:hessian_upadte}, a Cholesky reformulation is applied to calculate all the necessary information about $H^{-1}$ in advance. As the complete Cholesky decomposition cannot be applied, a mild damping factor is applied to the diagonal.
+\end{enumerate}
+
+Additionally, an accessible quantization package called \textbf{AutoGPTQ} has been developed, which implements the GPTQ algorithm in PyTorch \cite{william_autogptq_2023}. This package has been adopted by Hugging Face and is currently the only ready-to-use quantization technique available in the Transformers library \cite{noauthor_quantize_nodate}.
 
 \section{Related Work}
 \label{sec:related_work}

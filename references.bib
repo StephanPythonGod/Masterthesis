@@ -1564,3 +1564,274 @@ Version Number: 2},
 	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/X4UW5WIS/Wei et al. - 2023 - Chain-of-Thought Prompting Elicits Reasoning in La.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/J7IZ65BJ/2201.html:text/html},
 }
 
+
+@misc{zhu_survey_2023,
+	title = {A {Survey} on {Model} {Compression} for {Large} {Language} {Models}},
+	url = {https://arxiv.org/abs/2308.07633v3},
+	abstract = {Large Language Models (LLMs) have revolutionized natural language processing tasks with remarkable success. However, their formidable size and computational demands present significant challenges for practical deployment, especially in resource-constrained environments. As these challenges become increasingly pertinent, the field of model compression has emerged as a pivotal research area to alleviate these limitations. This paper presents a comprehensive survey that navigates the landscape of model compression techniques tailored specifically for LLMs. Addressing the imperative need for efficient deployment, we delve into various methodologies, encompassing quantization, pruning, knowledge distillation, and more. Within each of these techniques, we highlight recent advancements and innovative approaches that contribute to the evolving landscape of LLM research. Furthermore, we explore benchmarking strategies and evaluation metrics that are essential for assessing the effectiveness of compressed LLMs. By providing insights into the latest developments and practical implications, this survey serves as an invaluable resource for both researchers and practitioners. As LLMs continue to evolve, this survey aims to facilitate enhanced efficiency and real-world applicability, establishing a foundation for future advancements in the field.},
+	language = {en},
+	urldate = {2023-10-02},
+	journal = {arXiv.org},
+	author = {Zhu, Xunyu and Li, Jian and Liu, Yong and Ma, Can and Wang, Weiping},
+	month = aug,
+	year = {2023},
+	keywords = {Background, compression, LLM},
+	file = {Full Text PDF:/Users/lenert/Zotero/storage/BRAAL7EM/Zhu et al. - 2023 - A Survey on Model Compression for Large Language M.pdf:application/pdf},
+}
+
+
+
+@misc{fang_depgraph_2023,
+	title = {{DepGraph}: {Towards} {Any} {Structural} {Pruning}},
+	shorttitle = {{DepGraph}},
+	url = {http://arxiv.org/abs/2301.12900},
+	doi = {10.48550/arXiv.2301.12900},
+	abstract = {Structural pruning enables model acceleration by removing structurally-grouped parameters from neural networks. However, the parameter-grouping patterns vary widely across different models, making architecture-specific pruners, which rely on manually-designed grouping schemes, non-generalizable to new architectures. In this work, we study a highly-challenging yet barely-explored task, any structural pruning, to tackle general structural pruning of arbitrary architecture like CNNs, RNNs, GNNs and Transformers. The most prominent obstacle towards this goal lies in the structural coupling, which not only forces different layers to be pruned simultaneously, but also expects all removed parameters to be consistently unimportant, thereby avoiding structural issues and significant performance degradation after pruning. To address this problem, we propose a general and \{fully automatic\} method, {\textbackslash}emph\{Dependency Graph\} (DepGraph), to explicitly model the dependency between layers and comprehensively group coupled parameters for pruning. In this work, we extensively evaluate our method on several architectures and tasks, including ResNe(X)t, DenseNet, MobileNet and Vision transformer for images, GAT for graph, DGCNN for 3D point cloud, alongside LSTM for language, and demonstrate that, even with a simple norm-based criterion, the proposed method consistently yields gratifying performances.},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Fang, Gongfan and Ma, Xinyin and Song, Mingli and Mi, Michael Bi and Wang, Xinchao},
+	month = mar,
+	year = {2023},
+	note = {arXiv:2301.12900 [cs]},
+	keywords = {Background, compression, Computer Science - Artificial Intelligence, Computer Science - Computer Vision and Pattern Recognition, LLM},
+}
+
+
+@misc{frantar_sparsegpt_2023,
+	title = {{SparseGPT}: {Massive} {Language} {Models} {Can} {Be} {Accurately} {Pruned} in {One}-{Shot}},
+	shorttitle = {{SparseGPT}},
+	url = {https://arxiv.org/abs/2301.00774v3},
+	abstract = {We show for the first time that large-scale generative pretrained transformer (GPT) family models can be pruned to at least 50\% sparsity in one-shot, without any retraining, at minimal loss of accuracy. This is achieved via a new pruning method called SparseGPT, specifically designed to work efficiently and accurately on massive GPT-family models. We can execute SparseGPT on the largest available open-source models, OPT-175B and BLOOM-176B, in under 4.5 hours, and can reach 60\% unstructured sparsity with negligible increase in perplexity: remarkably, more than 100 billion weights from these models can be ignored at inference time. SparseGPT generalizes to semi-structured (2:4 and 4:8) patterns, and is compatible with weight quantization approaches. The code is available at: https://github.com/IST-DASLab/sparsegpt.},
+	language = {en},
+	urldate = {2023-10-02},
+	journal = {arXiv.org},
+	author = {Frantar, Elias and Alistarh, Dan},
+	month = jan,
+	year = {2023},
+	keywords = {Background, compression, LLM},
+	file = {Full Text PDF:/Users/lenert/Zotero/storage/JM22J3PL/Frantar und Alistarh - 2023 - SparseGPT Massive Language Models Can Be Accurate.pdf:application/pdf},
+}
+
+
+@misc{noauthor_deepsparse_2023,
+	title = {{DeepSparse}},
+	copyright = {Apache-2.0},
+	url = {https://github.com/neuralmagic/deepsparse},
+	abstract = {Inference runtime offering GPU-class performance on CPUs and APIs to integrate ML into your application},
+	urldate = {2023-10-02},
+	publisher = {Neural Magic},
+	month = oct,
+	year = {2023},
+	note = {original-date: 2020-12-14T17:40:38Z},
+	keywords = {auto-ml, Background, compression, computer-vision, cpu-inference-api, cpus, deepsparse-engine, inference, LLM, machinelearning, ml, nlp, object-detection, onnx, pretrained-models, pruning, pytorch, quantization, sparsification},
+}
+
+
+
+@misc{ma_llm-pruner_2023,
+	title = {{LLM}-{Pruner}: {On} the {Structural} {Pruning} of {Large} {Language} {Models}},
+	shorttitle = {{LLM}-{Pruner}},
+	url = {http://arxiv.org/abs/2305.11627},
+	doi = {10.48550/arXiv.2305.11627},
+	abstract = {Large language models (LLMs) have shown remarkable capabilities in language understanding and generation. However, such impressive capability typically comes with a substantial model size, which presents significant challenges in both the deployment, inference, and training stages. With LLM being a general-purpose task solver, we explore its compression in a task-agnostic manner, which aims to preserve the multi-task solving and language generation ability of the original LLM. One challenge to achieving this is the enormous size of the training corpus of LLM, which makes both data transfer and model post-training over-burdensome. Thus, we tackle the compression of LLMs within the bound of two constraints: being task-agnostic and minimizing the reliance on the original training dataset. Our method, named LLM-Pruner, adopts structural pruning that selectively removes non-critical coupled structures based on gradient information, maximally preserving the majority of the LLM's functionality. To this end, the performance of pruned models can be efficiently recovered through tuning techniques, LoRA, in merely 3 hours, requiring only 50K data. We validate the LLM-Pruner on three LLMs, including LLaMA, Vicuna, and ChatGLM, and demonstrate that the compressed models still exhibit satisfactory capabilities in zero-shot classification and generation. The code is available at: https://github.com/horseee/LLM-Pruner},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Ma, Xinyin and Fang, Gongfan and Wang, Xinchao},
+	month = sep,
+	year = {2023},
+	note = {arXiv:2305.11627 [cs]},
+	keywords = {Background, compression, Computer Science - Computation and Language, LLM},
+	annote = {Comment: Accepted at NeurIPS 2023},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/HX6KEILZ/Ma et al. - 2023 - LLM-Pruner On the Structural Pruning of Large Lan.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/GX3SH3NB/2305.html:text/html},
+}
+
+
+@misc{hinton_distilling_2015,
+	title = {Distilling the {Knowledge} in a {Neural} {Network}},
+	url = {http://arxiv.org/abs/1503.02531},
+	doi = {10.48550/arXiv.1503.02531},
+	abstract = {A very simple way to improve the performance of almost any machine learning algorithm is to train many different models on the same data and then to average their predictions. Unfortunately, making predictions using a whole ensemble of models is cumbersome and may be too computationally expensive to allow deployment to a large number of users, especially if the individual models are large neural nets. Caruana and his collaborators have shown that it is possible to compress the knowledge in an ensemble into a single model which is much easier to deploy and we develop this approach further using a different compression technique. We achieve some surprising results on MNIST and we show that we can significantly improve the acoustic model of a heavily used commercial system by distilling the knowledge in an ensemble of models into a single model. We also introduce a new type of ensemble composed of one or more full models and many specialist models which learn to distinguish fine-grained classes that the full models confuse. Unlike a mixture of experts, these specialist models can be trained rapidly and in parallel.},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Hinton, Geoffrey and Vinyals, Oriol and Dean, Jeff},
+	month = mar,
+	year = {2015},
+	note = {arXiv:1503.02531 [cs, stat]},
+	keywords = {Background, compression, Computer Science - Machine Learning, Computer Science - Neural and Evolutionary Computing, LLM, Statistics - Machine Learning},
+	annote = {Comment: NIPS 2014 Deep Learning Workshop},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/S38Z4JPW/Hinton et al. - 2015 - Distilling the Knowledge in a Neural Network.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/JDKYW9IV/1503.html:text/html},
+}
+
+
+@article{zhu_teach_nodate,
+	title = {Teach {Less}, {Learn} {More}: {On} the {Undistillable} {Classes} in {Knowledge} {Distillation}},
+	abstract = {Knowledge distillation (KD) can effectively compress neural networks by training a smaller network (student) to simulate the behavior of a larger one (teacher). A counter-intuitive observation is that a more expansive teacher does not make a better student, but the reasons for this phenomenon remain unclear. In this paper, we demonstrate that this is directly attributed to the presence of undistillable classes: when trained with distillation, the teacher’s knowledge of some classes is incomprehensible to the student model. We observe that while KD improves the overall accuracy, it is at the cost of the model becoming inaccurate in these undistillable classes. After establishing their widespread existence in state-ofthe-art distillation methods, we illustrate their correlation with the capacity gap between teacher and student models. Finally, we present a simple “Teach Less Learn More” (TLLM) framework to identify and discard the undistillable classes during training. We validate the effectiveness of our approach on multiple datasets with varying network architectures. In all settings, our proposed method is able to exceed the performance of competitive state-of-the-art techniques.},
+	language = {en},
+	author = {Zhu, Yichen and Liu, Ning and Xu, Zhiyuan and Liu, Xin and Meng, Weibing and Wang, Yi},
+	keywords = {Background, compression, LLM},
+	file = {Zhu et al. - Teach Less, Learn More On the Undistillable Class.pdf:/Users/lenert/Zotero/storage/Y5D8CS6Y/Zhu et al. - Teach Less, Learn More On the Undistillable Class.pdf:application/pdf},
+	year = {2022}
+}
+
+
+
+@misc{gu_knowledge_2023,
+	title = {Knowledge {Distillation} of {Large} {Language} {Models}},
+	url = {http://arxiv.org/abs/2306.08543},
+	doi = {10.48550/arXiv.2306.08543},
+	abstract = {Knowledge Distillation (KD) is a promising technique for reducing the high computational demand of large language models (LLMs). However, previous KD methods are primarily applied to white-box classification models or training small models to imitate black-box model APIs like ChatGPT. How to effectively distill the knowledge from white-box generative LLMs is still under-explored, which becomes more and more important with the prosperity of LLMs. In this work, we propose MiniLLM that distills smaller language models from generative larger language models. We first replace the forward Kullback-Leibler divergence (KLD) objective in the standard KD approaches with reverse KLD, which is more suitable for KD on generative language models, to prevent the student model from overestimating the low-probability regions of the teacher distribution. Then, we derive an effective optimization approach to learn this objective. Extensive experiments in the instruction-following setting show that the MiniLLM models generate more precise responses with the higher overall quality, lower exposure bias, better calibration, and higher long-text generation performance. Our method is also scalable for different model families with 120M to 13B parameters. We will release our code and model checkpoints at https://aka.ms/MiniLLM.},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Gu, Yuxian and Dong, Li and Wei, Furu and Huang, Minlie},
+	month = jun,
+	year = {2023},
+	note = {arXiv:2306.08543 [cs]},
+	keywords = {Background, compression, Computer Science - Artificial Intelligence, Computer Science - Computation and Language, LLM},
+	annote = {Comment: 20 pages, 12 figures},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/32BTGCA9/Gu et al. - 2023 - Knowledge Distillation of Large Language Models.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/AUR3UWX6/2306.html:text/html},
+}
+
+
+@misc{huang_-context_2022,
+	title = {In-context {Learning} {Distillation}: {Transferring} {Few}-shot {Learning} {Ability} of {Pre}-trained {Language} {Models}},
+	shorttitle = {In-context {Learning} {Distillation}},
+	url = {http://arxiv.org/abs/2212.10670},
+	doi = {10.48550/arXiv.2212.10670},
+	abstract = {Given the success with in-context learning of large pre-trained language models, we introduce in-context learning distillation to transfer in-context few-shot learning ability from large models to smaller models. We propose to combine in-context learning objectives with language modeling objectives to distill both the ability to read in-context examples and task knowledge to the smaller models. We perform in-context learning distillation under two different few-shot learning paradigms: Meta In-context Tuning (Meta-ICT) and Multitask In-context Tuning (Multitask-ICT). Multitask-ICT performs better on multitask few-shot learning but also requires more computation than Meta-ICT. Our method shows consistent improvements for both Meta-ICT and Multitask-ICT on two benchmarks: LAMA and CrossFit. Our extensive experiments and analysis reveal that in-context learning objectives and language modeling objectives are complementary under the Multitask-ICT paradigm. In-context learning objectives achieve the best performance when combined with language modeling objectives.},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Huang, Yukun and Chen, Yanda and Yu, Zhou and McKeown, Kathleen},
+	month = dec,
+	year = {2022},
+	note = {arXiv:2212.10670 [cs]},
+	keywords = {Background, compression, Computer Science - Computation and Language, Computer Science - Machine Learning, LLM},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/7QJDGN4J/Huang et al. - 2022 - In-context Learning Distillation Transferring Few.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/H9ZJYS6N/2212.html:text/html},
+}
+
+
+@misc{li_explanations_2022,
+	title = {Explanations from {Large} {Language} {Models} {Make} {Small} {Reasoners} {Better}},
+	url = {http://arxiv.org/abs/2210.06726},
+	doi = {10.48550/arXiv.2210.06726},
+	abstract = {Integrating free-text explanations to in-context learning of large language models (LLM) is shown to elicit strong reasoning capabilities along with reasonable explanations. In this paper, we consider the problem of leveraging the explanations generated by LLM to improve the training of small reasoners, which are more favorable in real-production deployment due to their low cost. We systematically explore three explanation generation approaches from LLM and utilize a multi-task learning framework to facilitate small models to acquire strong reasoning power together with explanation generation capabilities. Experiments on multiple reasoning tasks show that our method can consistently and significantly outperform finetuning baselines across different settings, and even perform better than finetuning/prompting a 60x larger GPT-3 (175B) model by up to 9.5\% in accuracy. As a side benefit, human evaluation further shows that our method can generate high-quality explanations to justify its predictions, moving towards the goal of explainable AI.},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Li, Shiyang and Chen, Jianshu and Shen, Yelong and Chen, Zhiyu and Zhang, Xinlu and Li, Zekun and Wang, Hong and Qian, Jing and Peng, Baolin and Mao, Yi and Chen, Wenhu and Yan, Xifeng},
+	month = oct,
+	year = {2022},
+	note = {arXiv:2210.06726 [cs]},
+	keywords = {Background, compression, Computer Science - Computation and Language, LLM},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/9ELILQFW/Li et al. - 2022 - Explanations from Large Language Models Make Small.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/5I8W66V2/2210.html:text/html},
+}
+
+
+
+@misc{jiang_lion_2023,
+	title = {Lion: {Adversarial} {Distillation} of {Closed}-{Source} {Large} {Language} {Model}},
+	shorttitle = {Lion},
+	url = {http://arxiv.org/abs/2305.12870},
+	doi = {10.48550/arXiv.2305.12870},
+	abstract = {The practice of transferring knowledge from a sophisticated, closed-source large language model (LLM) to a compact, open-source LLM has garnered considerable attention. Previous works have focused on a unidirectional knowledge distillation way by aligning the responses of the student model with those of the teacher model to a set of instructions. Nevertheless, they overlooked the possibility of incorporating any reciprocal "feedback"--identifying challenging instructions where the student model's performance falls short--to boost the student model's proficiency iteratively. To this end, we propose a novel adversarial distillation framework for a more efficient knowledge transfer. Leveraging the versatile role adaptability of LLMs, we prompt the closed-source model to identify "hard" instructions and generate new "hard" instructions for the student model, creating a three-stage adversarial loop of imitation, discrimination, and generation. By applying this adversarial framework, we successfully transfer knowledge from ChatGPT to a 7B student model (named Lion), achieving nearly 95\% capability approximation using a mere 70k training data. We aspire that this proposed model may serve as the baseline to reflect the performance of ChatGPT, especially the open-source instruction-following language model baseline for our community.},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Jiang, Yuxin and Chan, Chunkit and Chen, Mingyang and Wang, Wei},
+	month = may,
+	year = {2023},
+	note = {arXiv:2305.12870 [cs]},
+	keywords = {Background, compression, Computer Science - Computation and Language, LLM},
+	annote = {Comment: work in progress},
+}
+
+@misc{frantar_gptq_2023,
+	title = {{GPTQ}: {Accurate} {Post}-{Training} {Quantization} for {Generative} {Pre}-trained {Transformers}},
+	shorttitle = {{GPTQ}},
+	url = {http://arxiv.org/abs/2210.17323},
+	doi = {10.48550/arXiv.2210.17323},
+	abstract = {Generative Pre-trained Transformer models, known as GPT or OPT, set themselves apart through breakthrough performance across complex language modelling tasks, but also by their extremely high computational and storage costs. Specifically, due to their massive size, even inference for large, highly-accurate GPT models may require multiple performant GPUs, which limits the usability of such models. While there is emerging work on relieving this pressure via model compression, the applicability and performance of existing compression techniques is limited by the scale and complexity of GPT models. In this paper, we address this challenge, and propose GPTQ, a new one-shot weight quantization method based on approximate second-order information, that is both highly-accurate and highly-efficient. Specifically, GPTQ can quantize GPT models with 175 billion parameters in approximately four GPU hours, reducing the bitwidth down to 3 or 4 bits per weight, with negligible accuracy degradation relative to the uncompressed baseline. Our method more than doubles the compression gains relative to previously-proposed one-shot quantization methods, preserving accuracy, allowing us for the first time to execute an 175 billion-parameter model inside a single GPU for generative inference. Moreover, we also show that our method can still provide reasonable accuracy in the extreme quantization regime, in which weights are quantized to 2-bit or even ternary quantization levels. We show experimentally that these improvements can be leveraged for end-to-end inference speedups over FP16, of around 3.25x when using high-end GPUs (NVIDIA A100) and 4.5x when using more cost-effective ones (NVIDIA A6000). The implementation is available at https://github.com/IST-DASLab/gptq.},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Frantar, Elias and Ashkboos, Saleh and Hoefler, Torsten and Alistarh, Dan},
+	month = mar,
+	year = {2023},
+	note = {arXiv:2210.17323 [cs]},
+	keywords = {Background, compression, Computer Science - Machine Learning, LLM},
+	annote = {Comment: ICLR 2023},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/B8AEBAXP/Frantar et al. - 2023 - GPTQ Accurate Post-Training Quantization for Gene.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/6V53VLXP/2210.html:text/html},
+}
+
+
+@misc{gholami_survey_2021,
+	title = {A {Survey} of {Quantization} {Methods} for {Efficient} {Neural} {Network} {Inference}},
+	url = {http://arxiv.org/abs/2103.13630},
+	doi = {10.48550/arXiv.2103.13630},
+	abstract = {As soon as abstract mathematical computations were adapted to computation on digital computers, the problem of efficient representation, manipulation, and communication of the numerical values in those computations arose. Strongly related to the problem of numerical representation is the problem of quantization: in what manner should a set of continuous real-valued numbers be distributed over a fixed discrete set of numbers to minimize the number of bits required and also to maximize the accuracy of the attendant computations? This perennial problem of quantization is particularly relevant whenever memory and/or computational resources are severely restricted, and it has come to the forefront in recent years due to the remarkable performance of Neural Network models in computer vision, natural language processing, and related areas. Moving from floating-point representations to low-precision fixed integer values represented in four bits or less holds the potential to reduce the memory footprint and latency by a factor of 16x; and, in fact, reductions of 4x to 8x are often realized in practice in these applications. Thus, it is not surprising that quantization has emerged recently as an important and very active sub-area of research in the efficient implementation of computations associated with Neural Networks. In this article, we survey approaches to the problem of quantizing the numerical values in deep Neural Network computations, covering the advantages/disadvantages of current methods. With this survey and its organization, we hope to have presented a useful snapshot of the current research in quantization for Neural Networks and to have given an intelligent organization to ease the evaluation of future research in this area.},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Gholami, Amir and Kim, Sehoon and Dong, Zhen and Yao, Zhewei and Mahoney, Michael W. and Keutzer, Kurt},
+	month = jun,
+	year = {2021},
+	note = {arXiv:2103.13630 [cs]},
+	keywords = {Background, compression, Computer Science - Computer Vision and Pattern Recognition, LLM},
+	annote = {Comment: Book Chapter: Low-Power Computer Vision: Improving the Efficiency of Artificial Intelligence},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/ICYJNW6D/Gholami et al. - 2021 - A Survey of Quantization Methods for Efficient Neu.pdf:application/pdf},
+}
+
+
+@misc{noauthor_quantize_nodate,
+	title = {Quantize {Transformers} models},
+	url = {https://huggingface.co/docs/transformers/main_classes/quantization},
+	abstract = {We're on a journey to advance and democratize artificial intelligence through open source and open science.},
+	urldate = {2023-10-02},
+	keywords = {Background, compression, LLM},
+	file = {Snapshot:/Users/lenert/Zotero/storage/QQ6L8NEX/quantization.html:text/html},
+	year = {2023}
+}
+
+
+@misc{liu_llm-qat_2023,
+	title = {{LLM}-{QAT}: {Data}-{Free} {Quantization} {Aware} {Training} for {Large} {Language} {Models}},
+	shorttitle = {{LLM}-{QAT}},
+	url = {http://arxiv.org/abs/2305.17888},
+	doi = {10.48550/arXiv.2305.17888},
+	abstract = {Several post-training quantization methods have been applied to large language models (LLMs), and have been shown to perform well down to 8-bits. We find that these methods break down at lower bit precision, and investigate quantization aware training for LLMs (LLM-QAT) to push quantization levels even further. We propose a data-free distillation method that leverages generations produced by the pre-trained model, which better preserves the original output distribution and allows quantizing any generative model independent of its training data, similar to post-training quantization methods. In addition to quantizing weights and activations, we also quantize the KV cache, which is critical for increasing throughput and support long sequence dependencies at current model sizes. We experiment with LLaMA models of sizes 7B, 13B, and 30B, at quantization levels down to 4-bits. We observe large improvements over training-free methods, especially in the low-bit settings.},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Liu, Zechun and Oguz, Barlas and Zhao, Changsheng and Chang, Ernie and Stock, Pierre and Mehdad, Yashar and Shi, Yangyang and Krishnamoorthi, Raghuraman and Chandra, Vikas},
+	month = may,
+	year = {2023},
+	note = {arXiv:2305.17888 [cs]},
+	keywords = {Background, compression, Computer Science - Computation and Language, LLM},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/EDYY565R/Liu et al. - 2023 - LLM-QAT Data-Free Quantization Aware Training for.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/J6A3DWHH/2305.html:text/html},
+}
+
+
+@misc{frantar_optimal_2023,
+	title = {Optimal {Brain} {Compression}: {A} {Framework} for {Accurate} {Post}-{Training} {Quantization} and {Pruning}},
+	shorttitle = {Optimal {Brain} {Compression}},
+	url = {http://arxiv.org/abs/2208.11580},
+	doi = {10.48550/arXiv.2208.11580},
+	abstract = {We consider the problem of model compression for deep neural networks (DNNs) in the challenging one-shot/post-training setting, in which we are given an accurate trained model, and must compress it without any retraining, based only on a small amount of calibration input data. This problem has become popular in view of the emerging software and hardware support for executing models compressed via pruning and/or quantization with speedup, and well-performing solutions have been proposed independently for both compression approaches. In this paper, we introduce a new compression framework which covers both weight pruning and quantization in a unified setting, is time- and space-efficient, and considerably improves upon the practical performance of existing post-training methods. At the technical level, our approach is based on an exact and efficient realization of the classical Optimal Brain Surgeon (OBS) framework of [LeCun, Denker, and Solla, 1990] extended to also cover weight quantization at the scale of modern DNNs. From the practical perspective, our experimental results show that it can improve significantly upon the compression-accuracy trade-offs of existing post-training methods, and that it can enable the accurate compound application of both pruning and quantization in a post-training setting.},
+	urldate = {2023-10-02},
+	publisher = {arXiv},
+	author = {Frantar, Elias and Singh, Sidak Pal and Alistarh, Dan},
+	month = jan,
+	year = {2023},
+	note = {arXiv:2208.11580 [cs]},
+	keywords = {Background, Computer Science - Machine Learning, LLM, compression},
+	annote = {Comment: Published at NeurIPS 2022},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/9XX7LUM3/Frantar et al. - 2023 - Optimal Brain Compression A Framework for Accurat.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/W2BAZCDB/2208.html:text/html},
+}
+
+@misc{william_autogptq_2023,
+	title = {{AutoGPTQ}},
+	copyright = {MIT},
+	url = {https://github.com/PanQiWei/AutoGPTQ},
+	abstract = {An easy-to-use LLMs quantization package with user-friendly apis, based on GPTQ algorithm.},
+	urldate = {2023-10-02},
+	author = {William},
+	month = oct,
+	year = {2023},
+	note = {original-date: 2023-04-13T02:18:11Z},
+	keywords = {Background, compression, deep-learning, inference, large-language-models, LLM, llms, nlp, pytorch, quantization, transformer, transformers},
+}
+

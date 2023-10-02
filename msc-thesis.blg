@@ -3,6 +3,8 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: msc-thesis.aux
 The style file: apalike.bst
 Database file #1: references.bib
+Warning--to sort, need author or key in noauthor_deepsparse_2023
+Warning--to sort, need author or key in noauthor_quantize_nodate
 Warning--empty booktitle in chen_improving_2021
 Warning--empty journal in dai_dialog_2022
 Warning--empty booktitle in he_deberta_2020
@@ -21,45 +23,46 @@ Warning--empty booktitle in voorhees_trec-8_1999
 Warning--empty journal in wang_modern_2022
 Warning--empty booktitle in xu_laprador_2022
 Warning--empty journal in yang_query_2019
-You've used 91 entries,
+Warning--empty journal in zhu_teach_nodate
+You've used 107 entries,
             1935 wiz_defined-function locations,
-            880 strings with 29474 characters,
-and the built_in function-call counts, 48666 in all, are:
-= -- 4331
-> -- 4059
-< -- 34
-+ -- 1543
-- -- 1518
-* -- 4627
-:= -- 8950
-add.period$ -- 273
-call.type$ -- 91
-change.case$ -- 1214
-chr.to.int$ -- 88
-cite$ -- 109
-duplicate$ -- 1248
-empty$ -- 1996
-format.name$ -- 1627
-if$ -- 8879
-int.to.chr$ -- 4
+            940 strings with 32285 characters,
+and the built_in function-call counts, 54166 in all, are:
+= -- 4847
+> -- 4430
+< -- 36
++ -- 1682
+- -- 1650
+* -- 5104
+:= -- 10007
+add.period$ -- 317
+call.type$ -- 107
+change.case$ -- 1360
+chr.to.int$ -- 101
+cite$ -- 130
+duplicate$ -- 1411
+empty$ -- 2247
+format.name$ -- 1775
+if$ -- 9860
+int.to.chr$ -- 7
 int.to.str$ -- 0
-missing$ -- 37
-newline$ -- 449
-num.names$ -- 273
-pop$ -- 1141
+missing$ -- 38
+newline$ -- 525
+num.names$ -- 315
+pop$ -- 1262
 preamble$ -- 1
-purify$ -- 1214
+purify$ -- 1360
 quote$ -- 0
-skip$ -- 988
+skip$ -- 1115
 stack$ -- 0
-substring$ -- 1870
+substring$ -- 2068
 swap$ -- 164
 text.length$ -- 16
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 544
-warning$ -- 18
-while$ -- 242
+type$ -- 640
+warning$ -- 21
+while$ -- 270
 width$ -- 0
-write$ -- 1118
-(There were 18 warnings)
+write$ -- 1300
+(There were 21 warnings)
