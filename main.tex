@@ -44,6 +44,37 @@ Regarding the ConvQA-System, the objectives are as follows:
 \section{Conversational Retrieval-Augmented Generation}
 \label{sec:conrag}
 
+As illustrated in Figure \ref{fig:overview-system-architecture}, it is logical to partition the extensive grid of possibilities into smaller, manageable components that can be explored and designed independently. Consequently, the framework will be divided into two main segments: the extraction pipeline, with its potential configurations outlined in Figure \ref{fig:extract_pipeline}, and the three major modules: Retriever, Reader, and \gls{cqu}, showcasing their possible implementations in Figure \ref{fig:all_components_conrag}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/extract_pipeline.png}
+    \caption{Overview of the Extraction Pipeline Framework}
+    \label{fig:extract_pipeline}
+\end{figure}
+
+The framework varies in its level of granularity, shifting between high-level concepts and precise details. This is primarily due to the fact that certain aspects of the framework are well-researched and represent state-of-the-art knowledge, while others are ongoing research and necessitate a more abstract, conceptual treatment. For instance, \textit{BM25} is mentioned specifically as the state-of-the-art Sparse Retriever within the Retriever Module, whereas \textit{Automatic Question Generation} in the Training Data Generation step of the extraction pipeline is presented as a high-level concept.
+
+The framework strives to maintain a high level of generality, intentionally avoiding the incorporation of restrictive paradigms, except for the specified system architecture of \gls{rag} for \gls{qa}. This decision is motivated by the burgeoning breakthroughs and extensive research endeavors within the field of \gls{llm}s, as exemplified by the exceptional success of \textit{ChatGPT}. In response to the limitations of ChatGPT, including \textit{hallucination}, \textit{implicit knowledge}, and \textit{knowledge update}, interest has surged in the \gls{rag} architecture as a means to address these issues. Presently, there is no existing survey or similar resource that provides a quantitative evaluation of the ongoing business initiatives aimed at implementing RAG-based Systems. Nonetheless, both Google Cloud Services \cite{noauthor_generative_nodate} and Amazon Web Services \cite{noauthor_quickly_2023} have introduced new services that empower customers to construct \gls{rag}-based systems, with Langchain serving as the Framework for the Reader Implementation\cite{noauthor_langchain-ailangchain_nodate}. Consequently, the framework presented here seeks to illuminate potential pathways for implementing a \gls{conrag} system, as depicted in Figure \ref{fig:convqa_system_architecture}, tailored to the use case described in Section \ref{sec:overview}.
+
+The extraction pipeline can be visualized as a tree, where following different paths signifies making decisions with corresponding implications for subsequent steps and components. In Figure \ref{fig:all_components_conrag}, each column represents a decision to be made, although in some cases, choosing not to decide is itself a decision. Dotted lines encircling multiple frames indicate that a combination or ensemble approach is possible. For a better understanding of how to apply this framework to create a potential system implementation, refer to the example in Figure \ref{fig:example_decission_tree}. As previously mentioned, the framework does not prescribe specific models (e.g., BERT, PaLM, etc.) but rather conceptual approaches (e.g., Cross-Encoder). The example in Figure \ref{fig:example_decission_tree} represents a simple zero-shot baseline, which will also be implemented and tested in this thesis Chapter \ref{chap:eval}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/all_components_conrag.png}
+    \caption{Overview of all Modules of the Framework}
+    \label{fig:all_components_conrag}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/example_decission_tree.png}
+    \caption{Example of applying the Framework to a System Implementation}
+    \label{fig:example_decission_tree}
+\end{figure}
+
+
+
 \subsection{extract}
 \label{subsec:extract}
 

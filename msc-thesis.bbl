@@ -14,6 +14,11 @@ Anil, R., Dai, A.~M., Firat, O., Johnson, M., Lepikhin, D., Passos, A., Shakeri,
 \newblock {PaLM} 2 {Technical} {Report}.
 \newblock arXiv:2305.10403 [cs].
 
+\bibitem[AWS, 2023]{noauthor_quickly_2023}
+AWS (2023).
+\newblock Quickly build high-accuracy {Generative} {AI} applications on enterprise data using {Amazon} {Kendra}, {LangChain}, and large language models {\textbar} {AWS} {Machine} {Learning} {Blog}.
+\newblock Section: Amazon Kendra.
+
 \bibitem[Brown et~al., 2020]{brown_language_2020}
 Brown, T.~B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D.~M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., and Amodei, D. (2020).
 \newblock Language {Models} are {Few}-{Shot} {Learners}.
@@ -102,6 +107,10 @@ Frantar, E., Singh, S.~P., and Alistarh, D. (2023b).
 Gao, J., Xiong, C., Bennett, P., and Craswell, N. (2022).
 \newblock Neural {Approaches} to {Conversational} {Information} {Retrieval}.
 \newblock arXiv:2201.05176 [cs].
+
+\bibitem[GCS, 2023]{noauthor_generative_nodate}
+GCS (2023).
+\newblock Generative {AI} applications with {Vertex} {AI} {PaLM} 2 {Models} and {LangChain}.
 
 \bibitem[Gholami et~al., 2021]{gholami_survey_2021}
 Gholami, A., Kim, S., Dong, Z., Yao, Z., Mahoney, M.~W., and Keutzer, K. (2021).
