@@ -14,11 +14,6 @@ Anil, R., Dai, A.~M., Firat, O., Johnson, M., Lepikhin, D., Passos, A., Shakeri,
 \newblock {PaLM} 2 {Technical} {Report}.
 \newblock arXiv:2305.10403 [cs].
 
-\bibitem[Bajaj et~al., 2018]{bajaj_ms_2018}
-Bajaj, P., Campos, D., Craswell, N., Deng, L., Gao, J., Liu, X., Majumder, R., McNamara, A., Mitra, B., Nguyen, T., Rosenberg, M., Song, X., Stoica, A., Tiwary, S., and Wang, T. (2018).
-\newblock {MS} {MARCO}: {A} {Human} {Generated} {MAchine} {Reading} {COmprehension} {Dataset}.
-\newblock arXiv:1611.09268 [cs].
-
 \bibitem[Brown et~al., 2020]{brown_language_2020}
 Brown, T.~B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D.~M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., and Amodei, D. (2020).
 \newblock Language {Models} are {Few}-{Shot} {Learners}.
@@ -77,11 +72,6 @@ Elgohary, A., Peskov, D., and Boyd-Graber, J. (2019).
 Etezadi, R. and Shamsfard, M. (2023).
 \newblock The state of the art in open domain complex question answering: a survey.
 \newblock {\em Applied Intelligence}, 53(4):4124--4144.
-
-\bibitem[Fajcik et~al., 2021]{fajcik_r2-d2_2021}
-Fajcik, M., Docekal, M., Ondrej, K., and Smrz, P. (2021).
-\newblock R2-{D2}: {A} {Modular} {Baseline} for {Open}-{Domain} {Question} {Answering}.
-\newblock In {\em Findings of the {Association} for {Computational} {Linguistics}: {EMNLP} 2021}, pages 854--870, Punta Cana, Dominican Republic. Association for Computational Linguistics.
 
 \bibitem[Farea et~al., 2022]{farea_evaluation_2022}
 Farea, A., Yang, Z., Duong, K., Perera, N., and Emmert-Streib, F. (2022).
@@ -362,10 +352,6 @@ Owoicho, P., Dalton, J., Aliannejadi, M., Azzopardi, L., Trippas, J.~R., and Vak
 Pereira, J., Fidalgo, R., Lotufo, R., and Nogueira, R. (2022).
 \newblock Visconde: {Multi}-document {QA} with {GPT}-3 and {Neural} {Reranking}.
 
-\bibitem[PyPDF2, ]{noauthor_welcome_nodate}
-PyPDF2.
-\newblock Welcome to {PyPDF2} — {PyPDF2} documentation.
-
 \bibitem[Raffel et~al., 2023]{raffel_exploring_2023}
 Raffel, C., Shazeer, N., Roberts, A., Lee, K., Narang, S., Matena, M., Zhou, Y., Li, W., and Liu, P.~J. (2023).
 \newblock Exploring the {Limits} of {Transfer} {Learning} with a {Unified} {Text}-to-{Text} {Transformer}.
@@ -403,11 +389,6 @@ Robertson, S. and Zaragoza, H. (2009).
 Sachan, D.~S., Lewis, M., Yogatama, D., Zettlemoyer, L., Pineau, J., and Zaheer, M. (2023).
 \newblock Questions {Are} {All} {You} {Need} to {Train} a {Dense} {Passage} {Retriever}.
 \newblock arXiv:2206.10658 [cs].
-
-\bibitem[Santhanam et~al., 2022]{santhanam_colbertv2_2022}
-Santhanam, K., Khattab, O., Saad-Falcon, J., Potts, C., and Zaharia, M. (2022).
-\newblock {ColBERTv2}: {Effective} and {Efficient} {Retrieval} via {Lightweight} {Late} {Interaction}.
-\newblock arXiv:2112.01488 [cs].
 
 \bibitem[Serban et~al., 2016]{serban_generating_2016}
 Serban, I.~V., García-Durán, A., Gulcehre, C., Ahn, S., Chandar, S., Courville, A., and Bengio, Y. (2016).
@@ -469,12 +450,6 @@ White, J., Fu, Q., Hays, S., Sandborn, M., Olea, C., Gilbert, H., Elnashar, A., 
 William (2023).
 \newblock {AutoGPTQ}.
 \newblock original-date: 2023-04-13T02:18:11Z.
-
-\bibitem[Xu et~al., 2022]{xu_laprador_2022}
-Xu, C., Guo, D., Duan, N., and McAuley, J. (2022).
-\newblock {LaPraDoR}: {Unsupervised} {Pretrained} {Dense} {Retriever} for {Zero}-{Shot} {Text} {Retrieval}.
-\newblock arXiv.
-\newblock Version Number: 2.
 
 \bibitem[Yang et~al., 2019]{yang_query_2019}
 Yang, J.-H., Lin, S.-C., Lin, J., Tsai, M.-F., and Wang, C.-J. (2019).
