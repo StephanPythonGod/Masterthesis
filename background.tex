@@ -98,7 +98,7 @@ Generative \gls{qa} is often denoted as \textit{Retriever-free} or \textit{Neura
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Grafiken/Retriever_Reader.png}
-    \caption{Reader-Retriever-System Architecture for \gls{qa} by Zhu et. al. \cite{zhu_retrieving_2021}. The dashed lines indicate optional modules.}
+    \caption{Reader-Retriever-System Architecture for \gls{qa} by Zhu et al. \cite{zhu_retrieving_2021}. The dashed lines indicate optional modules.}
     \label{fig:rr_architecture}
 \end{figure}
 
@@ -118,7 +118,7 @@ In Section \ref{subsec:qa_reader}, we will delve into the finer details of Reade
 
 There are also \textbf{End-to-End} approaches that employ a single module to execute the entire \gls{qa} task. Excluding generative approaches, two common categories of such approaches are \textbf{Retriever-Reader} and \textbf{Retriever-only} models.
 
-An End-to-End Retriever-Reader aims to train both the Retriever and Reader in a single backpropagation step, and in some cases, it introduces additional knowledge sources beyond the traditional \gls{ir} framework. An illustrative example is \gls{rag} \cite{lewis_retrieval-augmented_2021}. \gls{rag} consists of a pre-trained Generator with implicit knowledge encoded in its parameters and a pre-trained Retriever. For each question, the Retriever identifies the most relevant documents and generates a latent vector based on them. This latent vector, along with the original question, is fed into the Generator.
+An End-to-End Retriever-Reader aims to train both the Retriever and Reader in a single backpropagation step, and in some cases, it introduces additional knowledge sources beyond the traditional \gls{ir} framework. An illustrative example is \gls{rag} \cite{lewis_retrieval-augmented_2021}. \gls{rag} consists of a pre-trained Generator with implicit knowledge encoded in its parameters and a pre-trained Retriever. For each question, the Retriever identifies the most relevant documents and generates a latent vector based on them. This latent vector, along with the original question, is fed into the Generator. Section \ref{subsec:qa_reader} will delve into details regarding the \gls{rag} architecture.
 
 Another end-to-end approach, similar to \gls{rag}, is \gls{realm} \cite{guu_realm_2020}. While these previous two approaches extended the capabilities of pre-trained \gls{s2s} models, Nishida et al. pursued a different path by training a single \gls{nn} to perform both tasks simultaneously: \gls{ir} and \gls{mrc} \cite{nishida_retrieve-and-read_2018}.
 
@@ -202,7 +202,7 @@ To address this latency issue, models like ColBERT introduced the concept of \te
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Grafiken/Types_of_Retriever.png}
-    \caption{Types of Dense Retriever by Zhu et. al. \cite{zhu_retrieving_2021}.}
+    \caption{Types of Dense Retriever by Zhu et al. \cite{zhu_retrieving_2021}.}
     \label{fig:types_of_retriever}
 \end{figure}
 
@@ -270,6 +270,28 @@ Latest research projects like Visconde \cite{pereira_visconde_2022} even employ 
 
 Luo et al. conducted the first survey comparing state-of-the-art Extractive and Generative Readers \cite{luo_choose_2022}. They discovered that \enquote{on average, extractive readers perform better than generative ones} \cite{luo_choose_2022}, except in cases involving long context passages, where generative approaches outperform the extractive ones.
 
+\textbf{RAG} can be seen as a generative reader, but with a much more capable \gls{nn} as the reader, specifically the idea is that the reader itself is a \gls{llm} with implicit knowledge encoded in its parameters, which it uses to generate an answer, the retrieved passages intentionally function as support in order to guide the reader an reduce risk of hallucination. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/RAG-Figure1.png}
+    \caption{Overview of \gls{rag} by Lewis et al. \cite{lewis_retrieval-augmented_2021}}
+    \label{fig:rag}
+\end{figure}
+
+Figure \ref{fig:rag} is taken from the original paper by Lewis et al. \cite{lewis_retrieval-augmented_2021} and displays the general approach of \gls{rag}. The original idea of \gls{rag} is to have an end-to-end backpropagation in order to train the retriever and reader (generator) at once and on the same data, not seperate as in most Retriever-Reader-Systems. The used retriever in the original \gls{rag} is a \gls{dpr}. Other retrievers can be used, as this is just a decission to make as the generator does not directly depend on the type of retriever. More interestingly is the kind of implementation of the generator. \gls{rag} implements a \textit{sequence-based} generator, while future work, such as \gls{fid} \cite{izacard_leveraging_2021} use an \textit{attention-based} generator. The sequence-based generator works the following way: Given an arbitrary encoder-decoder $p_{\theta}(y_i | q, p, y_{1:i-1})$, the query $q$, the $k$-relevant passages $p$, and the previously generated tokens $y_{1:i-1}$, the generator computes the probability distribution over the next token $y_i$. $q$ and $p$ where simply concatenated.
+
+Further \gls{rag} generators are attention-based like \gls{fid} \cite{izacard_leveraging_2021}. Here the encoder and decoder of the generator are slightly decoupled as to the classic \gls{rag}. Given a question $q$, the retriever retrieves the top-$k$ passages $p$. The encoder ecodes every sinlge passage in a question, title, passage triple $(q, t, p)$. The encodings of multiple passages are afterwards concatenated and passed into the encoder-decoder attention of the decoder. An illustration can be found in Figure \ref{fig:fid} This allows for the combination of multiple passages, so there is no input token limitation as for the classical \gls{rag}. Also experiments by Izacard et al. showed, that the performance imrpoves over multiple tasks, as multi-passage relations can easily be resolved by the decoder. The latest work of Izacard et al. is ATLAS, which set new state-of-the-art benchmarks on multiple evaluation tasks \cite{izacard_atlas_2022}. ATLAS extends on the idea of \gls{fid}.   
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/fid.png}
+    \caption{Overview of \gls{fid} by Izacard et al. \cite{izacard_leveraging_2021}}
+    \label{fig:fid}
+\end{figure}
+
+Still over all \gls{rag} approaches, the main idea is to have a fully end-to-end backpropagation during training or fine-tuning of the systems.
+
 The \textbf{Answer Post-Processor} is similar to the Document Post-Processor, serving as an optional component. Its primary task is to provide support for multi-hop complex questions, helping determine the final answer from a set of answers extracted by the reader component \cite{zhu_retrieving_2021}. Depending on the implementation of the Reader, this component may become obsolete.
 
 % Commit #5
@@ -326,12 +348,12 @@ Figure \ref{fig:conversation_explain} shows the core concepts based on a chat. F
     \label{fig:conversation_explain}
 \end{figure}
 
-Regarding the System architecture of a \gls{convqa} there is no one fits them all solution at the moment, but Gao et. al. \cite{gao_neural_2022} presented a modern system architecture, which represents commonly used appraoches and their corresponding components in a genral fashion. This general architecture can be observed in Figure \ref{fig:convqa_system_architecture}. Modern \gls{convqa} systems are closely realted to \gls{qa} systems, but lag certain generalizing components in order to be full \gls{cis} systems \cite{zamani_conversational_2023}.
+Regarding the System architecture of a \gls{convqa} there is no one fits them all solution at the moment, but Gao et al. \cite{gao_neural_2022} presented a modern system architecture, which represents commonly used appraoches and their corresponding components in a genral fashion. This general architecture can be observed in Figure \ref{fig:convqa_system_architecture}. Modern \gls{convqa} systems are closely realted to \gls{qa} systems, but lag certain generalizing components in order to be full \gls{cis} systems \cite{zamani_conversational_2023}.
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Grafiken/System_Architecture_ConQA.png}
-    \caption{General System Architecture of a \gls{convqa} System by Gao et. al. \cite{gao_neural_2022}}
+    \caption{General System Architecture of a \gls{convqa} System by Gao et al. \cite{gao_neural_2022}}
     \label{fig:convqa_system_architecture}
 \end{figure}
 
@@ -363,7 +385,7 @@ For training of this model they used the among others the canard dataset \cite{e
 State-of-the-art reasearch utilizes more and more \gls{llm} for the task of Query Rewriting, as they can handle long context histories $H$ and are in general strong zero- or few-shot models \cite{mao_large_2023}. This is also the main approach frameworks like \textit{Langchain} \cite{noauthor_question_nodate} or \textit{ChatGPT by OpenAI} \cite{noauthor_chatgpt_2023} use. 
 
 
-Lastly the appraoch of \textbf{Conversational Retrievers} exists. Those use compared to classical \gls{qa} retrievers not a pair of $(q,p)$ in order to calculate a similarity $sim(q,p)$ between the question $q$ and the passage $p$, but use \gls{convqa} datapoints from conversational interactions like $(q_1, a_1, \dots, q_i, a_i, q_{i+1}, p)$, in short $(H, q_{i+1}, p)$, so combining a conversation history $H$ with a new question $q_{i+1}$ and the relevant passage $p$ to answer this question given the history $H$ \cite{gao_neural_2022,dai_dialog_2022}. High performing zero-shot or subdomain-adapted Conversational Retrievers do not exist, as it is extremly time consuming to create a dataset for this type of Retriever. To close this gap in researchers proposed sufficient data augmentation techniques to generate those datasets, given a document. One example is the work of Dai et. al. \cite{dai_dialog_2022} which introduced the technique of \enquote{Dialog Inpainting} \cite{dai_dialog_2022}.  
+Lastly the appraoch of \textbf{Conversational Retrievers} exists. Those use compared to classical \gls{qa} retrievers not a pair of $(q,p)$ in order to calculate a similarity $sim(q,p)$ between the question $q$ and the passage $p$, but use \gls{convqa} datapoints from conversational interactions like $(q_1, a_1, \dots, q_i, a_i, q_{i+1}, p)$, in short $(H, q_{i+1}, p)$, so combining a conversation history $H$ with a new question $q_{i+1}$ and the relevant passage $p$ to answer this question given the history $H$ \cite{gao_neural_2022,dai_dialog_2022}. High performing zero-shot or subdomain-adapted Conversational Retrievers do not exist, as it is extremly time consuming to create a dataset for this type of Retriever. To close this gap in researchers proposed sufficient data augmentation techniques to generate those datasets, given a document. One example is the work of Dai et al. \cite{dai_dialog_2022} which introduced the technique of \enquote{Dialog Inpainting} \cite{dai_dialog_2022}.  
 
 \subsection{Initiative}
 \label{subsec:cqa_initiative}
@@ -395,7 +417,7 @@ Section \ref{subsec:llm_fine_tuning} will explore possibilities to enhance effic
 % \begin{figure}
 %     \centering
 %     \includegraphics[width=\textwidth]{Grafiken/Efficient_Survey_Taxonomy.png}
-%     \caption{Adjusted Taxonomy of efficiency improvement for \gls{llm} by Treviso et. al. \cite{treviso_efficient_2023}}
+%     \caption{Adjusted Taxonomy of efficiency improvement for \gls{llm} by Treviso et al. \cite{treviso_efficient_2023}}
 %     \label{fig:llm_taxonomy_2}
 % \end{figure}
 
@@ -446,7 +468,7 @@ In summary, \textbf{$\text{(IA)}^3$} is a \gls{peft} approach specifically desig
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{Grafiken/Lora.png}
-    \caption{\gls{lora} by Hu et. al. \cite{hu_lora_nodate}}
+    \caption{\gls{lora} by Hu et al. \cite{hu_lora_nodate}}
     \label{fig:lora}
 \end{figure}
 
@@ -508,7 +530,7 @@ Furthermore, the Hessian is updated in the following manner, avoiding the need f
 This leads to the following algorithm:
 
 \begin{algorithm}
-    \caption{Quantize $W$ given inverse Hessian $H^{-1} = (2XX^T + \lambda I)^{-1}$ and blocksize $B$ by Frantar et. al. \cite{frantar_gptq_2023}}
+    \caption{Quantize $W$ given inverse Hessian $H^{-1} = (2XX^T + \lambda I)^{-1}$ and blocksize $B$ by Frantar et al. \cite{frantar_gptq_2023}}
     \label{alg:quantize_W}
     \begin{algorithmic}[1]
     \State $Q \gets \mathbf{0}_{d_{\text{row}} \times d_{\text{col}}}$ \Comment{Quantized output}

@@ -44,39 +44,208 @@ Regarding the ConvQA-System, the objectives are as follows:
 \section{Conversational Retrieval-Augmented Generation}
 \label{sec:conrag}
 
-As illustrated in Figure \ref{fig:overview-system-architecture}, it is logical to partition the extensive grid of possibilities into smaller, manageable components that can be explored and designed independently. Consequently, the framework will be divided into two main segments: the extraction pipeline, with its potential configurations outlined in Figure \ref{fig:extract_pipeline}, and the three major modules: Retriever, Reader, and \gls{cqu}, showcasing their possible implementations in Figure \ref{fig:all_components_conrag}.
+In the following section, we will outline the general problem field of \gls{convqa}. Unlike other definitions of this problem field, our definition begins with a collection of documents $d \in D$, where \textit{document} refers to any textual knowledge source (e.g., plain text, web pages, etc.). The core task of \gls{convqa} can be defined as follows:
+
+\begin{definition}
+    \textbf{(\gls{convqa} Task)} The task comprises (i) information extraction, (ii) passage retrieval, (iii) response generation, and (iv) question understanding.
+    \label{def:task}
+\end{definition}
+
+The system architecture \gls{conrag}, introduced in Section \ref{sec:overview} (see Figure \ref{fig:convqa_system_architecture}), divides these four tasks among four components. Each of these sub-tasks corresponds to a different mechanism of the model ($M$), which is designed to engage in a conversation with a user over a collection of documents $D$. The first task (i) of extraction can be defined as follows:
+
+\begin{definition}
+    \textbf{(extraction)} An extraction model ($Ext$) is a model which extracts passages from a collection of documents $D$.
+    \begin{align*}
+        \mathbf{Ext: D \rightarrow P}
+    \end{align*} 
+    Whereas $P$ is a set of passages $p \in P$ and $\forall d \in D, \exists p \in P : p \subseteq d$.
+    \label{def:extraction}
+\end{definition}
+
+Therefore, the input to the next component of $M$, the Retriever $p_\eta(p|q)$, is as follows:
+
+\begin{equation}
+    \text{Input} = (Q, P) :
+    \begin{cases}
+        \begin{aligned}
+            &\text{question}, && Q = \{q_1, \ldots, q_m\} \\
+            &\text{knowledge source}, && P = \{p_1, \ldots, p_n\}
+        \end{aligned}
+    \end{cases}
+\end{equation}
+
+This means that the input is a tuple $(Q,P)$ consisting of a set of questions $Q = \{q_1, q_2, \ldots, q_m\}$ and a knowledge source $P = \{p_1, p_2, \ldots, p_n\}$. Therefore, the task of $p_\eta(p|q)$ with parameters $\eta$ can be defined as follows:
+
+\begin{definition}
+    \textbf{(Passage Retrieval)} A retrieval model ($p_\eta(p|q)$) is a model that generates a relevance score for every tuple $(q,p)$.
+    \begin{align*}
+        \mathbf{p_\eta(p|q) = Score(q,p)}
+    \end{align*}
+    Here, $q$ itself is a tuple $(q,i)$, where $i \in I$, and $I$ is the set of all possible search intents. 
+    \label{def:retrieval}
+\end{definition}
+
+The set of search intents $I$ (e.g., extractive, abstractive, etc., see Section \ref{subsec:cqa_basics}) is finite. The index $i$ of a question $q$ is implicit and therefore not further specified in the following notations. Hence, instead of representing the whole tuple as $(q,i)$ for each question, we simplify it to just $q$. Task (iii) of response generation is carried out by a generator/reader $p_\theta(a|q,p)$ with parameter $\theta$:
+
+\begin{definition}
+    \textbf{(Response Generation)} A generation model ($p_\theta(a|q,p)$) is a model that generates an answer $a$ given a question $q$ and top-$k$ retrieved passages $p$.
+    \begin{align*}
+        \mathbf{p_\theta(a|q,p) = a}
+    \end{align*}
+    \label{def:generation}
+\end{definition}
+
+In a more general context, we assume that there always exists a correct answer $a$ to a question $q$ that can be extracted from the passages $P$. Therefore, we distinguish the following cases:
+
+\begin{equation}
+    \forall q \in Q, \exists! a \in A : a = 
+    \begin{cases}
+        \begin{aligned}
+            &1. \text{ } f(q, \emptyset), \text{ } &\text{if there is no evidence in } P \\
+            &2. \text{ } f(q, p), \text{ } &\text{if there is exactly one piece of evidence in } P \\
+            &3. \text{ } f(q, E) \mid E \subset P, \text{ } &\text{if there are multiple pieces of evidence in } P
+        \end{aligned}
+    \end{cases}
+\end{equation}
+
+In case 1, the answer $a$ to the question $q$ indicates that there is no evidence available for this question. Depending on the specific question $q$ intend $i$, this can lead to different answers. Case 2 can be an example of a common extraction question $q$ where the answer $a$ refers to an exact span in one passage $p$. Case 3 involves more complex questions $q$ that require information from multiple passages $p$ to be answered correctly.
+
+Lastly, task (vi) is handled by a \gls{cqu} $p_\xi(q_c|H,q_i)$ with parameter $\xi$:
+
+\begin{definition}
+    \textbf{(Question Understanding)} A question understanding model ($p_\xi(q_c|H,q_i)$) is a model that generates a contextualized question $q_c$ given a history $H$.
+    \begin{align*}
+        \mathbf{p_\xi(q_c|H, q_i) = q}
+    \end{align*}
+    Contextualized refers to identifying language-specific features between turns of a conversation to incorporate the context of the conversation into the question $q_i$.
+    \label{def:question_understanding}
+\end{definition}
+
+The history $H$ is further described in Section \ref{subsec:cqa_basics}.
+
+Figure \ref{fig:task_convqa} illustrates the general task of \gls{convqa}. It displays the relationship between questions, answers, documents, and the model $M$ on a high level. The following sections will delve deeper into the individual components of $M$. Section \ref{subsec:extract} will discuss sub-task (i), Section \ref{subsec:retriever} will discuss sub-task (ii), Section \ref{subsec:reader} will focus on sub-task (iii), and Section \ref{subsec:cqu} will explore sub-task (vi).
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Grafiken/extract_pipeline.png}
-    \caption{Overview of the Extraction Pipeline Framework}
-    \label{fig:extract_pipeline}
+    \includegraphics[width=0.8\textwidth]{Grafiken/general_conqa.png}
+    \caption{General Task of \gls{convqa}}
+    \label{fig:task_convqa}
 \end{figure}
 
-The framework varies in its level of granularity, shifting between high-level concepts and precise details. This is primarily due to the fact that certain aspects of the framework are well-researched and represent state-of-the-art knowledge, while others are ongoing research and necessitate a more abstract, conceptual treatment. For instance, \textit{BM25} is mentioned specifically as the state-of-the-art Sparse Retriever within the Retriever Module, whereas \textit{Automatic Question Generation} in the Training Data Generation step of the extraction pipeline is presented as a high-level concept.
 
-The framework strives to maintain a high level of generality, intentionally avoiding the incorporation of restrictive paradigms, except for the specified system architecture of \gls{rag} for \gls{qa}. This decision is motivated by the burgeoning breakthroughs and extensive research endeavors within the field of \gls{llm}s, as exemplified by the exceptional success of \textit{ChatGPT}. In response to the limitations of ChatGPT, including \textit{hallucination}, \textit{implicit knowledge}, and \textit{knowledge update}, interest has surged in the \gls{rag} architecture as a means to address these issues. Presently, there is no existing survey or similar resource that provides a quantitative evaluation of the ongoing business initiatives aimed at implementing RAG-based Systems. Nonetheless, both Google Cloud Services \cite{noauthor_generative_nodate} and Amazon Web Services \cite{noauthor_quickly_2023} have introduced new services that empower customers to construct \gls{rag}-based systems, with Langchain serving as the Framework for the Reader Implementation\cite{noauthor_langchain-ailangchain_nodate}. Consequently, the framework presented here seeks to illuminate potential pathways for implementing a \gls{conrag} system, as depicted in Figure \ref{fig:convqa_system_architecture}, tailored to the use case described in Section \ref{sec:overview}.
+% As illustrated in Figure \ref{fig:overview-system-architecture}, it is logical to partition the extensive grid of possibilities into smaller, manageable components that can be explored and designed independently. Consequently, the framework will be divided into two main segments: the extraction pipeline, with its potential configurations outlined in Figure \ref{fig:extract_pipeline}, and the three major modules: Retriever, Reader, and \gls{cqu}, showcasing their possible implementations in Figure \ref{fig:all_components_conrag}.
 
-The extraction pipeline can be visualized as a tree, where following different paths signifies making decisions with corresponding implications for subsequent steps and components. In Figure \ref{fig:all_components_conrag}, each column represents a decision to be made, although in some cases, choosing not to decide is itself a decision. Dotted lines encircling multiple frames indicate that a combination or ensemble approach is possible. For a better understanding of how to apply this framework to create a potential system implementation, refer to the example in Figure \ref{fig:example_decission_tree}. As previously mentioned, the framework does not prescribe specific models (e.g., BERT, PaLM, etc.) but rather conceptual approaches (e.g., Cross-Encoder). The example in Figure \ref{fig:example_decission_tree} represents a simple zero-shot baseline, which will also be implemented and tested in this thesis Chapter \ref{chap:eval}.
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/extract_pipeline.png}
+%     \caption{Overview of the Extraction Pipeline Framework}
+%     \label{fig:extract_pipeline}
+% \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{Grafiken/all_components_conrag.png}
-    \caption{Overview of all Modules of the Framework}
-    \label{fig:all_components_conrag}
-\end{figure}
+% The framework varies in its level of granularity, shifting between high-level concepts and precise details. This is primarily due to the fact that certain aspects of the framework are well-researched and represent state-of-the-art knowledge, while others are ongoing research and necessitate a more abstract, conceptual treatment. For instance, \textit{BM25} is mentioned specifically as the state-of-the-art Sparse Retriever within the Retriever Module, whereas \textit{Automatic Question Generation} in the Training Data Generation step of the extraction pipeline is presented as a high-level concept.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{Grafiken/example_decission_tree.png}
-    \caption{Example of applying the Framework to a System Implementation}
-    \label{fig:example_decission_tree}
-\end{figure}
+% The framework strives to maintain a high level of generality, intentionally avoiding the incorporation of restrictive paradigms, except for the specified system architecture of \gls{rag} for \gls{qa}. This decision is motivated by the breakthroughs and extensive research endeavors within the field of \gls{llm}s, as exemplified by the exceptional success of \textit{ChatGPT}. In response to the limitations of ChatGPT, including \textit{hallucination}, \textit{implicit knowledge}, and \textit{static knowledge}, interest has surged in the \gls{rag} architecture as a means to address these issues. Presently, there is no existing survey or similar resource that provides a quantitative evaluation of the ongoing business initiatives aimed at implementing RAG-based Systems. Nonetheless, both Google Cloud Services \cite{noauthor_generative_nodate} and Amazon Web Services \cite{noauthor_quickly_2023} have introduced new services that empower customers to construct \gls{rag}-based systems, with Langchain serving as the Framework for the Reader Implementation \cite{noauthor_langchain-ailangchain_nodate}. Consequently, the framework presented here seeks to illuminate potential pathways for implementing a \gls{conrag} system, as depicted in Figure \ref{fig:convqa_system_architecture}, tailored to the use case described in Section \ref{sec:overview}.
+
+% The extraction pipeline can be visualized as a tree, where following different paths signifies making decisions with corresponding implications for subsequent steps and components. In Figure \ref{fig:all_components_conrag}, each column represents a decision to be made, although in some cases, choosing not to decide is itself a decision. Dotted lines encircling multiple frames indicate that a combination or ensemble approach is possible. For a better understanding of how to apply this framework to create a potential system implementation, refer to the example in Figure \ref{fig:example_decission_tree}. As previously mentioned, the framework does not prescribe specific models (e.g., BERT, PaLM, etc.) but rather conceptual approaches (e.g., Cross-Encoder). The example in Figure \ref{fig:example_decission_tree} represents a simple zero-shot baseline, which will also be implemented and tested in this thesis Chapter \ref{chap:eval}.
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/all_components_conrag.png}
+%     \caption{Overview of all Modules of the Framework}
+%     \label{fig:all_components_conrag}
+% \end{figure}
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/example_decission_tree.png}
+%     \caption{Example of applying the Framework to a System Implementation}
+%     \label{fig:example_decission_tree}
+% \end{figure}
 
 
 
 \subsection{extract}
 \label{subsec:extract}
+
+The task of extraction was defined in Definition \ref{def:extraction}. Given the set of documents $D$, the set $P$ will be extracted using Information Extraction in combination with Passage Extraction operations. As synthetic data generation is also part of the extraction component according to Section \ref{sec:overview}, it will also be discussed in this section.
+
+\vspace{\baselineskip} % Add one line space
+
+\textbf{Information Extraction:} When it comes to extracting text from any source of information, there are many approaches to choose from. Some extract structures, metadata, or similar, which can be further utilized, while others extract unstructured text only. In any case, this extraction process highly depends on the source document type. An HTML website requires different approaches and tools compared to a PDF, for instance. An example tool for direct extraction of PDFs is Py2PDF \cite{noauthor_welcome_nodate}. Regardless of the source document and tool used to extract textual information, there are two major possible outcomes given a set of documents $D$, where $d$ represents the textual content of a document $d \in D$:
+
+\begin{enumerate}
+    \item \textit{Structured Extraction:} Denoted as $f_{StrucExt}(\cdot)$, in this extraction operation, $d$ can be extracted into logical segments directly: $f_{StrucExt}(d) = \{m_i \subseteq d : i \in \{1, 2, \ldots, n\}, d = \bigcup_{i=1}^{n} m_i\}$. If $f_s$ is applied to all documents $d$ in $D$, the resulting set $M$ contains all the outputs of $f_{StrucExt}$ for each document in $D$. Formally, $f_{StrucExt}(D) := M = \{m_1, m_2, \dots, m_n\}$, where each document $d$ is transformed into a set of logical segments $m$ representing its content.
+    \item \textit{Unstructured Extraction:} Denoted as $f_{UnstExt}(\cdot)$, when applied to $D$, it results in a concatenated text corpus $m$ containing the textual content of a document $d$: $f_{UnstExt}(D) := M = \{m_1, m_2, \dots, m_n\}$, where each document $d$ is transformed into a single text snippet $m$ representing its content.
+\end{enumerate}
+
+\vspace{\baselineskip} % Add one line space
+
+\noindent\textbf{Passages:} The implementation of passage splitting depends on the nature of $M$ and the desired granularity of the output. In general, there are three operations for constructing passages $p$ based on a corpus $m$:
+
+\begin{enumerate}
+    \item \textit{Paragraphs:} $f_p(\cdot)$ is an operation that transforms a collection $M$ of texts $m$ into a set of passages $P = \{p_1, p_2, \dots, p_n\}$. It operates similarly to $f_{StrucExt}(\cdot)$, but instead of $D$, it operates on $M$. The output of $f_p(\cdot)$ consists of passages $p$ that represent logical segments of the text corpus $m$. Usually, it operates in a \textit{rule-based} manner, meaning that a paragraph is defined by a token indicating a paragraph (e.g., \textit{<p/>} in HTML). The length $l$ of each $p_i$ is variable, and the number of paragraphs $|P|$ can also vary.
+    \item \textit{Snippets:} $f_s(\cdot)$, when you have a fixed passage length $l$, divides the concatenated text $m$ into $|m|\bmod{l} + 1$ passages $p$ per $m$. Alternative approaches may involve specifying minimum and maximum lengths, denoted as $l_{\text{min}}$ and $l_{\text{max}}$. The exact point of division depends on whether a sentence ends within the specified window or not. If a sentence ending is found within the window, the snippet concludes at that point; otherwise, it concludes at the end of the window. The individual length of the extracted passages $P = \{p_1, p_2, \ldots, p_n\}$ is not fixed in the case of syntactic snippets, as well as the number of paragraphs $|P|$.
+    \item \textit{Sliding Windows:} $f_w(\cdot)$ utilizes a window size $l$, a concatenated text $m$, and a step size $s$. The window slides over the text $m$, and the text within the window is used as a passage $p$. This results in $\frac{|m| - l}{s}$ passages, denoted as $P = \{p_1, p_2, \ldots, p_n\}$.
+\end{enumerate}
+
+These operations can be combined in a pipeline fashion. For example, first $f_p(M) := P_p = \{p_{p,1}, p_{p,2}, \dots, p_{p,n}\}$ is constructed, and afterwards, on the logical paragraphs, $f_w(f_p(M)) := f_w(P_p) = P_w = \{p_{w,1}, p_{w,2}, \dots, p_{w,i}\}$ is applied. The way these operations are combined is highly use-case specific and needs to be evaluated for each use-case individually. Another important factor influencing the decision regarding the parameters $l$ and, in general, the operation used, is the desired model for the \textit{Retriever} and \textit{Reader} as they may be trained on a specific token length as input or have a maximum length of tokens they accept as input or require a certain clarity of data points.
+
+
+\vspace{\baselineskip} % Add one line space
+\noindent\textbf{Synthetic Training Data Generation:} This can be interpreted as a knowledge distillation task. The main idea is to use a model $ED(\cdot)$ to generate a synthetic dataset for the task and problem field $T$ of a Retriever-Reader-System as described in Definitions \ref{def:retrieval} and \ref{def:generation}:
+
+\begin{equation}
+    \mathbf{T = \{P, Q, I\}}
+    \label{eq:task}
+\end{equation}
+
+Where $P = \{p_1, p_2, \dots, p_n\}$ corresponds to a corpus of passages to retrieve from, $Q$ is a set of questions, and $I$ is the underlying search intent for a question $q \in Q$. If $I(q,p) = 1$, this means that the passage reflects the question's search intent. Given this task, there are several synthetic dataset types:
+
+\begin{enumerate}
+    \item \textit{Questions given Context} $ED_{qgp}(p,I) := q_s$: Given a passage $p$, generate a synthetic question $q_s$ that satisfies the desired search intent $I$. Applying $ED_{qgp}(P)$ to a set of passages will generate a set of questions $Q_s = \{q_1, q_2, \dots, q_n\}$, with one question for every passage, i.e., $|Q_s| = |P|$. $ED_{gpq}$ can also be applied multiple times with different $i \in I$ to generate multiple different questions $q_{j,s,1}, q_{j,s,2}, \dots , q_{j,s,i}$ for a single passage $p_j$.
+    \item \textit{Question-Context-Answer Triples} $ED_{qpa}(p, I) := (q_s, p, a_s, I)$: Given a passage $p$, generate a synthetic question $q_s$ that satisfies the search intent $I$ and provides an answer $a_s$, where $I(q_s, a_s, p) = 1$. The result of applying $ED_{qpa}(P)$ to a set of passages is a set of question-passage-answer triples $QPA_s = \allowbreak \{(q_{1,s}, p_1, a_{1,s}, I), \allowbreak (q_{2,s}, p_2, a_{2,s}, I), \allowbreak \dots, (q_{n,s}, p_n, a_{n,s}, I)\}$, where $|QPA_s| = |P|$. $ED_{qpa}$ can also be applied multiple times with different $i \in I$ to generate multiple different questions $q_{j,s,1}, \allowbreak q_{j,s,2}, \dots , q_{j,s,i}$ and corresponding answers $a_{j,s,1}, \allowbreak a_{j,s,2}, \dots , a_{j,s,i}$ for a single passage $p_j$.
+\end{enumerate}
+
+While the previous two approaches focus on single tuples of either $(q,p)$ or triples of $(q,p,a)$, there is also a problem field of generating conversations based on passages $P = \{p_1, p_2, \dots, p_n\}$ from the same underlying document $d$. Therefore, the task given in Equation \ref{eq:task} is changed to:
+
+\begin{equation}
+    \mathbf{T = \{H, P, I\}}
+    \label{eq:task_conversation}
+\end{equation}
+
+Where $H$ corresponds to a set of conversation histories $h$ containing multiple turns. The first turn is always a question $q_1$, followed by an answer $a_1$ based on a passage $p \in P$, also given a search intent $I$ over the whole history $h$. Synthetic datasets for this task can be generated in the following ways:
+
+\begin{enumerate}
+    \setcounter{enumi}{2} % Set the starting value to 3
+    \item \textit{Conversational Question-Context-Answer Histories} $ED_{cqpa}(E, I) := H_s$: Given a subset of passages $E \subset P$, the task of the model $ED_{cqpa}$ is it to construct a realistic conversation with an intent $I$ over the corpus $E$. The result of applying $ED_{cqpa}(E,I)$ on a set of passages is a set of conversation histories $H_s = \{h_1, h_2, \dots, h_n\}$. $ED_{cqpa}$ can also be applied multiple times with different $i \in I$ in order to generate multiple different conversations $h_{j,s,1}, h_{j,s,2} \dots , h_{j,s,i}$ for a single subset of passages $E \subset P$.
+\end{enumerate}
+
+There are several ways to implemnt the models $ED_{qgp}$, $ED{qpa}$ or $ED_{cqpa}$. Implementations of those appraoches will be discussed in Chapter \ref{chap:eval}. 
+
+
+% In this pipeline, the prompt-based \gls{qg} method known as PROMPTAGATOR \cite{dai_promptagator_2022} is used to generate a synthetic \gls{qa} dataset for ColBERTv2 \cite{santhanam_colbertv2_2022} based on $P$. The goal is to create triples of $(q, p^{+}, p^{-})$, similar to those found in datasets like MS MACRO \cite{bajaj_ms_2018}. For the task of $E_{qg}(p) := q$, a \gls{s2s} model, specifically a \gls{llm}, will be employed. This technique can be interpreted as knowledge distilation from the LLM to the later trained retriever. Similar to PROMPTAGATOR, there are two approaches to consider:
+
+% \begin{enumerate}
+%     \item \textit{Zero-Shot:} In this approach, a single prompt is executed to generate a question $q_i$ corresponding to a passage $p_i$, all without the need for any supervised dataset.
+    
+%     \item \textit{Few-Shot:} This approach uses $k$ supervised pairs $(q_j, p^{+}_{j})^{k}$ to generate a question $q_i$ corresponding to a passage $p_i \in P$.
+% \end{enumerate}
+
+% The prompt used for \textbf{zero-shot \gls{qg}}, where $p_i$ represents a passage from $P$, is:
+
+% \verb|f'{p_i} Read the passage and generate a corresponding query.'|
+
+% The prompt used for \textbf{few-shot \gls{qg}}, where $q_j$ represents a question, $p_j$ the corresponding passage, and $p$ the passage for which a question is being generated, is:
+
+% \verb|f'Passage: {p_1} Question: {q_1} XXX Passage: {p_2} Question: {q_2}|
+
+% \verb|XXX ... XXX Passage: {p} Question:'|
+
+% The result of either of these approaches will be a synthetic training dataset of $(q_s, p^{+})$ tuples. This dataset can be used for fine-tuning the retriever.
+
+% A major issue associated with this form of \textbf{\gls{qg}} is its strict limitation to extractive questions, where the evidence can be derived from a single passage only. This limitation significantly constrains this pipeline. However, it does not necessarily prevent the system from answering more complex questions, such as multi-hop questions. These can be addressed by the \textit{retriever} and \textit{reader} modules.
+
+
 
 \subsection{Retriever}
 \label{subsec:retriever}
@@ -103,41 +272,6 @@ The extraction pipeline can be visualized as a tree, where following different p
 
 % \subsection{Extract}
 % \label{subsec:extract}
-
-% \textbf{Information Extraction:} When it comes to extracting text from PDFs, you have two approaches to choose from: the \textit{visual} approach and the \textit{direct} approach, each with its own advantages. In the \textit{visual} approach, you can create a model for document layout analysis combined with an OCR tool. Ideally, this approach yields a collection, denoted as $M$, comprising paragraphs $m$. These paragraphs vary in length but represent self-contained semantic units from the underlying PDF. On the other hand, the \textit{direct} approach is suitable only for digitally-born PDFs. For such PDFs, you can employ a tool like Py2PDF \cite{noauthor_welcome_nodate}. This results in a corpus $M$ that requires processing to achieve the desired granularity.
-
-% \noindent\textbf{Indexing:} The implementation of indexing depends on the nature of $M$ and the desired granularity of the output. In general, there are three approaches to constructing passages $p$ in the index $P$:
-
-% \begin{enumerate}
-%     \item \textit{Paragraphs:} In this approach, $P$ comprises passages $p_i$ such as $P = \{p_1, p_2, \ldots, p_n\}$, where each $p_i$ is derived from $M$ and represents semantic paragraphs from the original document. The length $l$ of each $p_i$ is not fixed, and the number of paragraphs $|P|$ can also vary.
-%     \item \textit{Snippets:} When you have a fixed passage length $l$, the concatenated text corpus $M$ is divided into $|M|\bmod{l} + 1$ passages $p$. Alternative approaches may involve specifying minimum and maximum lengths, denoted as $l_{\text{min}}$ and $l_{\text{max}}$. The exact point of division depends on whether a sentence ends within the specified window or not. If a sentence ending is found within the window, the snippet concludes at that point; otherwise, it concludes at the end of the window.
-%     \item \textit{Sliding Windows:} This approach utilizes a window size $l$, a concatenated text corpus $M$, and a step size $s$. The window slides over the text corpus $M$, and the text within the window is used as a passage $p$. This results in $\frac{|M| - l}{s}$ passages, denoted as $P = \{p_1, p_2, \ldots, p_n\}$.
-% \end{enumerate}
-
-% \textit{Paragraphs} may seem like the most intuitive choice, but the indefinite length of passages, denoted as $p$, can be an issue. \textit{Snippets} have the advantage of having almost uniform lengths. However, a downside could be that important connections between sentences are lost, potentially leading to the loss of information. \textit{Sliding Windows} offer the advantage of uniform lengths and the ability to capture connections between sentences. However, the downside is the high number of passages, denoted as $p$, that need to be indexed, along with potential issues related to data cleanliness.
-
-% \noindent\textbf{Synthetic Training Data Generation:} In this pipeline, the prompt-based \gls{qg} method known as PROMPTAGATOR \cite{dai_promptagator_2022} is used to generate a synthetic \gls{qa} dataset for ColBERTv2 \cite{santhanam_colbertv2_2022} based on $P$. The goal is to create triples of $(q, p^{+}, p^{-})$, similar to those found in datasets like MS MACRO \cite{bajaj_ms_2018}. For the task of $E_{qg}(p) := q$, a \gls{s2s} model, specifically a \gls{llm}, will be employed. This technique can be interpreted as knowledge distilation from the LLM to the later trained retriever. Similar to PROMPTAGATOR, there are two approaches to consider:
-
-% \begin{enumerate}
-%     \item \textit{Zero-Shot:} In this approach, a single prompt is executed to generate a question $q_i$ corresponding to a passage $p_i$, all without the need for any supervised dataset.
-    
-%     \item \textit{Few-Shot:} This approach uses $k$ supervised pairs $(q_j, p^{+}_{j})^{k}$ to generate a question $q_i$ corresponding to a passage $p_i \in P$.
-% \end{enumerate}
-
-% The prompt used for \textbf{zero-shot \gls{qg}}, where $p_i$ represents a passage from $P$, is:
-
-% \verb|f'{p_i} Read the passage and generate a corresponding query.'|
-
-% The prompt used for \textbf{few-shot \gls{qg}}, where $q_j$ represents a question, $p_j$ the corresponding passage, and $p$ the passage for which a question is being generated, is:
-
-% \verb|f'Passage: {p_1} Question: {q_1} XXX Passage: {p_2} Question: {q_2}|
-
-% \verb|XXX ... XXX Passage: {p} Question:'|
-
-% The result of either of these approaches will be a synthetic training dataset of $(q_s, p^{+})$ tuples. This dataset can be used for fine-tuning the retriever.
-
-% A major issue associated with this form of \textbf{\gls{qg}} is its strict limitation to extractive questions, where the evidence can be derived from a single passage only. This limitation significantly constrains this pipeline. However, it does not necessarily prevent the system from answering more complex questions, such as multi-hop questions. These can be addressed by the \textit{retriever} and \textit{reader} modules.
-
 % %%%%%
 
 % \subsection{Retrieve}

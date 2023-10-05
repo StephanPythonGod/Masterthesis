@@ -14,11 +14,6 @@ Anil, R., Dai, A.~M., Firat, O., Johnson, M., Lepikhin, D., Passos, A., Shakeri,
 \newblock {PaLM} 2 {Technical} {Report}.
 \newblock arXiv:2305.10403 [cs].
 
-\bibitem[AWS, 2023]{noauthor_quickly_2023}
-AWS (2023).
-\newblock Quickly build high-accuracy {Generative} {AI} applications on enterprise data using {Amazon} {Kendra}, {LangChain}, and large language models {\textbar} {AWS} {Machine} {Learning} {Blog}.
-\newblock Section: Amazon Kendra.
-
 \bibitem[Brown et~al., 2020]{brown_language_2020}
 Brown, T.~B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D.~M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., and Amodei, D. (2020).
 \newblock Language {Models} are {Few}-{Shot} {Learners}.
@@ -108,10 +103,6 @@ Gao, J., Xiong, C., Bennett, P., and Craswell, N. (2022).
 \newblock Neural {Approaches} to {Conversational} {Information} {Retrieval}.
 \newblock arXiv:2201.05176 [cs].
 
-\bibitem[GCS, 2023]{noauthor_generative_nodate}
-GCS (2023).
-\newblock Generative {AI} applications with {Vertex} {AI} {PaLM} 2 {Models} and {LangChain}.
-
 \bibitem[Gholami et~al., 2021]{gholami_survey_2021}
 Gholami, A., Kim, S., Dong, Z., Yao, Z., Mahoney, M.~W., and Keutzer, K. (2021).
 \newblock A {Survey} of {Quantization} {Methods} for {Efficient} {Neural} {Network} {Inference}.
@@ -190,6 +181,11 @@ Huggingface (2023).
 Izacard, G. and Grave, E. (2021).
 \newblock Leveraging {Passage} {Retrieval} with {Generative} {Models} for {Open} {Domain} {Question} {Answering}.
 \newblock In {\em Proceedings of the 16th {Conference} of the {European} {Chapter} of the {Association} for {Computational} {Linguistics}: {Main} {Volume}}, pages 874--880, Online. Association for Computational Linguistics.
+
+\bibitem[Izacard et~al., 2022]{izacard_atlas_2022}
+Izacard, G., Lewis, P., Lomeli, M., Hosseini, L., Petroni, F., Schick, T., Dwivedi-Yu, J., Joulin, A., Riedel, S., and Grave, E. (2022).
+\newblock Atlas: {Few}-shot {Learning} with {Retrieval} {Augmented} {Language} {Models}.
+\newblock Publisher: arXiv Version Number: 3.
 
 \bibitem[Jiang et~al., 2023]{jiang_lion_2023}
 Jiang, Y., Chan, C., Chen, M., and Wang, W. (2023).
@@ -360,6 +356,10 @@ Owoicho, P., Dalton, J., Aliannejadi, M., Azzopardi, L., Trippas, J.~R., and Vak
 \bibitem[Pereira et~al., 2022]{pereira_visconde_2022}
 Pereira, J., Fidalgo, R., Lotufo, R., and Nogueira, R. (2022).
 \newblock Visconde: {Multi}-document {QA} with {GPT}-3 and {Neural} {Reranking}.
+
+\bibitem[PyPDF2, ]{noauthor_welcome_nodate}
+PyPDF2.
+\newblock Welcome to {PyPDF2} — {PyPDF2} documentation.
 
 \bibitem[Raffel et~al., 2023]{raffel_exploring_2023}
 Raffel, C., Shazeer, N., Roberts, A., Lee, K., Narang, S., Matena, M., Zhou, Y., Li, W., and Liu, P.~J. (2023).
