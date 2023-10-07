@@ -28,6 +28,11 @@ Chung, H.~W., Hou, L., Longpre, S., Zoph, B., Tay, Y., Fedus, W., Li, Y., Wang, 
 \newblock Scaling {Instruction}-{Finetuned} {Language} {Models}.
 \newblock arXiv:2210.11416 [cs].
 
+\bibitem[Cohen, 1960]{cohen_coefficient_1960}
+Cohen, J. (1960).
+\newblock A {Coefficient} of {Agreement} for {Nominal} {Scales}.
+\newblock {\em Educational and Psychological Measurement}, 20(1):37--46.
+
 \bibitem[Dai et~al., 2022a]{dai_dialog_2022}
 Dai, Z., Chaganty, A.~T., Zhao, V., Amini, A., Rashid, Q.~M., Green, M., and Guu, K. (2022a).
 \newblock Dialog {Inpainting}: {Turning} {Documents} into {Dialogs}.
@@ -202,6 +207,11 @@ Jurafsky, D. and Martin, J.~H. (2023).
 \newblock {\em Speech and {Language} {Processing}}.
 \newblock Palo Alto, 3 edition.
 
+\bibitem[Kamalloo et~al., 2023]{kamalloo_evaluating_2023}
+Kamalloo, E., Dziri, N., Clarke, C. L.~A., and Rafiei, D. (2023).
+\newblock Evaluating {Open}-{Domain} {Question} {Answering} in the {Era} of {Large} {Language} {Models}.
+\newblock arXiv:2305.06984 [cs].
+
 \bibitem[Karpukhin et~al., 2020]{karpukhin_dense_2020}
 Karpukhin, V., Oğuz, B., Min, S., Lewis, P., Wu, L., Edunov, S., Chen, D., and Yih, W.-t. (2020).
 \newblock Dense {Passage} {Retrieval} for {Open}-{Domain} {Question} {Answering}.
@@ -239,13 +249,18 @@ Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttle
 \newblock Retrieval-{Augmented} {Generation} for {Knowledge}-{Intensive} {NLP} {Tasks}.
 \newblock arXiv:2005.11401 [cs].
 
-\bibitem[Li et~al., 2022a]{li_dit_2022}
-Li, J., Xu, Y., Lv, T., Cui, L., Zhang, C., and Wei, F. (2022a).
+\bibitem[Li et~al., 2022a]{li_ditch_2022}
+Li, H., Gao, T., Goenka, M., and Chen, D. (2022a).
+\newblock Ditch the {Gold} {Standard}: {Re}-evaluating {Conversational} {Question} {Answering}.
+\newblock arXiv:2112.08812 [cs].
+
+\bibitem[Li et~al., 2022b]{li_dit_2022}
+Li, J., Xu, Y., Lv, T., Cui, L., Zhang, C., and Wei, F. (2022b).
 \newblock {DiT}: {Self}-supervised {Pre}-training for {Document} {Image} {Transformer}.
 \newblock arXiv:2203.02378 [cs].
 
-\bibitem[Li et~al., 2022b]{li_explanations_2022}
-Li, S., Chen, J., Shen, Y., Chen, Z., Zhang, X., Li, Z., Wang, H., Qian, J., Peng, B., Mao, Y., Chen, W., and Yan, X. (2022b).
+\bibitem[Li et~al., 2022c]{li_explanations_2022}
+Li, S., Chen, J., Shen, Y., Chen, Z., Zhang, X., Li, Z., Wang, H., Qian, J., Peng, B., Mao, Y., Chen, W., and Yan, X. (2022c).
 \newblock Explanations from {Large} {Language} {Models} {Make} {Small} {Reasoners} {Better}.
 \newblock arXiv:2210.06726 [cs].
 
@@ -253,6 +268,11 @@ Li, S., Chen, J., Shen, Y., Chen, Z., Zhang, X., Li, Z., Wang, H., Qian, J., Pen
 Li, X.~L. and Liang, P. (2021).
 \newblock Prefix-{Tuning}: {Optimizing} {Continuous} {Prompts} for {Generation}.
 \newblock arXiv:2101.00190 [cs].
+
+\bibitem[Lin, 2004]{lin_rouge_2004}
+Lin, C.-Y. (2004).
+\newblock {ROUGE}: {A} {Package} for {Automatic} {Evaluation} of {Summaries}.
+\newblock In {\em Text {Summarization} {Branches} {Out}}, pages 74--81, Barcelona, Spain. Association for Computational Linguistics.
 
 \bibitem[Ling et~al., 2023]{ling_domain_2023}
 Ling, C., Zhao, X., Lu, J., Deng, C., Zheng, C., Wang, J., Chowdhury, T., Li, Y., Cui, H., Zhang, X., Zhao, T., Panalkar, A., Cheng, W., Wang, H., Liu, Y., Chen, Z., Chen, H., White, C., Gu, Q., Pei, J., and Zhao, L. (2023).
@@ -352,6 +372,11 @@ Nishida, K., Saito, I., Otsuka, A., Asano, H., and Tomita, J. (2018).
 \bibitem[Owoicho et~al., 2022]{owoicho_trec_2022}
 Owoicho, P., Dalton, J., Aliannejadi, M., Azzopardi, L., Trippas, J.~R., and Vakulenko, S. (2022).
 \newblock {TREC} {CAsT} 2022: {Going} {Beyond} {User} {Ask} and {System} {Retrieve} with {Initiative} and {Response} {Generation}.
+
+\bibitem[Papineni et~al., 2002]{papineni_bleu_2002}
+Papineni, K., Roukos, S., Ward, T., and Zhu, W.-J. (2002).
+\newblock Bleu: a {Method} for {Automatic} {Evaluation} of {Machine} {Translation}.
+\newblock In {\em Proceedings of the 40th {Annual} {Meeting} of the {Association} for {Computational} {Linguistics}}, pages 311--318, Philadelphia, Pennsylvania, USA. Association for Computational Linguistics.
 
 \bibitem[Pereira et~al., 2022]{pereira_visconde_2022}
 Pereira, J., Fidalgo, R., Lotufo, R., and Nogueira, R. (2022).
@@ -487,6 +512,11 @@ Zhang, J., Zhang, H., Zhang, D., Liu, Y., and Huang, S. (2023a).
 Zhang, Q., Chen, S., Xu, D., Cao, Q., Chen, X., Cohn, T., and Fang, M. (2023b).
 \newblock A {Survey} for {Efficient} {Open} {Domain} {Question} {Answering}.
 \newblock In {\em Proceedings of the 61st {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} ({Volume} 1: {Long} {Papers})}, pages 14447--14465, Toronto, Canada. Association for Computational Linguistics.
+
+\bibitem[Zhang et~al., 2020]{zhang_bertscore_2020}
+Zhang, T., Kishore, V., Wu, F., Weinberger, K.~Q., and Artzi, Y. (2020).
+\newblock {BERTScore}: {Evaluating} {Text} {Generation} with {BERT}.
+\newblock arXiv:1904.09675 [cs].
 
 \bibitem[Zhao et~al., 2023]{zhao_survey_2023}
 Zhao, W.~X., Zhou, K., Li, J., Tang, T., Wang, X., Hou, Y., Min, Y., Zhang, B., Zhang, J., Dong, Z., Du, Y., Yang, C., Chen, Y., Chen, Z., Jiang, J., Ren, R., Li, Y., Tang, X., Liu, Z., Liu, P., Nie, J.-Y., and Wen, J.-R. (2023).

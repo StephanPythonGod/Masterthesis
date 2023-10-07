@@ -1,2 +1,141 @@
-This chapter is the evaluation of the proposed solution. It consists of laying out different possible solutions to the given problem.
+The previous chapter, Chapter \ref{chap:main}, introduced the main idea behind the architecture and its components. This chapter aims to evaluate the applicability of the established system in a real-world scenario. Section \ref{sec:data} describes the available data for the real-world scenario and delves into applied data augmentation techniques. Section \ref{sec:metrics} introduces the metrics used to evaluate the performance of the individual system components, as well as the complete \gls{convqa} system. These metrics are selected based on those used in related work. Section \ref{sec:setup} details the experimental setup, implementation specifics, and provides an implementation framework for similar use cases. Finally, Section \ref{sec:results} presents both quantitative and qualitative results from the experiments.
 
+\section{Data}
+\label{sec:data}
+
+\section{Evaluation Metrics}
+\label{sec:metrics}
+
+When it comes to Evaluation Metrics, it's important to differentiate between the components or models being evaluated. For the evaluation, we will categorize the evaluation scopes as follows:
+
+\begin{enumerate}
+    \item Retrieval
+    \item Answer Generation
+    \item Conversational Question Answering
+\end{enumerate}
+
+Evaluating the \gls{cqu} component is only possible with high quality human supervised datasets, therefore for the performance of the \gls{cqu} we refer to previously by other works performed benchmarks of the used zero-shot models. The exact metrics and paradigms for each individual evaluation will be discussed in the following sections.
+
+\subsection{Retrieval Evaluation}
+\label{subsec:retrieval-eval}
+
+Evaluating a Retriever largely depends on the use-case and the evaluation data available. Since the data introduced in Section \ref{sec:data} lacks a supervised dataset for $(question,\allowbreak passages)$ pairs, we will evaluate it using the synthetic dataset created, as also established in Section \ref{sec:data}. This dataset consists of $(question, passages)$ pairs, where for every question, there is an exact matching passage. Therefore, this dataset is essentially a binary task, where a passage is either the correct one or not. An alternative approach would be a graded relevance task, where each passage has a certain relevance score in relation to the question. However, for our use-case, we opted for the simpler metrics \gls{hr}@k and \gls{mrr}, instead of the Normalized Cumulative Gain (NDCG) used in benchmarks like BEIR \cite{thakur_beir_2021}. We chose these metrics because it's crucial for our system to retrieve the correct passage, and we don't have a relevance score for every passage in relation to every question.
+
+Given a pair of $(q,\hat{p})$, where $\hat{p}$ corresponds to the correct passage and $\forall q, \exists ! \hat{p} \in P$ and a retriever model $p_\eta(p|q) = \text{Score}(q,p)$ (as defined in Definition \ref{def:retrieval}) that assigns a score to every passage $p \in P$ in relation to the question $q$ is used. We can rank all passages based on their relevance to $q$. Each passage receives a rank $r_q,p$ based on its score in relation to $q$. These passages are then ranked in descending order of $r_q,p$, and the top $k$ passages are added to the retrieved set $R_q$.
+
+\begin{itemize}
+    \item \textbf{\gls{hr}@k} This metric calculates the proportion of questions for which the correct passage is retrieved within the top $k$ retrieved passages.
+    \begin{equation}
+        \text{HR@k} = \frac{1}{|Q|} \sum_{q \in Q} 
+        \begin{cases}
+            1 & \text{if } \hat{p}_q \in R_{q,k} \\
+            0 & \text{otherwise}
+        \end{cases}
+        \in [0,1]
+    \end{equation}
+    The \gls{hr}@k is a straightforward metric that provides a value between 0 and 1, with a higher value indicating the percentage of cases where the correct passage was retrieved within the top $k$ passages.
+    \item \textbf{\gls{mrr}} This metric computes the mean reciprocal rank of the correct passage. It is similar to \gls{hr}@k but considers the position of the correct passage $\hat{p}q$ within the ranking $R_q$.
+    \begin{equation}
+        \text{MRR} = \frac{1}{|Q|} \sum_{q \in Q} \frac{1}{r_{q,\hat{p}_q}} \in [0,1]
+    \end{equation}
+    In an ideal system, the \gls{mrr} would be 1, indicating that the correct passage is always retrieved in the first position ($r_{q,\hat{p}} = 1$) for all $q \in Q$.
+\end{itemize}
+
+In addition to the automatic evaluation on the synthetic dataset, there is a small supervised dataset for the retrieval task, introduced in Section \ref{sec:data}. The same metrics are used to evaluate the retrieval performance on this dataset, and the quantitative results will be reported separately.
+
+\subsection{Answer Generation Evaluation}
+\label{subsec:answer-generation-eval}
+
+Evaluating the task of answer generation, particularly the \gls{mrc} aspect of the reader component, presents challenges similar to those discussed for the retrieval task evaluation in Section \ref{subsec:retrieval-eval}. For automatic and manual evaluation, we will utilize the synthetic dataset generated in Section \ref{sec:data}. This dataset comprises triples of $(\text{question}, \text{passages}, \text{answer})$, where \textit{answer} refers to a gold answer that has been syntactically generated.
+
+In the context of a triple $(q, \hat{p}, \hat{a})$, where $\hat{p}$ corresponds to the correct passage and $\hat{a}$ corresponds to the correct answer in relation to a question $q$, we employ a reader model $p_\theta(a' \, | \, q, \hat{p}) := \hat{a}$ (as defined in Definition \ref{def:generation}) to predict the answer $\hat{a}$ given the question $q$ and the passage $\hat{p}$. The predicted answer $a'$ is then evaluated using the following metrics:
+
+\begin{itemize}
+    \item \textbf{BLUE-1:} This precision-oriented metric compares the occurrence of unigrams (words $w \in \hat{a}$) in the predicted answer $a'$ and the gold answer $\hat{a}$.
+    \begin{equation}
+        \text{BLUE-1} = \frac{\sum_{w \in a'} \min(\text{count}_{a'}(w), \text{count}_{\hat{a}}(w))}{\sum_{w \in a'} \text{count}_{a'}(w)} \in [0,1]
+    \end{equation}
+    Here, $\text{count}_{a'}(w)$ represents the number of occurrences of the word $w$ in the predicted answer $a'$. \gls{bleu} is particularly useful for evaluating extractive questions \cite{papineni_bleu_2002}.
+
+    \item \textbf{ROUGE-L:} This recall-oriented metric, especially \gls{rogue}-L, compares the longest common subsequence ($LCS$) between the predicted answer $a'$ and the gold answer $\hat{a}$.
+    \begin{align}
+        R_{LCS} &= \frac{LCS(\hat{a}, a')}{|\hat{a}|} \\
+        P_{LCS} &= \frac{LCS(\hat{a}, a')}{|a'|} \\
+        \text{ROUGE-L} &= \frac{(1+\beta^2)R_{LCS}P_{LCS}}{R_{LCS}+\beta^2P_{LCS}} \in [0,1]
+    \end{align}
+    Here, $\beta$ is a parameter to balance between precision and recall. Rouge operates similarly to \gls{bleu} but focuses on lexical matching \cite{lin_rouge_2004}.
+
+    \item \textbf{F1-BERTscore}: BERTscore is a \gls{s2s}-model-based evaluation metric for comparing two text fragments: $x$, which is the reference, and $\hat{x}$, which is the prediction. In this context, the predicted answer $a'$ is compared to the gold answer $\hat{a}$. Essentially, the score between two tokens, $a'_i$ and $\hat{a}_i$, is calculated as the inner product of their respective BERT embeddings: $\text{BERT}(a'_i)^T\text{BERT}(\hat{a}_i)$. For simplicity, we'll use the  $\text{BERT}(a'_i) \rightarrow a'_i$ in the following equations. The final scores of F1-BERTscore are weighted by the inverse document frequency (idf) of each word-piece token:
+
+    \begin{align}
+        P_{BERT} &= \frac{\sum_{a'_j\in a'} \text{idf}(a') \max_{\hat{a}_i \in \hat{a}} (\hat{a}_i^T a'_j)}{\sum_{a'_j\in a'} \text{idf}(a')} \\
+        R_{BERT} &= \frac{\sum_{\hat{a}_i \in \hat{a}} \text{idf}(\hat{a}_i) \max_{a'_j \in a'} (\hat{a}_i^T a'_j)}{\sum_{\hat{a}_i \in \hat{a}} \text{idf}(\hat{a}_i)} \\
+        F1_{BERT} &= \frac{2P_{BERT}R_{BERT}}{P_{BERT}+R_{BERT}}
+    \end{align}
+    
+    The advantage of F1-BERTscore lies in its reliance on semantic matching between the gold answer $\hat{a}$ and the predicted answer $a'$ rather than mere lexical matching \cite{zhang_bertscore_2020}.
+    
+
+    \item \textbf{Accuracy} This metric calculates the proportion of questions for which the predicted answer $a'$ matches the gold answer $\hat{a}$. 
+    \begin{equation}
+        \text{Accuracy} = \frac{1}{|Q|} \sum_{q \in Q} 
+        \begin{cases}
+            1 & \text{if } a' = \hat{a} \\
+            0 & \text{otherwise}
+        \end{cases}
+        \in [0,1]
+    \end{equation}
+    This metric is useful for evaluating question, answer realtions, where there is only one correct answer. In order to define if an answer is correct or not, the following approaches will be used:
+    \begin{itemize}
+        \item \textbf{LLM-based:} A \gls{llm} can be prompted to determine a binary value (0 or 1) indicating whether the underlying message of $a'$ and $\hat{a}$ matches. The prompt used is based on the work of \cite{kamalloo_evaluating_2023}:
+        \begin{quote}
+            \texttt{Question:} q \\
+            \texttt{Gold Answer:} $\hat{a}$ \\
+            \texttt{Predicted Answer:} a' \\
+            \texttt{Is the predicted answer correct?} Yes/No
+        \end{quote}
+        This appraoch is especially useful for evaluating generative questions, as it allows for semantic matching.
+        \item \textbf{Human-based:} A human evaluator is asked to assign a binary value of 0 or 1 to indicate whether there is a match in the underlying message of $a'$ and $\hat{a}$. 1 if the answer $a'$ covers the information from $\hat{a}$, and 0 if it does not. The evaluator is provided with the question $q$, the important passage $\hat{p}$, the gold answer $\hat{a}$, and the generated answer $a'$. This approach is particularly useful for evaluating generative questions and closely resembles real-world applications. For this thesis two evaluaters will receive the same 100 randomly sampled answers and will be asked to assign a binary value to each answer. The inter-rater agreement will be calculated using Cohen's Kappa \cite{cohen_coefficient_1960}. 
+    \end{itemize}
+\end{itemize}
+    
+Similar to the evaluation of the retrieval component, the same metrics are employed to evaluate the answer generation performance on the small supervised dataset introduced in Section \ref{sec:data}. The quantitative results will be reported separately.
+
+\subsection{Conversational Question Answering Evaluation}
+\label{subsec:convqa-eval}
+
+The most challenging aspect of evaluation within the context of the system developed here is assessing \gls{convqa} as a holistic system. Instead of presenting evaluation metrics in this section, we will explore the approaches for evaluating \gls{convqa}, and as final metrics, we will use those introduced in Sections \ref{subsec:answer-generation-eval} and \ref{subsec:retrieval-eval}. Generally, two approaches can be considered: 
+
+The first approach, known as \textbf{Manual Human Evaluation (\gls{mahueval})}, operates as follows:
+
+\begin{enumerate}
+    \item A human evaluator initiates a conversation with a question, either based on their own intuition or using provided questions from the supervised dataset. Evaluators are encouraged to pose context-dependent questions.
+    \item The evaluator continues the conversation, asking follow-up questions or engaging in a general discussion with the \gls{convqa}-System for 8-10 turns.
+    \item After the conversation, the evaluator has access to the retrieved passages $p$ for each turn and all other passages $P$ in the index. The evaluator assesses the answer provided by the system and the relevance of the retrieved passages $p$. They are required to provide the following information:
+        \begin{itemize}
+            \item \textit{Question Intent:} The evaluator specifies the intent of the question, which can be categorized as either \textit{extractive}, \textit{abstractive}, or \textit{boolean}.
+            \item \textit{Answer:} The evaluator assigns a binary value (0 or 1) to the system's answer. A score of 1 indicates a correct answer, while 0 represents an incorrect answer.
+            \item \textit{Passage:} The evaluator assigns a binary value (0 or 1) to the relevance of the retrieved passages $p$. A score of 1 indicates that the passages are relevant for generating the correct answer, while 0 indicates irrelevance.
+        \end{itemize}
+    \item Based on the provided scores, metrics for the retriever and reader will be calculated for each turn, the entire conversation history, and the entire dataset. \textit{Accuracy} will be computed for answers, and \textit{HR@k} will be computed for passages. All results will be grouped by turn, enabling deeper insights into the performance and errors of the system.
+\end{enumerate}
+
+To mitigate bias, human manual evaluations are conducted by two different evaluators. Each evaluator conducts 10 conversations with the system in the first round. In the second round, the evaluators initiate conversations with the first question from the 10 conversations of the other evaluator. This results in a total of 40 conversations and, ideally, 20 overlapping conversations that can be used to calculate inter-rater agreement \cite{cohen_coefficient_1960}.
+
+The second approach, \textbf{\gls{auev}}, operates as follows. In this approach, a synthetic dataset is provided, consisting of lists of triples $(q, \hat{p}, \hat{a})$, where each triple corresponds to one turn, and a list represents a conversation history $h \in H$:
+
+\begin{enumerate}
+    \item Initially, the system is presented with the first question $q_1$ from the conversation history. The response $a'_1$ is evaluated using the \textit{F1-BERTscore} in comparison to the gold answer $\hat{a}$ of the history $h$. This score is computed for each turn, assessing the system's response against the gold answer for that turn.
+    \item Subsequently, to mitigate the impact of an incorrect system response on the ongoing conversation, the following question (e.g., $q_2$) is augmented with the gold answer $\hat{a}_1$. This augmentation helps address missing information or coreference problems caused by an erroneous response. This method, originally introduced by Li et al. \cite{li_ditch_2022}, improves the automatic evaluation of \gls{convqa} systems. The model used to resolve the relationship between the gold answer and the question is the standard CQU model. Additionally, within the \gls{convqa} history, the answer $a'_1$ is replaced by the gold answer $\hat{a}_1$ for the CQU unit.
+    \item After enhancing the question, the system is tasked with generating a response $a'_2$ to the augmented question $q'_2$. Once again, the response $a'_2$ is evaluated using the \textit{F1-BERTscore} against the gold answer $\hat{a}_2$ from the history $h$.
+    \item Steps (2) and (3) are repeated until the end of the conversation history $h$.
+    \item All scores will be groupable by turn depth, enabling deeper insights into the performance and errors of the system.
+\end{enumerate}
+
+Both \gls{mahueval} and \gls{auev} will be employed to evaluate the \gls{convqa} system, and the results will be reported separately.
+
+\section{Experimental Setup and Implementation}
+\label{sec:setup}
+
+\section{Experimental Results}
+\label{sec:results}
