@@ -3,6 +3,65 @@ The previous chapter, Chapter \ref{chap:main}, introduced the main idea behind t
 \section{Data}
 \label{sec:data}
 
+To evaluate the proposed system architecture and framework discussed in Chapter \ref{chap:main}, we will implement and assess its performance using the PDFs of the University of Heidelberg's examination regulations (\gls{er}). The university provides these regulations on two separate websites: one in German\footnote{\url{https://www.uni-heidelberg.de/de/studium/studienorganisation/downloadcenter/studien-und-pruefungsordnungen}} and the other in English\footnote{\url{https://www.uni-heidelberg.de/courses/download/examination_rules_regulations.html}}. It's important to note that only the German \gls{er} holds legal authority, and in cases of ambiguity between the English translation and the German original, the German \gls{er} version takes precedence.
+
+Both websites offer structured access to the \gls{er} of nearly all faculties at the University of Heidelberg. However, it's worth mentioning that the German website is regularly updated, while the English version primarily contains outdated \gls{er}. Since there is no centralized source for accessing all English \gls{er}, the decission was made to utilize both the outdated English \gls{er} and the current German \gls{er} for this thesis. This decision aligns with the primary objective of this thesis, which is to demonstrate the \gls{poc} of the introduced framework. Obtaining the latest English \gls{er} of the University of Heidelberg is beyond the scope of this thesis.
+
+As part of the experiments outlined in Section \ref{sec:setup}, the knowledge source of the German \gls{er} will be translated. Additional details on this process can be found in Section \ref{subsec:index}.
+
+The two datasets (German/English) differ in their statistics. Therefore, Figure \ref{fig:er-german-stats} displays the number of documents per faculty regarding the German \gls{er}. Figure \ref{fig:er-english-stats} provides the same statistics for the English \gls{er} dataset. In general, the German dataset consists of 233 individual \gls{er}, while the English dataset contains only 151 individual \gls{er}. As observed, some faculties are overrepresented in both datasets, such as the philosophical faculty. The impact of the document distribution on the system will be discussed in Section \ref{sec:results}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Statistiken/PO_german_Document Count per Faculty.png}
+    \caption{Documents per Faculty of the German \gls{er} Dataset}
+    \label{fig:er-german-stats}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Statistiken/PO_english_Document Count per Faculty.png}
+    \caption{Documents per Faculty of the English \gls{er} Dataset}
+    \label{fig:er-english-stats}
+\end{figure}
+
+While the previous statistics described the underlying documents of the \gls{poc}, what's even more interesting are the statistics related to the final knowledge source of passages that will be used throughout the \gls{poc}. Details on how these passages have been extracted from the PDFs will be provided in Section \ref{subsec:index}. In this section, we will focus on the statistical analysis.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Statistiken/IndexGerman_Passages_Distribution.png}
+    \caption{Passages per Document of the German \gls{er} Dataset}
+    \label{fig:er-german-passage-document}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Statistiken/IndexGerman_Passage_Length_Statistics.png}
+    \caption{Passage Length Distribution of the German \gls{er} Dataset}
+    \label{fig:er-german-passage-length}
+\end{figure}
+Figure \ref{fig:er-german-passage-document} illustrates the distribution of passages across documents in the German dataset, offering insights into the diverse influence that documents can have on the knowledge source in terms of the number of passages. These differences in passages are mainly due to variations in the length of the examination regulations (\gls{er}). The total number of passages in the German dataset is 39,039, resulting in an average of 167.55 passages per document. In comparison, the English dataset has an average of 212.94 passages per document. The statistics for the translated dataset are similar to those of the German dataset. An apparent difference between these two datasets is that the distribution of German passages per document exhibits a slight camel-like shape with a local maximum, while the English distribution follows a clear Gaussian pattern. However, these distribution differences are not further evaluated, as we assume that they do not significantly impact the system's quality.
+
+Figure \ref{fig:er-english-passage-document} presents the same statistics for the English dataset. As observed, the English knowledge source is smaller (31,659 vs. 38,642) than the German one, which is expected given that the English dataset contains only 151 \gls{er} compared to the 233 German \gls{er}. Still, the average number of passages per document is higher in the English dataset, as mentioned earlier. The total number of passages in the knowledge source indicates a highly closed-domain scenario. For comparison, MS MARCO \cite{bajaj2016ms}, an often-used dataset for open-domain \gls{qa}, has a knowledge source comprising 3.2 million passages, with an average length of 442 characters and passages ranging from 19 to 1,167 characters.
+
+Figure \ref{fig:er-german-passage-length} depicts the distribution of passage lengths in the German dataset. It's evident that the majority of passages fall within the range of 200 to 350 characters. The same statistics for the English dataset are presented in Figure \ref{fig:er-english-passage-length}. As observed, they are quite similar. The shortest passage is 5 characters, as we applied a lower filter to the extracted passages. The longest passages are 1,300 characters long, also subjected to filtering. Considering statistics such as standard deviation, mean, and median, the English and German datasets do not significantly differ in terms of passage length.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Statistiken/IndexEnglish_Passages_Distribution.png}
+    \caption{Passages per Document of the English \gls{er} Dataset}
+    \label{fig:er-english-passage-document}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Statistiken/IndexEnglish_Passage_Length_Statistics.png}
+    \caption{Passage Length Distribution of the English \gls{er} Dataset}
+    \label{fig:er-english-passage-length}
+\end{figure}
+
+
 \section{Evaluation Metrics}
 \label{sec:metrics}
 
@@ -136,6 +195,83 @@ Both \gls{mahueval} and \gls{auev} will be employed to evaluate the \gls{convqa}
 
 \section{Experimental Setup and Implementation}
 \label{sec:setup}
+
+This section outlines the experimental setup and provides details on the implementation of the System Architecture and Framework introduced in Chapter \ref{chap:main}. First and foremost, we apply the theoretically outlined model ($M$) to create an implementation decision map. Figure \ref{fig:extract-pipeline-implementation-grid} illustrates a decision tree showcasing the possible implementations of the "Extract" pipeline. Figure \ref{fig:all-components-conrag-grid} displays the main components, namely the \textit{Retriever}, \textit{Reader}, and \textit{\gls{cqu}}, in a similar decision matrix, where each column represents a decision to be made during implementation. Opting not to make a decision is also a valid choice. Developing an implementation can then be easily achieved using a decision tree, as shown in Figure \ref{fig:example-implementation-tree}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/extract_pipeline.png}
+    \caption{Possible Implementations of the Extract Pipeline}
+    \label{fig:extract-pipeline-implementation-grid}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/all_components_conrag.png}
+    \caption{All Components of the System Architecture}
+    \label{fig:all-components-conrag-grid}
+\end{figure}
+
+\subsection{Extraction}
+\label{subsec:index}
+
+Figure \ref{fig:extract-pipeline-implementation} illustrates the extraction pipeline implemented for this thesis' \gls{poc}, resulting in the creation of the \textit{document model} of the passages forming the knowledge source. This pipeline comprises the following steps:
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/extract_implemented.png}
+    \caption{Implemented Extraction Pipeline}
+    \label{fig:extract-pipeline-implementation}
+\end{figure}
+
+\begin{enumerate}
+    \item \textit{Extract:} Visual extraction using the Google Cloud Vision API for PDF OCR\footnote{\url{https://cloud.google.com/vision/docs/pdf}}, followed by post-processing.
+    \item \textit{Passages:} Extraction of paragraphs using the NLTK tokenizer-based Text Splitter by Langchain\footnote{\url{https://python.langchain.com/docs/modules/data\_connection/document\_transformers/text\_splitters/split\_by\_token\#nltk}}, followed by filtering.
+    \item \textit{Translation:} Retaining the original data and providing translations from German to English using the Google Cloud Translation API\footnote{\url{https://cloud.google.com/translate/docs/overview}}.
+    \item \textit{Index:} A flat index, with each passage extended to include the title of the document.
+    \item \textit{Training Data:} Application of Automatic Question Generation, Automatic Answer Generation, and Automatic Conversation Generation using the Llama2-7b-chat and LeoLama-7b models quantized using GPTQ.
+\end{enumerate}
+
+\textbf{Extraction Pipeline:} In step (1), when given a PDF, the textual content of every page is extracted as plain text using OCR without paragraph awareness. This choice was made after simple qualitative experiments, which revealed that using direct methods leads to an unclean text corpus for the given PDFs. In the OCR, line breaks are detected and inserted as characters like \texttt{\textbackslash n}. The textual content of separate pages is concatenated using a linebreak character \texttt{\textbackslash n}. For post-processing, all \texttt{\textbackslash n} characters will be replaced by spaces \texttt{" "}. This process results in a fully concatenated text corpus for every PDF.
+
+In step (2), the NLTK-based Text Splitter receives a text corpus and identifies sentences in a first step based on punctuation. This list of sentences is then combined recursively to ensure it does not exceed the desired maximum length of 240 tokens. This choice of token length was made based on reference works and their chosen token lengths (see Section \ref{sec:related_work}). It's also important to consider the input token sizes of the later-implemented Reader components. If an identified sentence itself has more than 240 tokens, e.g., 400, it will still be kept as a 400-token-long passage. Misidentifying sentences can occur quickly, as in the case of a text like this, originally corresponding to a table, which cannot be easily split into sentences:
+
+\begin{quote}
+    \texttt{Coding reference Appendix 1: Semester 1 30 CPS A03-16-3 Semester 2 30 CP Semester 3 30 CPS Key qualifications: Patient Orientation, Consultation, Moderation / Presentation, English, Interdisciplinary Collaboration 4 CP 2 CP 4 CP Scientific Writing 1 Thematic Area I: Scientific Principles and Methods Scientific Writing ...}
+\end{quote}
+
+To ensure that passages do not exceed a maximum character length, identified passages will be truncated at the next empty space after reaching 1300 characters. For comparison and to understand the impact of this filtering on the knowledge source, Figure \ref{fig:er-german-passage-length-old} displays the distribution of passage lengths before filtering, compared to the distribution after filtering in Figure \ref{fig:er-german-passage-length}, which illustrates the influence of filtering. The filtering process removes outliers at 1300 characters, a decision that aligns with the later components of the system.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Statistiken/IndexGerman_Passage_Length_Statistics_old.png}
+    \caption{Passage Length Distribution of the German \gls{er} Dataset before Filtering}
+    \label{fig:er-german-passage-length-old}
+\end{figure}
+
+In Step (3), every passage of the German \gls{er} dataset is translated using the Google Translate API. This creates a third dataset in addition to the existing two, which are directly based on the document's language.
+
+The final Step (4) toward the \textit{knowledge source} is the index creation. To simplify the later \gls{rag} system, the decision was made not to use a hierarchical index structure. However, this could lead to problems when users need to find specific information within one document. To address this, all passages have the title of the document from which they were extracted concatenated to them in the following way:
+
+\begin{quotation}
+    \{passage\} + \texttt{ - } + \{documentName\}
+\end{quotation}
+
+This approach enables the retriever and reader to identify passages and their corresponding documents in a single step, as opposed to hierarchical index implementations that necessitate multiple steps and potentially multiple databases for embeddings and metadata of the passages. This method has been chosen because, in this use-case, the topic of a document can mostly be summarized by the document's title (e.g., \textit{Examination Regulation for the Master Data and Computer Science}, with some even including the date). Other use-cases may require hierarchical structures when the topic of a document cannot be summarized as precisely. For the translated dataset, the document name will be translated, as described in Step (3). The final \textit{knowledge source} for all three indices is stored in an Elasticsearch instance.
+
+\textbf{Data Augmentation} Step (5) of the extraction pipeline is the data augmentatio
+
+\subsection{Retriever}
+\label{subsec:retriever-impl}
+
+\textbf{Retriever Models} Zero-Shot only which models? Describe why those. Explain benchmarking approach.
+
+\subsection{Reader}
+\label{subsec:reader-impl}
+
+
+\subsection{CQU}
+\label{subsec:cqu-impl}
 
 \section{Experimental Results}
 \label{sec:results}
