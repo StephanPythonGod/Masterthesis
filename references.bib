@@ -1992,3 +1992,63 @@ author={Bajaj, Payal and Campos, Daniel and Craswell, Nick and Deng, Li and Gao,
 journal={arXiv preprint arXiv:1611.09268},
 year={2016}
 }
+
+@misc{pluster_leolm_2023,
+	title = {{LeoLM}: {Ein} {Impuls} für {Deutschsprachige} {LLM}-{Forschung} {\textbar} {LAION}},
+	url = {https://laion.ai/blog-de/leo-lm/},
+	urldate = {2023-10-17},
+	author = {Plüster, Björn},
+	month = sep,
+	year = {2023},
+	keywords = {Evaluation, german, LLM, Reader, Retrieval},
+	file = {LeoLM\: Ein Impuls für Deutschsprachige LLM-Forschung | LAION:/Users/lenert/Zotero/storage/7MPYDXA6/leo-lm.html:text/html},
+}
+
+
+@misc{muennighoff_sgpt_2022,
+	title = {{SGPT}: {GPT} {Sentence} {Embeddings} for {Semantic} {Search}},
+	shorttitle = {{SGPT}},
+	url = {http://arxiv.org/abs/2202.08904},
+	doi = {10.48550/arXiv.2202.08904},
+	abstract = {Decoder transformers have continued increasing in scale reaching hundreds of billions of parameters. Due to their scale the same decoder sets state-of-the-art results on various language tasks via prompting or fine-tuning. Yet, these large foundation models remain unusable for the related fields of semantic search and sentence embeddings. This prevents possibly new state-of-the-art results and forces organizations to train and maintain separate models. To this end, we propose SGPT to use decoders for sentence embeddings and semantic search via prompting or fine-tuning. At 5.8 billion parameters SGPT improves on the previously best sentence embeddings by a margin of 7\% and outperforms a concurrent method with 175 billion parameters as measured on the BEIR search benchmark. Code, models and result files are freely available at https://github.com/Muennighoff/sgpt.},
+	urldate = {2023-09-27},
+	publisher = {arXiv},
+	author = {Muennighoff, Niklas},
+	month = aug,
+	year = {2022},
+	note = {arXiv:2202.08904 [cs]},
+	keywords = {Computer Science - Artificial Intelligence, Computer Science - Computation and Language, Computer Science - Information Retrieval, Retrieval, LLM, OOD, Main},
+	annote = {Comment: 19 pages, 3 figures, 12 tables. v2 corrects a misreported nDCG@10 number for the SGPT-BE-5.8B model. v3 updates SGPT-BE-5.8B scores based on retrained models with larger batch sizes v4 removes a superfluous table. v5 adds OpenAI scores on USEB and makes the paper easier to read},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/RTAZ3T3I/Muennighoff - 2022 - SGPT GPT Sentence Embeddings for Semantic Search.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/WYMQ6JBQ/2202.html:text/html},
+}
+
+
+@misc{ouyang_training_2022,
+	title = {Training language models to follow instructions with human feedback},
+	url = {http://arxiv.org/abs/2203.02155},
+	doi = {10.48550/arXiv.2203.02155},
+	abstract = {Making language models bigger does not inherently make them better at following a user's intent. For example, large language models can generate outputs that are untruthful, toxic, or simply not helpful to the user. In other words, these models are not aligned with their users. In this paper, we show an avenue for aligning language models with user intent on a wide range of tasks by fine-tuning with human feedback. Starting with a set of labeler-written prompts and prompts submitted through the OpenAI API, we collect a dataset of labeler demonstrations of the desired model behavior, which we use to fine-tune GPT-3 using supervised learning. We then collect a dataset of rankings of model outputs, which we use to further fine-tune this supervised model using reinforcement learning from human feedback. We call the resulting models InstructGPT. In human evaluations on our prompt distribution, outputs from the 1.3B parameter InstructGPT model are preferred to outputs from the 175B GPT-3, despite having 100x fewer parameters. Moreover, InstructGPT models show improvements in truthfulness and reductions in toxic output generation while having minimal performance regressions on public NLP datasets. Even though InstructGPT still makes simple mistakes, our results show that fine-tuning with human feedback is a promising direction for aligning language models with human intent.},
+	urldate = {2023-12-19},
+	publisher = {arXiv},
+	author = {Ouyang, Long and Wu, Jeff and Jiang, Xu and Almeida, Diogo and Wainwright, Carroll L. and Mishkin, Pamela and Zhang, Chong and Agarwal, Sandhini and Slama, Katarina and Ray, Alex and Schulman, John and Hilton, Jacob and Kelton, Fraser and Miller, Luke and Simens, Maddie and Askell, Amanda and Welinder, Peter and Christiano, Paul and Leike, Jan and Lowe, Ryan},
+	month = mar,
+	year = {2022},
+	note = {arXiv:2203.02155 [cs]},
+	keywords = {Computer Science - Artificial Intelligence, Computer Science - Computation and Language, Computer Science - Machine Learning, Evaluation, LLM, Reader},
+	file = {arXiv Fulltext PDF:/Users/lenert/Zotero/storage/ENEICRNB/Ouyang et al. - 2022 - Training language models to follow instructions wi.pdf:application/pdf;arXiv.org Snapshot:/Users/lenert/Zotero/storage/QJ32PLF3/2203.html:text/html},
+}
+
+
+@misc{pluster_leolm_nodate,
+	title = {{LeoLM}: {Ein} {Impuls} für {Deutschsprachige} {LLM}-{Forschung} {\textbar} {LAION}},
+	shorttitle = {{LeoLM}},
+	url = {https://laion.ai/blog-de/leo-lm},
+	abstract = {{\textless}p{\textgreater}Lernen Sie LeoLM kennen, das erste offen und kommerziell verfügbare deutsche Foundation Language Model, das auf Llama-2 basiert.
+Unsere Modelle erweitern ...},
+	language = {en},
+	urldate = {2023-12-19},
+	year = {2023},
+	author = {Plüster, Björn},
+	keywords = {Evaluation, German, LLM},
+	file = {Snapshot:/Users/lenert/Zotero/storage/R4TYHLK6/leo-lm.html:text/html},
+}

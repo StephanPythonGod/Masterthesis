@@ -1,4 +1,4 @@
-The previous chapter, Chapter \ref{chap:main}, introduced the main idea behind the architecture and its components. This chapter aims to evaluate the applicability of the established system in a real-world scenario. Section \ref{sec:data} describes the available data for the real-world scenario and delves into applied data augmentation techniques. Section \ref{sec:metrics} introduces the metrics used to evaluate the performance of the individual system components, as well as the complete \gls{convqa} system. These metrics are selected based on those used in related work. Section \ref{sec:setup} details the experimental setup, implementation specifics, and provides an implementation framework for similar use cases. Finally, Section \ref{sec:results} presents both quantitative and qualitative results from the experiments.
+The previous chapter, Chapter \ref{chap:main}, layed out a holistic framework for \gls{convqa}. This chapter aims to evaluate the applicability of the established system in a real-world scenario. Section \ref{sec:data} describes the available data for the real-world scenario and delves into applied data augmentation techniques. Section \ref{sec:metrics} introduces the metrics used to evaluate the performance of the individual system components, as well as the complete \gls{convqa} system. These metrics are selected based on those used in related work. Section \ref{sec:setup} details the experimental setup, implementation specifics, and provides an implementation framework for similar use cases. Finally, Section \ref{sec:results} presents both quantitative and qualitative results from the experiments.
 
 \section{Data}
 \label{sec:data}
@@ -69,11 +69,11 @@ When it comes to Evaluation Metrics, it's important to differentiate between the
 
 \begin{enumerate}
     \item Retrieval
-    \item Answer Generation
+    \item Reader
     \item Conversational Question Answering
 \end{enumerate}
 
-Evaluating the \gls{cqu} component is only possible with high quality human supervised datasets, therefore for the performance of the \gls{cqu} we refer to previously by other works performed benchmarks of the used zero-shot models. The exact metrics and paradigms for each individual evaluation will be discussed in the following sections.
+Evaluating the \gls{cqu} component is only possible with high quality human supervised datasets, therefore for the performance of the \gls{cqu} section \ref{subsec:cqu-impl} refers to previously by other works performed benchmarks of the used zero-shot models. The exact metrics and paradigms for each individual evaluation will be discussed in the following sections.
 
 \subsection{Retrieval Evaluation}
 \label{subsec:retrieval-eval}
@@ -100,9 +100,7 @@ Given a pair of $(q,\hat{p})$, where $\hat{p}$ corresponds to the correct passag
     In an ideal system, the \gls{mrr} would be 1, indicating that the correct passage is always retrieved in the first position ($r_{q,\hat{p}} = 1$) for all $q \in Q$.
 \end{itemize}
 
-In addition to the automatic evaluation on the synthetic dataset, there is a small supervised dataset for the retrieval task, introduced in Section \ref{sec:data}. The same metrics are used to evaluate the retrieval performance on this dataset, and the quantitative results will be reported separately.
-
-\subsection{Answer Generation Evaluation}
+\subsection{Reader Evaluation}
 \label{subsec:answer-generation-eval}
 
 Evaluating the task of answer generation, particularly the \gls{mrc} aspect of the reader component, presents challenges similar to those discussed for the retrieval task evaluation in Section \ref{subsec:retrieval-eval}. For automatic and manual evaluation, we will utilize the synthetic dataset generated in Section \ref{sec:data}. This dataset comprises triples of $(\text{question}, \text{passages}, \text{answer})$, where \textit{answer} refers to a gold answer that has been syntactically generated.
@@ -158,8 +156,6 @@ In the context of a triple $(q, \hat{p}, \hat{a})$, where $\hat{p}$ corresponds 
     \end{itemize}
 \end{itemize}
     
-Similar to the evaluation of the retrieval component, the same metrics are employed to evaluate the answer generation performance on the small supervised dataset introduced in Section \ref{sec:data}. The quantitative results will be reported separately.
-
 \subsection{Conversational Question Answering Evaluation}
 \label{subsec:convqa-eval}
 
@@ -196,7 +192,7 @@ Both \gls{mahueval} and \gls{auev} will be employed to evaluate the \gls{convqa}
 \section{Experimental Setup and Implementation}
 \label{sec:setup}
 
-This section outlines the experimental setup and provides details on the implementation of the System Architecture and Framework introduced in Chapter \ref{chap:main}. First and foremost, we apply the theoretically outlined model ($M$) to create an implementation decision map. Figure \ref{fig:extract-pipeline-implementation-grid} illustrates a decision tree showcasing the possible implementations of the "Extract" pipeline. Figure \ref{fig:all-components-conrag-grid} displays the main components, namely the \textit{Retriever}, \textit{Reader}, and \textit{\gls{cqu}}, in a similar decision matrix, where each column represents a decision to be made during implementation. Opting not to make a decision is also a valid choice. Developing an implementation can then be easily achieved using a decision tree, as shown in Figure \ref{fig:example-implementation-tree}.
+This section outlines the experimental setup and provides details on the implementation of the System Architecture and Framework introduced in Chapter \ref{chap:main}. First and foremost, we apply the theoretically outlined model ($M$) to create an implementation decision map. Figure \ref{fig:extract-pipeline-implementation-grid} illustrates a decision tree showcasing the possible implementations of the \textit{Extract} pipeline. Figure \ref{fig:all-components-conrag-grid} displays the main components, namely the \textit{Retriever}, \textit{Reader}, and \textit{\gls{cqu}}, in a similar decision matrix, where each column represents a decision to be made during implementation. Opting not to make a decision is also a valid choice. Developing an implementation can then be easily achieved using a decision tree, as shown in Figure \ref{fig:example-implementation-tree}. For the implementation and benchmarking, ressources of the BwUniCluster\footnote{\url{https://wiki.bwhpc.de/e/BwUniCluster2.0}} have been used.
 
 \begin{figure}
     \centering
@@ -227,14 +223,14 @@ Figure \ref{fig:extract-pipeline-implementation} illustrates the extraction pipe
 \begin{enumerate}
     \item \textit{Extract:} Visual extraction using the Google Cloud Vision API for PDF OCR\footnote{\url{https://cloud.google.com/vision/docs/pdf}}, followed by post-processing.
     \item \textit{Passages:} Extraction of paragraphs using the NLTK tokenizer-based Text Splitter by Langchain\footnote{\url{https://python.langchain.com/docs/modules/data\_connection/document\_transformers/text\_splitters/split\_by\_token\#nltk}}, followed by filtering.
-    \item \textit{Translation:} Retaining the original data and providing translations from German to English using the Google Cloud Translation API\footnote{\url{https://cloud.google.com/translate/docs/overview}}.
+    \item \textit{Translation:} Retaining the original data and providing translations from German to English and English to German using the Google Cloud Translation API\footnote{\url{https://cloud.google.com/translate/docs/overview}}.
     \item \textit{Index:} A flat index, with each passage extended to include the title of the document.
     \item \textit{Training Data:} Application of Automatic Question Generation, Automatic Answer Generation, and Automatic Conversation Generation using the Llama2-7b-chat and LeoLama-7b models quantized using GPTQ.
 \end{enumerate}
 
 \textbf{Extraction Pipeline:} In step (1), when given a PDF, the textual content of every page is extracted as plain text using OCR without paragraph awareness. This choice was made after simple qualitative experiments, which revealed that using direct methods leads to an unclean text corpus for the given PDFs. In the OCR, line breaks are detected and inserted as characters like \texttt{\textbackslash n}. The textual content of separate pages is concatenated using a linebreak character \texttt{\textbackslash n}. For post-processing, all \texttt{\textbackslash n} characters will be replaced by spaces \texttt{" "}. This process results in a fully concatenated text corpus for every PDF.
 
-In step (2), the NLTK-based Text Splitter receives a text corpus and identifies sentences in a first step based on punctuation. This list of sentences is then combined recursively to ensure it does not exceed the desired maximum length of 240 tokens. This choice of token length was made based on reference works and their chosen token lengths (see Section \ref{sec:related_work}). It's also important to consider the input token sizes of the later-implemented Reader components. If an identified sentence itself has more than 240 tokens, e.g., 400, it will still be kept as a 400-token-long passage. Misidentifying sentences can occur quickly, as in the case of a text like this, originally corresponding to a table, which cannot be easily split into sentences:
+In step (2), the NLTK-based Text Splitter receives a text corpus and identifies sentences in a first step based on punctuation. This list of sentences is then combined recursively to ensure it does not exceed the desired maximum length of 240 tokens. This choice of token length was made based on reference works and their chosen token lengths (see Section \ref{sec:related_work}). It's also important to consider the input token sizes of the later-implemented Reader components. If an identified sentence itself has more than 240 tokens, e.g., 400, it will still be kept as a 400-token-long passage. Misidentifying sentences can occur quickly, e.g. text originally corresponding to a table, which cannot be easily split into sentences:
 
 \begin{quote}
     \texttt{Coding reference Appendix 1: Semester 1 30 CPS A03-16-3 Semester 2 30 CP Semester 3 30 CPS Key qualifications: Patient Orientation, Consultation, Moderation / Presentation, English, Interdisciplinary Collaboration 4 CP 2 CP 4 CP Scientific Writing 1 Thematic Area I: Scientific Principles and Methods Scientific Writing ...}
@@ -249,29 +245,93 @@ To ensure that passages do not exceed a maximum character length, identified pas
     \label{fig:er-german-passage-length-old}
 \end{figure}
 
-In Step (3), every passage of the German \gls{er} dataset is translated using the Google Translate API. This creates a third dataset in addition to the existing two, which are directly based on the document's language.
+In Step (3), every passage and all in Step (5) generated questions of the German and English \gls{er} dataset are translated using the Google Translate API. This creates a two more dataset in addition to the existing two, which are directly based on the document's language.
 
-The final Step (4) toward the \textit{knowledge source} is the index creation. To simplify the later \gls{rag} system, the decision was made not to use a hierarchical index structure. However, this could lead to problems when users need to find specific information within one document. To address this, all passages have the title of the document from which they were extracted concatenated to them in the following way:
+The final Step (4) toward the \textit{knowledge source} is the index creation. To simplify the later \gls{rag} system, the decision was made not to use a hierarchical index structure. However, this could lead to problems when users need to find specific information within one document and want to perform metadata-filtering. To address this, all passages have the title of the document from which they were extracted concatenated to them in the following way:
 
 \begin{quotation}
     \{passage\} + \texttt{ - } + \{documentName\}
 \end{quotation}
 
-This approach enables the retriever and reader to identify passages and their corresponding documents in a single step, as opposed to hierarchical index implementations that necessitate multiple steps and potentially multiple databases for embeddings and metadata of the passages. This method has been chosen because, in this use-case, the topic of a document can mostly be summarized by the document's title (e.g., \textit{Examination Regulation for the Master Data and Computer Science}, with some even including the date). Other use-cases may require hierarchical structures when the topic of a document cannot be summarized as precisely. For the translated dataset, the document name will be translated, as described in Step (3). The final \textit{knowledge source} for all three indices is stored in an Elasticsearch instance.
+This approach enables the retriever and reader to identify passages and their corresponding documents in a single step, as opposed to hierarchical index implementations that necessitate multiple steps and potentially multiple databases for embeddings and metadata of the passages. This method has been chosen because, in this use-case, the only utilized and easy extractable metadata of a document is a documents title (e.g., \textit{Examination Regulation for the Master Data and Computer Science}, with some even including the date). Other use-cases may require more complicated appraoches. For the translated datasets, the document name will be translated, as described in Step (3).
 
-\textbf{Data Augmentation} Step (5) of the extraction pipeline is the data augmentatio
+\textbf{Data Augmentation:} Step (5) of the extraction pipeline involves data augmentation. For \textit{Question Generation} based on a given passage, the few-shot approach from \textit{PROMPTAGATOR} \cite{dai_promptagator_2022} has been employed. For the English \gls{er} dataset, the following prompt is used to generate a question, given a passage and $i$ examples:
+
+\begin{quote}
+   \texttt{System Prompt:}\\
+    \texttt{You are an assistant generating one question given a context. Please start your generated question with the indicator 'Generated Question:' Here are some examples:} \\
+   \{i\}\texttt{-Example:} \\
+   \texttt{Context:} \{passage\} \\
+    \texttt{Generated Question:} \{question\} \\ \\
+    \texttt{User:} \\
+    \texttt{Generate the question based on the following context:}\\
+    \{passage\}
+\end{quote}
+
+The snippet in the System Prompt is looped four times to accommodate the number of examples. The examples represent different question types, which themeself indicate different answer types, in order to add some variety to the generated data. The used examples can be found in the appendix \ref{ref:appendixA-data-augmentation-few-shot-prompt}. The Prompt is generally designed to be used with a chat fine-tuned model, as it showed better results in a qualitative evaluation. For English question generation, the \textit{Llama2-7B-Chat-GPTQ}\footnote{\url{https://huggingface.co/TheBloke/Llama-2-7b-Chat-GPTQ}} is employed. It's a quantized version of the original Llama2-7B-Chat Model by Meta \cite{touvron_llama_2023}. For the German \gls{er}, the same prompt translated to English is used. For the German tasks, the \textit{Leo-Hessianai-7B-Chat-GPTQ}\footnote{\url{https://huggingface.co/TheBloke/leo-hessianai-7B-chat-GPTQ}} model is used, which is a quantized version of a German language fine-tuned Llama2-7B-Chat Model \cite{pluster_leolm_2023}.
+
+It's worth noting that the English Llama2-7B-Chat was capable of directly understanding the system prompt and generating questions with the indicator \texttt{Generated Question}, which made using the generated text easier. However, the German \gls{llm} struggled with this Few-Shot task and often generated multiple responses that didn't start with the indicator \texttt{Generierte Frage}. Additionally, the model sometimes included answers after the questions. To extract the single question from the generated text in the German \gls{llm} output, the text is cropped after a \texttt{:} and \texttt{?}, so the string enclosed by these characters is used as the question for a given passage. 
+
+The choice of Llama2-based models was based on their new state-of-the-art results in multiple benchmarks, as demonstrated by these models in the open-source \gls{llm} niche \cite{touvron_llama_2023}. Additionally, the work of Plüster et al. \cite{pluster_leolm_2023} on LeoLama opens the opportunity to compare the performance of German and English \gls{llm}s from the same family.
+
+For \textit{Answer Generation} the previously generated questions per passage are being used. In order to provide high quality answers, the choice was made to use gpt-3.5-turbo
 
 \subsection{Retriever}
 \label{subsec:retriever-impl}
 
-\textbf{Retriever Models} Zero-Shot only which models? Describe why those. Explain benchmarking approach.
+The implemented retrievers can be found in Figure \ref{fig:retriever-implementation}. Given the limited availability of (synthetic) data suitable for fine-tuning, the decision was made to exclusively utilize top-performing \gls{ood} zero-shot retrievers. Fine-tuning a model on such a small dataset could lead to a high risk of overfitting. To assess retriever performance, the synthetic dataset will be used for benchmarking. Among the top-performing retrievers from the BEIR benchmarks, the following three retrievers have been choosen:
+
+\begin{enumerate}
+    \item \textbf{BM25:} This employs the standard lexical-based best match algorithm with hyperparameters $k_1=1.5$, $b=0.75$, and $\epsilon=0.25$. It is implemented using the open-source project \textit{rank-bm25} \footnote{\url{https://github.com/dorianbrown/rank_bm25}}.
+    \item \textbf{BM25 + CE:} This uses a BM25 retriever in combination with a Cross-Encoder re-ranker, which serves as the baseline established in BEIR \cite{thakur_beir_2021}. This combination continues to perform as the state-of-the-art. The Cross-Encoder utilized is the same as the one in the BEIR baseline implementation: \textit{ms-marco-MiniLM-L-6-v2} \cite{wang_minilm_2020}, specifically the implementation provided on Hugging Face \footnote{\url{https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-6-v2}}. For German indices, a German version of \textit{ms-marco-MiniLM-L-6} is used: \textit{ms-marco-MiniLM-L-6-en-de-v1} \footnote{\url{https://huggingface.co/cross-encoder/msmarco-MiniLM-L6-en-de-v1}}.
+    \item \textbf{Large DPR:} For the large \gls{dpr}, the embedding model from OpenAI, \textit{text-embedding-ada-002} \footnote{\url{https://platform.openai.com/docs/models/embeddings}}, is employed. The parameter size of this model is estimated to be around 350 million parameters\cite{muennighoff_sgpt_2022}\footnote{As OpenAI does not publicly provide information on their model specs, there exists only estimates}.
+\end{enumerate}
+
+These retrievers have been implemented and evaluated based on the synthetic data, and the results are presented in Section \ref{sec:results}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/retriever_implemented.png}    
+    \caption{Implemented Retrievers}
+    \label{fig:retriever-implementation}
+\end{figure}
 
 \subsection{Reader}
 \label{subsec:reader-impl}
 
+The implemented readers can be found in Figure \ref{fig:reader-implementation}. Due to the limited hardware resources and high-quality data, the decision was made to only use zero-shot pre-trained \glspl{llm}s for the reader component and not fine-tune any. The following readers have been chosen:
+
+\begin{enumerate}
+    \item \textbf{gpt-3.5-turbo:} GPT 3.5 Turbo is part of the OpenAI chat completion family\footnote{\url{https://platform.openai.com/docs/models/gpt-3-5}}. Details on the parameters are not available. However, the latest published research by OpenAI indicates 175B parameters for the model on which GPT 3.5 Turbo was built. In general, the model is an \gls{llm} trained using human feedback on chat-like completion tasks \cite{ouyang_training_2022}. It accepts up to 4,096 tokens as input.
+    \item \textbf{Llama2-7B-Chat-GPTQ:} This is a quantized version of the original Llama2-7B-Chat Model by Meta \cite{touvron_llama_2023}. The model is an \gls{llm} trained on chat-instruction datasets \cite{ouyang_training_2022}. The model is available on Hugging Face\footnote{\url{https://huggingface.co/TheBloke/Llama-2-7b-Chat-GPTQ}}. The model is quantized using GPTQ \cite{muennighoff_sgpt_2022}. However, the provider did not report any benchmarks indicating the accuracy drop of the GPTQ version compared to the original. It accepts up to 4,096 tokens as input.
+    \item \textbf{leo-hessianai-7B-chat-GPTQ:} \textit{Linguistisch Erweitertes Offenes Language Model} (LeoLM) is a German tasks fine-tuned version of the original Llama2-7B-Chat model. The original Llama2 is fine-tuned on a large corpus of German language texts, and multiple adjustments are applied to overcome the problem of forgetting. This results in a maximum input token length of 8,000 tokens. In addition to original German chat instruction-based datasets, automatic translated English benchmark datasets are used as well. Benchmarking results indicate an increase in German language capabilities while maintaining English language task performance \cite{pluster_leolm_nodate}.
+\end{enumerate}
+
+Generally, \textbf{gpt-3.5-turbo} acts as a higher-end benchmark. It is a state-of-the-art \gls{llm} with high popularity in the media and developer community. \textbf{Llama2-7B-Chat-GPTQ} should be a hardware resource-efficient alternative pre-trained model, especially the quantized version that can run on consumer hardware. \textbf{leo-hessianai-7B-chat-GPTQ} is representative of a German native model, providing further insights into language dependencies and the performance of \gls{llm}s, as the use case involves multiple indices in German and English.
+
+Further approaches such as evaluating different fine-tuning approaches have been excluded, as they would open a huge problem field itself and can't be covered in an appropriate manner in this thesis. Therefore this thesis rather focuses on a holistic \gls{poc} to show and evaluate one possible implementation approach of the in Section \ref{chap:main} introduced framework using the mentioned \gls{llm}s.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/reader_implemented.png}
+    \caption{Implemented Readers}
+    \label{fig:reader-implementation}
+\end{figure}
 
 \subsection{CQU}
 \label{subsec:cqu-impl}
 
 \section{Experimental Results}
 \label{sec:results}
+
+\subsection{Data Augmentation Quality}
+\label{subsec:data-augmentation-quality}
+
+\subsection{Retrieval Results}
+\label{subsec:retrieval-results}
+
+\subsection{Reader Results}
+\label{subsec:reader-results}
+
+\subsection{Conversational Question Answering Results}
+\label{subsec:convqa-results}

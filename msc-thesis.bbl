@@ -348,6 +348,11 @@ Mishra, A. and Jain, S.~K. (2016).
 \newblock A survey on question answering systems with classification.
 \newblock {\em Journal of King Saud University - Computer and Information Sciences}, 28(3):345--361.
 
+\bibitem[Muennighoff, 2022]{muennighoff_sgpt_2022}
+Muennighoff, N. (2022).
+\newblock {SGPT}: {GPT} {Sentence} {Embeddings} for {Semantic} {Search}.
+\newblock arXiv:2202.08904 [cs].
+
 \bibitem[Nassiri and Akhloufi, 2023]{nassiri_transformer_2023}
 Nassiri, K. and Akhloufi, M. (2023).
 \newblock Transformer models used for text-based question answering systems.
@@ -374,6 +379,11 @@ Nishida, K., Saito, I., Otsuka, A., Asano, H., and Tomita, J. (2018).
 \newblock {ChatGPT} {Retrieval} {Plugin}.
 \newblock original-date: 2023-03-23T06:06:22Z.
 
+\bibitem[Ouyang et~al., 2022]{ouyang_training_2022}
+Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C.~L., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray, A., Schulman, J., Hilton, J., Kelton, F., Miller, L., Simens, M., Askell, A., Welinder, P., Christiano, P., Leike, J., and Lowe, R. (2022).
+\newblock Training language models to follow instructions with human feedback.
+\newblock arXiv:2203.02155 [cs].
+
 \bibitem[Owoicho et~al., 2022]{owoicho_trec_2022}
 Owoicho, P., Dalton, J., Aliannejadi, M., Azzopardi, L., Trippas, J.~R., and Vakulenko, S. (2022).
 \newblock {TREC} {CAsT} 2022: {Going} {Beyond} {User} {Ask} and {System} {Retrieve} with {Initiative} and {Response} {Generation}.
@@ -386,6 +396,14 @@ Papineni, K., Roukos, S., Ward, T., and Zhu, W.-J. (2002).
 \bibitem[Pereira et~al., 2022]{pereira_visconde_2022}
 Pereira, J., Fidalgo, R., Lotufo, R., and Nogueira, R. (2022).
 \newblock Visconde: {Multi}-document {QA} with {GPT}-3 and {Neural} {Reranking}.
+
+\bibitem[Plüster, 2023a]{pluster_leolm_2023}
+Plüster, B. (2023a).
+\newblock {LeoLM}: {Ein} {Impuls} für {Deutschsprachige} {LLM}-{Forschung} {\textbar} {LAION}.
+
+\bibitem[Plüster, 2023b]{pluster_leolm_nodate}
+Plüster, B. (2023b).
+\newblock {LeoLM}: {Ein} {Impuls} für {Deutschsprachige} {LLM}-{Forschung} {\textbar} {LAION}.
 
 \bibitem[PyPDF2, ]{noauthor_welcome_nodate}
 PyPDF2.
@@ -464,6 +482,11 @@ Voskarides, N., Li, D., Ren, P., Kanoulas, E., and de~Rijke, M. (2020).
 \newblock Query {Resolution} for {Conversational} {Search} with {Limited} {Supervision}.
 \newblock In {\em Proceedings of the 43rd {International} {ACM} {SIGIR} {Conference} on {Research} and {Development} in {Information} {Retrieval}}, pages 921--930.
 \newblock arXiv:2005.11723 [cs].
+
+\bibitem[Wang et~al., 2020]{wang_minilm_2020}
+Wang, W., Wei, F., Dong, L., Bao, H., Yang, N., and Zhou, M. (2020).
+\newblock {MiniLM}: {Deep} {Self}-{Attention} {Distillation} for {Task}-{Agnostic} {Compression} of {Pre}-{Trained} {Transformers}.
+\newblock arXiv:2002.10957 [cs].
 
 \bibitem[Wang, 2022]{wang_modern_2022}
 Wang, Z. (2022).
