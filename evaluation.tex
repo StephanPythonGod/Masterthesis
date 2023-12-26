@@ -275,7 +275,18 @@ It's worth noting that the English Llama2-7B-Chat was capable of directly unders
 
 The choice of Llama2-based models was based on their new state-of-the-art results in multiple benchmarks, as demonstrated by these models in the open-source \gls{llm} niche \cite{touvron_llama_2023}. Additionally, the work of Plüster et al. \cite{pluster_leolm_2023} on LeoLama opens the opportunity to compare the performance of German and English \gls{llm}s from the same family.
 
-For \textit{Answer Generation} the previously generated questions per passage are being used. In order to provide high quality answers, the choice was made to use gpt-3.5-turbo
+For \textit{Answer Generation}, the previously generated questions per passage are utilized. The \gls{llm} is prompted in the following manner:
+
+\begin{quote}
+    \texttt{System Prompt:}\\
+    \texttt{You are an assistant who generates gold answers for a given question and context.}\\
+    \texttt{User:}\\
+    \texttt{Generate the answer based on the following question and context:}\\
+    \texttt{Question:} \{question\} \\
+    \texttt{Context:} \{passage\}
+\end{quote}
+
+This prompt was applied in both German and English to generate gold answers for all datasets. A random selection of 2000 samples was drawn from the original German and English \gls{er} datasets and their translated versions, resulting in four selections of 2000 question-context pairs each\footnote{This sampling approach will also be employed later to mitigate the costs associated with the OpenAI API}. On this smaller selection, \textit{gpt-3.5-turbo} was employed with the mentioned prompt to generate high-quality question-context-answer triples. Additionally, \textit{leo-hessianai-7B-chat-GPTQ} and \textit{Llama2-7B-Chat-GPTQ} (See Section \ref{subsec:reader-impl}) were used to generate gold answers over the entire dataset. The sampled high-quality gold-answer sets will be employed in Section \ref{subsec:reader-results} to compare the gold-answer generation quality of the smaller models against the larger \textit{gpt-3.5-turbo} model. In order to extend the triples to contain not only the correct context, but also other high probable contexts per question, the large \gls{dpr} retriever (See Section \ref{subsec:retriever-impl}) was used per triple to retrieve the top 10 passages. Those were appended to the context of the triple. This will be used in the reader evaluation later.
 
 \subsection{Retriever}
 \label{subsec:retriever-impl}
@@ -284,7 +295,7 @@ The implemented retrievers can be found in Figure \ref{fig:retriever-implementat
 
 \begin{enumerate}
     \item \textbf{BM25:} This employs the standard lexical-based best match algorithm with hyperparameters $k_1=1.5$, $b=0.75$, and $\epsilon=0.25$. It is implemented using the open-source project \textit{rank-bm25} \footnote{\url{https://github.com/dorianbrown/rank_bm25}}.
-    \item \textbf{BM25 + CE:} This uses a BM25 retriever in combination with a Cross-Encoder re-ranker, which serves as the baseline established in BEIR \cite{thakur_beir_2021}. This combination continues to perform as the state-of-the-art. The Cross-Encoder utilized is the same as the one in the BEIR baseline implementation: \textit{ms-marco-MiniLM-L-6-v2} \cite{wang_minilm_2020}, specifically the implementation provided on Hugging Face \footnote{\url{https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-6-v2}}. For German indices, a German version of \textit{ms-marco-MiniLM-L-6} is used: \textit{ms-marco-MiniLM-L-6-en-de-v1} \footnote{\url{https://huggingface.co/cross-encoder/msmarco-MiniLM-L6-en-de-v1}}.
+    \item \textbf{BM25 + CE:} This uses a BM25 retriever in combination with a Cross-Encoder re-ranker, which serves as the baseline established in BEIR \cite{thakur_beir_2021}. This combination continues to perform as the state-of-the-art. The Cross-Encoder utilized is the same as the one in the BEIR baseline implementation: \textit{ms-marco-MiniLM-L-6-v2} \cite{wang_minilm_2020}, specifically the implementation provided on Hugging Face \footnote{\url{https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-6-v2}}. It has close to 17 million parameters. For German indices, a German version of \textit{ms-marco-MiniLM-L-6} is used: \textit{ms-marco-MiniLM-L-6-en-de-v1} \footnote{\url{https://huggingface.co/cross-encoder/msmarco-MiniLM-L6-en-de-v1}}.
     \item \textbf{Large DPR:} For the large \gls{dpr}, the embedding model from OpenAI, \textit{text-embedding-ada-002} \footnote{\url{https://platform.openai.com/docs/models/embeddings}}, is employed. The parameter size of this model is estimated to be around 350 million parameters\cite{muennighoff_sgpt_2022}\footnote{As OpenAI does not publicly provide information on their model specs, there exists only estimates}.
 \end{enumerate}
 
@@ -310,7 +321,24 @@ The implemented readers can be found in Figure \ref{fig:reader-implementation}. 
 
 Generally, \textbf{gpt-3.5-turbo} acts as a higher-end benchmark. It is a state-of-the-art \gls{llm} with high popularity in the media and developer community. \textbf{Llama2-7B-Chat-GPTQ} should be a hardware resource-efficient alternative pre-trained model, especially the quantized version that can run on consumer hardware. \textbf{leo-hessianai-7B-chat-GPTQ} is representative of a German native model, providing further insights into language dependencies and the performance of \gls{llm}s, as the use case involves multiple indices in German and English.
 
-Further approaches such as evaluating different fine-tuning approaches have been excluded, as they would open a huge problem field itself and can't be covered in an appropriate manner in this thesis. Therefore this thesis rather focuses on a holistic \gls{poc} to show and evaluate one possible implementation approach of the in Section \ref{chap:main} introduced framework using the mentioned \gls{llm}s.
+Additional approaches, such as evaluating different fine-tuning strategies, have been excluded, as they would open up a vast problem space that cannot be adequately covered within the scope of this thesis. Therefore, the thesis predominantly concentrates on a comprehensive \gls{poc} to demonstrate and evaluate one possible implementation approach of the framework introduced in Section \ref{chap:main}, utilizing the mentioned \gls{llm}s.
+
+However, to address specific questions in the evaluation (See Section \ref{subsec:reader-results}), such as \textit{How many contexts can the model receive and still determine the correct answer?}, the reader prompt was structured to accept multiple contexts as inputs to the question:
+
+\begin{quote}
+    \texttt{System Prompt:} \\
+    \texttt{You are an assistant who generates an answer given multiple contexts, which not necessarily contain the answer. You only respond to the "Assistant". Please generate an answer or state, "I can't provide an answer given the context." if you can not provide an answer based on the provided context.} \\
+    \texttt{User:} \\
+    \texttt{Please generate an answer for the following question:} \\
+    \{question\} \\
+    \texttt{Use the following contexts:} \\
+    for context in contexts: \\
+    \{context\} \\
+    \texttt{Assistant:} \\
+\end{quote}
+
+This prompt is applied consistently across all models. In cases where the model is applied on a German dataset, a German version of this prompt is utilized.
+
 
 \begin{figure}
     \centering
@@ -339,11 +367,11 @@ This section evaluates the implemented system and the introduced framework, usin
 
 As detailed in Section \ref{subsec:index}, the two main indices, namely \textit{indexEnglish} and \textit{indexGerman}, are based on the corresponding \gls{er}s. During the generation of the question-context datasets, qualitative issues arose when using \textit{leo-hessianai-7B-chat-GPTQ}. As indicated by System Prompt \ref{prompt:system-prompt-data-generation}, the model was prompted to start the generated answer after a defined indication text. In multiple cases, the German model \textit{leo-hessianai-7B-chat-GPTQ} was unable to fulfill this request, necessitating post-processing as described in Section \ref{subsec:index}. This issue was not present when using the English model \textit{Llama2-7B-Chat-GPTQ}. 
 
-In addition to this qualitative issue, a quantitative evaluation is possible when comparing the retrieval performance on both datasets and their translated versions: \textit{translated-indexEnglish} and \textit{translated-indexGerman}. The performance results of the large \gls{dpr} retriever are shown in Figure \ref{fig:synthetic-data-generation-performance-comparison}. They indicate, despite a small language performance gap, a significant difference in performance between the two indices \textit{indexEnglish} and \textit{indexGerman} and their corresponding translated versions. This suggests poorer question generation quality for \textit{indexGerman}, as observed in the following example:
+In addition to this qualitative issue, a quantitative evaluation is possible when comparing the retrieval performance on both datasets and their translated versions: \textit{translated-indexEnglish} and \textit{translated-indexGerman}. The performance results of the large \gls{dpr} retriever are shown in Figure \ref{fig:synthetic-data-generation-performance-comparison}. They indicate, despite a small language performance gap, a significant difference in performance between the two indices \textit{indexEnglish} and \textit{indexGerman} and their corresponding translated versions. Of course, a gap in question difficulty could also be the case, but as both models used the same examples, it can be assumed that they did not necessarily generate significantly different questions in terms of difficulty to answer (e.g., the English model could mainly generate extractive questions, which are easier to find the corresponding passage to). This can be excluded when taking a look at Figure \ref{fig:retriever-performance-bm25-vs-dpr}, this is indicating a high performance of the \textit{BM25} retriever which could relate to an at least keyword based close realtion between questions and passages, therefore easier extractive questions. This hypothesis can further be supported when taking a qualitative look at questions generated in the \textit{indexGerman}, an example:
 
 \begin{quote}
-% \begin{lstlisting}[breaklines, escapeinside={(*@}{@*)}]
-\begin{verbatim}
+    % \begin{lstlisting}[breaklines, escapeinside={(*@}{@*)}]
+    \begin{verbatim}
 Generierte Antwort:
 Was ist der Wert von $(4+5) \\times {(4+5) \\div {2 \\div {1 \\
 times {2}}}}$, wobei die mündliche Prüfung von einer Person 
@@ -355,16 +383,87 @@ liche Prüfung bekannt zu geben.\n\n(4) (5) Mündliche Prüfungen
 werden vor einer prüfenden Person in Gegenwart einer beisitzen-
 den Person gem. 6 Abs.\n\n4 abgelegt. - Prüfungsordnung Mathematik 
 MA (2022-10-05)
-\end{verbatim}
-% \end{lstlisting}
+    \end{verbatim}
+    % \end{lstlisting}
 \end{quote}
+
+This observation highlights a discernible zero-shot performance gap between the English model \textit{Llama2-7B-Chat-GPTQ} and the German model \textit{leo-hessianai-7B-chat-GPTQ}. Consequently, the subsequent evaluations will concentrate on the \textit{indexEnglish} and \textit{translated-indexEnglish} datasets.
+
+How does the gold-answer-generation performance differ between the models? 
 
 
 \subsection{Retrieval Results}
 \label{subsec:retrieval-results}
 
+The evaluation based on the described metrics (See Section \ref{sec:metrics}) delivers multiple insights:
+
+% TODO: Needs correction as soon as benchmark is done
+\begin{enumerate}
+    \item COMPARISON BM25 AND DPR 
+    % \item \textit{BM25}'s \gls{hr} increases continousely when $k$ increases, potentially reaching a $100\%$ accuracy at a certain $k$. \textit{\gls{dpr}} on the other side plateaus quite early, reaching a maximum \gls{hr} of $HR = 0.65$ at $k = 10$. An increase in $k$ (NEEDS CORRECTION) 
+    \item The ensemble of \textit{BM25-CE} outperforms the regular \textit{BM25} retriever for three out of four indices (all except for the \textit{indexGerman}) when considering small values of $k$. Figure \ref{fig:retriever-performance-bm25-vs-bm25-ce-mrr} compares the \gls{mrr} between the standard \textit{BM25} retriever and \textit{BM25-CE} retriever with the BM25 $k$-value set to 500. As the \textit{Reader} component ideally takes as small a set of passages as possible as input, the \textit{BM25-CE} retriever is the better choice. The internal $k$-value of the first stage \textit{BM25} retriever can be as large as possible, as it only improves the performance of the ensemble. However, depending on the dataset and use-case, an increasing $k$-value may not necessarily improve performance, as it seems to exist an upper performance limit in the cross-encoder component (See Figure \ref{fig:retriever-performance-bm25-ce-k}).
+    \item LANGUAGE COMPARISON BM25 AND DPR
+    \item In the comparison of \textit{BM25} and \gls{dpr} retrievers for different languages, the final choice of the \textit{Retriever} component should consider the best \gls{mrr} value for English and German datasets for $k \leq 10$. Figure \ref{fig:retriever-performance-best-retriever} compares \textit{BM25-CE-500} with the large \textit{\gls{dpr}} retriever over all datasets. The \gls{dpr} retriever significantly outperforms the \textit{BM25-CE-500} retriever for all datasets, indicating a high multi-language zero-shot performance of the \textit{text-embedding-ada-002} model by OpenAI. Nevertheless, considering the diffference in parameters (350 million vs. 17 million), the \textit{BM25-CE-500} retriever is a good alternative.
+\end{enumerate}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/BM25_vs_BM25_CE_MRR.png}
+    \caption{BM25 and BM25-CE MRR perfromance for $k = 10$}
+    \label{fig:retriever-performance-bm25-vs-bm25-ce-mrr}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/BM25_CE_k.png}
+    \caption{BM25-CE HR perfromance for different BM25 $k$-values}
+    \label{fig:retriever-performance-bm25-ce-k}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/de_vs_en.png}
+    \caption{DPR and BM25 performance comparison for indexEnglish and translated-indexEnglish}
+    \label{fig:retriever-performance-de-vs-en}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/best_retriever.png}
+    \caption{BM25-CE and DPR MRR perfromance for $k = 10$}
+    \label{fig:retriever-performance-best-retriever}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/BM25_DPR_1000.png}
+    \caption{BM25 and Large DPR performance comparison for $k = 1000$}
+    \label{fig:retriever-performance-bm25-vs-dpr}
+\end{figure}
+
+The influence of the Retriever component will be further evaluated in Section \ref{subsec:convqa-results}. Here the bottlenecks of the system will be identified and discussed.
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/BM25_vs_BM25_CE.png}
+%     \caption{BM25 and BM25-CE HR perfromance for $k = 10$}
+%     \label{fig:retriever-performance-bm25-vs-bm25-ce-hr}
+% \end{figure}
+
 \subsection{Reader Results}
 \label{subsec:reader-results}
+
+QUESTIONS I WANT TO ANSWER:
+
+\begin{enumerate}
+    \item How many context passages will still lead to a correct answer?
+    \item Is the order of the contexts important?
+    \item Can the reader identify if the correct context was not provided?
+    \item How much do the models differ in language?
+    \item How much better is OpenAI?
+\end{enumerate}
 
 \subsection{Conversational Question Answering Results}
 \label{subsec:convqa-results}
