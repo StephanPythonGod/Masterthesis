@@ -266,6 +266,7 @@ This approach enables the retriever and reader to identify passages and their co
     \texttt{User:} \\
     \texttt{Generate the question based on the following context:}\\
     \{passage\}
+    \label{prompt:system-prompt-data-generation}
 \end{quote}
 
 The snippet in the System Prompt is looped four times to accommodate the number of examples. The examples represent different question types, which themeself indicate different answer types, in order to add some variety to the generated data. The used examples can be found in the appendix \ref{ref:appendixA-data-augmentation-few-shot-prompt}. The Prompt is generally designed to be used with a chat fine-tuned model, as it showed better results in a qualitative evaluation. For English question generation, the \textit{Llama2-7B-Chat-GPTQ}\footnote{\url{https://huggingface.co/TheBloke/Llama-2-7b-Chat-GPTQ}} is employed. It's a quantized version of the original Llama2-7B-Chat Model by Meta \cite{touvron_llama_2023}. For the German \gls{er}, the same prompt translated to English is used. For the German tasks, the \textit{Leo-Hessianai-7B-Chat-GPTQ}\footnote{\url{https://huggingface.co/TheBloke/leo-hessianai-7B-chat-GPTQ}} model is used, which is a quantized version of a German language fine-tuned Llama2-7B-Chat Model \cite{pluster_leolm_2023}.
@@ -324,8 +325,40 @@ Further approaches such as evaluating different fine-tuning approaches have been
 \section{Experimental Results}
 \label{sec:results}
 
+This section evaluates the implemented system and the introduced framework, using metrics introduced in Section \ref{sec:metrics}. The evaluation covers the following components: \textit{Extraction}, especially synthetic data generation (Section \ref{subsec:data-augmentation-quality}), \textit{Retriever} (Section \ref{subsec:retrieval-results}), \textit{Reader} (Section \ref{subsec:reader-results}), and the complete \gls{convqa} system (Section \ref{subsec:convqa-results}). The evaluation is based on the synthetic dataset described in Section \ref{subsec:index}, generated from the dataset introduced in Section \ref{sec:data}.
+
 \subsection{Data Augmentation Quality}
 \label{subsec:data-augmentation-quality}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/hr_dpr_all_400.png}
+    \caption{Retriever performance comparison over all datasets}
+    \label{fig:synthetic-data-generation-performance-comparison}
+\end{figure}
+
+As detailed in Section \ref{subsec:index}, the two main indices, namely \textit{indexEnglish} and \textit{indexGerman}, are based on the corresponding \gls{er}s. During the generation of the question-context datasets, qualitative issues arose when using \textit{leo-hessianai-7B-chat-GPTQ}. As indicated by System Prompt \ref{prompt:system-prompt-data-generation}, the model was prompted to start the generated answer after a defined indication text. In multiple cases, the German model \textit{leo-hessianai-7B-chat-GPTQ} was unable to fulfill this request, necessitating post-processing as described in Section \ref{subsec:index}. This issue was not present when using the English model \textit{Llama2-7B-Chat-GPTQ}. 
+
+In addition to this qualitative issue, a quantitative evaluation is possible when comparing the retrieval performance on both datasets and their translated versions: \textit{translated-indexEnglish} and \textit{translated-indexGerman}. The performance results of the large \gls{dpr} retriever are shown in Figure \ref{fig:synthetic-data-generation-performance-comparison}. They indicate, despite a small language performance gap, a significant difference in performance between the two indices \textit{indexEnglish} and \textit{indexGerman} and their corresponding translated versions. This suggests poorer question generation quality for \textit{indexGerman}, as observed in the following example:
+
+\begin{quote}
+% \begin{lstlisting}[breaklines, escapeinside={(*@}{@*)}]
+\begin{verbatim}
+Generierte Antwort:
+Was ist der Wert von $(4+5) \\times {(4+5) \\div {2 \\div {1 \\
+times {2}}}}$, wobei die mündliche Prüfung von einer Person 
+abgenommen wird, die nicht prüft?
+
+Gegebener Kontext:
+Das Ergebnis ist der zu prüfenden Person im Anschluss an die münd-
+liche Prüfung bekannt zu geben.\n\n(4) (5) Mündliche Prüfungen 
+werden vor einer prüfenden Person in Gegenwart einer beisitzen-
+den Person gem. 6 Abs.\n\n4 abgelegt. - Prüfungsordnung Mathematik 
+MA (2022-10-05)
+\end{verbatim}
+% \end{lstlisting}
+\end{quote}
+
 
 \subsection{Retrieval Results}
 \label{subsec:retrieval-results}
