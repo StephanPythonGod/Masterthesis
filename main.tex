@@ -1,9 +1,9 @@
-This chapter outlines the methods and techniques employed in the development of a conversational question-answering system designed for the use with a collection of documents as knowledge source. The chapter is structured as follows: Section \ref{sec:overview} provides an overview of the desired use case, its objectives, and constraints concerning a Conversational Question Answering System. Section \ref{sec:conrag} presents a general framework that can be utilized as a decision tree for the practical implementation of a Conversational Question Answering System. Its subsections will highlight and discuss the components introduced within the framework.
+This chapter outlines the methods and techniques employed in the development of a conversational question-answering system designed for the use with a collection of documents as knowledge source. The chapter is structured as follows: Section \ref{sec:overview} provides an overview of the desired use case, its objectives, and constraints concerning a Conversational Question Answering System. Section \ref{sec:problem_statement} will introduce the fundamental document enquiry model and Section \ref{sec:conrag} presents a general framework that can be utilized for the implementation of a Conversational Question Answering System. Its subsections will highlight and discuss the components introduced within the framework.
 
 \section{Overview and Objective}
 \label{sec:overview}
 
-The primary use case addressed in this thesis can be summarized as follows: Imagine having a collection of PDF files, and our goal is to create a chatbot capable of engaging in conversations about the knowledge within these PDFs. This chatbot should provide accurate answers to questions based on the content of the PDFs and furnish supporting evidence from these documents. Furthermore, it should enable users to have a conversational query experience, allowing them to ask follow-up questions and engage in dialogue with the chatbot based on its previous responses. Figure \ref{fig:use-case} illustrates an example of this use case.
+The primary use case addressed in this thesis can be summarized as follows: Imagine having a collection of Documents, and our goal is to create a chatbot capable of engaging in conversations about the knowledge within these Documents. This chatbot should provide accurate answers to questions based on the content of the Documents and furnish supporting evidence from these documents. Furthermore, it should enable users to have a conversational query experience, allowing them to ask follow-up questions and engage in dialogue with the chatbot based on its previous responses. Figure \ref{fig:use-case} illustrates an example of this use case.
 
 \begin{figure}
     \centering
@@ -66,7 +66,7 @@ Answer 3: Either 04.08.1961 or 05.09.1962 I'm not sure.
 The intent of the question is fullfilled given answer 1, so the answer contains the information the user was looking for, when starting the search, but answer 2 misses the search intent. Answer 3 is somewhere inbetween, as it understands the search intent, but doesn't fullfill it correctly. Therefore intent can be summarized as the users true information need he had when generating a search query. Mathematically we define intent the following way:
 
 \begin{definition}
-    \textbf{(Intent)} Intent is an operation $\mathcal{I}(x, y)$ between two elements, which can either be two questions or a question and an answer. This operation returns a value between 0 and 1, which indicates the overlap of the two intents of $x$ and $y$, $\mathcal{I}(x, y) = [0,1]$ 
+    \textbf{(Intent)} Intent is an operation $\mathcal{I}(x, y)$ between two elements, which can either be two questions, answers or passages. This operation returns a value between 0 and 1, which indicates the overlap of the two intents of $x$ and $y$, $\mathcal{I}(x, y) = [0,1]$ 
     \label{def:intent}
 \end{definition}
 
@@ -94,7 +94,7 @@ In terms of conversations, we split an exchange between two agents into \textit{
 As we now have elaborated, what \textit{Questions}, \textit{Knowledge Source}, \textit{Answers} and \textit{History} are, we're ready to define the problem of \gls{convqa}:
 
 \begin{definition}
-    \textbf{(Conversational Question Answering Task)} Given a new question $q_{i+1}$ and a history $H$ with $i$-many turns $h$, a model ($\mathbf{M}$) should generate an answer $a_{i+1}$, based on the provided knowledge in the knowledge source $P$, which satisfies the search intent $i$ of $q_{i+1}$. Next to the answer $a_{i+1}$, $\mathbf{M}$ should return $p$ as evidence from $P$. Formally:
+    \textbf{(Conversational Question Answering Task)} Given a new question $q_{i+1}$ and a history $H$ with $i$-many turns $h$, a model ($\mathbf{M}$) should generate an answer $a_{i+1}$, based on the provided knowledge in the knowledge source $P$, which satisfies the search intent of $q_{i+1}$. Next to the answer $a_{i+1}$, $\mathbf{M}$ should return $p$ as evidence from $P$. Formally:
     \begin{align*}
         \mathbf{M}: (q_{i+1}, H, P) \rightarrow (a_{i+1}, p)
     \end{align*}
@@ -262,7 +262,7 @@ The sub-task of \textit{Inforamtion Extraction} was defined in the previous Sect
 \textbf{Information Extraction:} When it comes to extracting text from any document $d$, there are many approaches to choose from. Some extract structures, metadata, or similar, which can be further utilized, while others extract unstructured text only. In any case, this extraction process highly depends on the source document type. An HTML website requires different approaches and tools compared to a PDF, for instance. An example tool for direct extraction of PDFs is Py2PDF \cite{noauthor_welcome_nodate}. Regardless of the source document and tool used to extract textual information $C_d$, there are two major possible outcomes given a set of documents $D$:
 
 \begin{enumerate}
-    \item \textit{Structured Extraction:} Denoted as $f_{StrucExt}(\cdot)$, in this extraction operation, $C_d$ can be extracted into logical segments directly: $f_{StrucExt}(d) = \{c_{d_i} \subseteq C_d : i \in \{1, 2, \ldots, n\}, C_d = \bigcup_{i=1}^{n} c_{d_i}\}$. If $f_{StrucExt}$ is applied to all documents $d$ in $D$, the resulting set $C$ contains all the outputs of $f_{StrucExt}$ for each document in $D$. Formally, $f_{StrucExt}(D) := C = \{C_{d_1}, C_{d_2}, \dots, C_{d_m}\}$, where each document $d$ is transformed into a set of logical segments $C_{d_i}$ representing its content.
+    \item \textit{Structured Extraction:} Denoted as $f_{StrucExt}(\cdot)$, in this extraction operation, $C_d$ can be extracted into logical segments directly: $f_{StrucExt}(d) = \{c_{d_i} \subset C_d : i \in \{1, 2, \ldots, n\}, C_d = \bigcup_{i=1}^{n} c_{d_i}\}$. If $f_{StrucExt}$ is applied to all documents $d$ in $D$, the resulting set $C$ contains all the outputs of $f_{StrucExt}$ for each document in $D$. Formally, $f_{StrucExt}(D) := C = \{C_{d_1}, C_{d_2}, \dots, C_{d_m}\}$, where each document $d$ is transformed into a set of logical segments $C_{d_i}$ representing its content.
     \item \textit{Unstructured Extraction:} Denoted as $f_{UnstExt}(\cdot)$, when applied to $D$, it results in a concatenated text corpus $C_d = \{c_d\} $ containing the textual content of a document $d$: $f_{UnstExt}(D) := C = \{C_{d_1}, C_{d_2}, \dots, C_{d_n}\}$, where each document $d$ is transformed into a single text snippet $c_d$ representing its content.
 \end{enumerate}
 
@@ -285,21 +285,21 @@ These operations can be combined in a pipeline fashion. For example, first $f_p(
 \noindent\textbf{Synthetic Training Data Generation:} This can be interpreted as a knowledge distillation task. The main idea is to use a model $ED(\cdot)$ to generate a synthetic dataset for the sub-task and problem field of \textit{Passage Retrieval} and \textit{Response Generation}:
 
 \begin{equation}
-    \mathbf{ED(P) := (P, Q, I)}
+    ED(P) := (P, Q)
     \label{eq:task}
 \end{equation}
 
-Where $P = \{p_1, p_2, \dots, p_n\}$ corresponds to a corpus of passages to retrieve from, $Q$ is a set of questions, and $I$ is the underlying search intent for a question $q \in Q$. If $\mathcal{I}(q,p) = 1$, this means that the passage reflects the question's search intent. Given this task, there are several synthetic dataset types:
+Where $P = \{p_1, p_2, \dots, p_n\}$ corresponds to a corpus of passages to retrieve from and $Q$ is a set of questions. If $\mathcal{I}(q,p) = 1$, this means that the passage reflects the question's search intent. Given this task, there are several synthetic dataset types:
 
 \begin{enumerate}
-    \item \textit{Questions given Context} $ED_{qp}(p,I) := q_s$: Given a passage $p$, generate a synthetic question $q_s$ that satisfies the desired search intent $I$. Applying $ED_{qp}(P)$ to a set of passages will generate a set of questions $Q_s = \{q_1, q_2, \dots, q_n\}$, with one question for every passage, i.e., $|Q_s| = |P|$. $ED_{gq}$ can also be applied multiple times with different $i \in I$ to generate multiple different questions $q_{j,s,1}, q_{j,s,2}, \dots , q_{j,s,i}$ for a single passage $p_j$.
-    \item \textit{Question-Context-Answer Triples} $ED_{qpa}(p, I) := (q_s, p, a_s, I)$: Given a passage $p$, generate a synthetic question $q_s$ that satisfies the search intent $I$ and provides an answer $a_s$, where $\mathcal{I}(q_s, a_s, p) = 1$. The result of applying $ED_{qpa}(P)$ to a set of passages is a set of question-passage-answer triples $QPA_s = \allowbreak \{(q_{1,s}, p_1, a_{1,s}, I), \allowbreak (q_{2,s}, p_2, a_{2,s}, I), \allowbreak \dots, (q_{n,s}, p_n, a_{n,s}, I)\}$, where $|QPA_s| = |P|$. $ED_{qpa}$ can also be applied multiple times with different $i \in I$ to generate multiple different questions $q_{j,s,1}, \allowbreak q_{j,s,2}, \dots , q_{j,s,i}$ and corresponding answers $a_{j,s,1}, \allowbreak a_{j,s,2}, \dots , a_{j,s,i}$ for a single passage $p_j$.
+    \item \textit{Questions given Context} $ED_{qp}(p) := q_s$: Given a passage $p$, generate a synthetic question $q_s$ that satisfies the desired search intent. Applying $ED_{qp}(P)$ to a set of passages will generate a set of questions $Q_s = \{q_1, q_2, \dots, q_n\}$, with one question for every passage, i.e., $|Q_s| = |P|$. $ED_{qp}$ can also be applied multiple times with different intents to generate multiple different questions $q_{s,j,1}, q_{s,j,2}, \dots , q_{s,j,i}$ for a single passage $p_j$.
+    \item \textit{Question-Context-Answer Triples} $ED_{qpa}(p) := (q_s, p, a_s)$: Given a passage $p$, generate a synthetic question $q_s$ that satisfies the search intent and provides an answer $a_s$, where $\mathcal{I}(q_s, a_s) = 1 \land \mathcal{I}(q_s, p) = 1 \land \mathcal{I}(a_s, p) = 1$. The result of applying $ED_{qpa}(P)$ to a set of passages is a set of question-passage-answer triples $QPA_s = \allowbreak \{(q_{1,s}, p_1, a_{1,s}), \allowbreak (q_{2,s}, p_2, a_{2,s}), \allowbreak \dots, (q_{n,s}, p_n, a_{n,s})\}$, where $|QPA_s| = |P|$. $ED_{qpa}$ can also be applied multiple times with different intents to generate multiple different questions $q_{s,j,1}, \allowbreak q_{s,j,2}, \dots , q_{s,j,i}$ and corresponding answers $a_{s,j,1}, \allowbreak a_{s,j,2}, \dots , a_{s,j,i}$ for a single passage $p_j$.
 \end{enumerate}
 
 While the previous two approaches focus on single tuples of either $(q,p)$ or triples of $(q,p,a)$, there is also a problem field of generating conversations based on passages $P = \{p_1, p_2, \dots, p_n\}$ from the same underlying document $d$. Therefore, the task given in Equation \ref{eq:task} is changed to:
 
 \begin{equation}
-    \mathbf{ED(P) := (H, P, I)}
+    ED(P) := (H, P)
     \label{eq:task_conversation}
 \end{equation}
 
@@ -307,7 +307,7 @@ Where $H$ corresponds to a set of conversation histories $h$ containing multiple
 
 \begin{enumerate}
     \setcounter{enumi}{2} % Set the starting value to 3
-    \item \textit{Conversational Question-Context-Answer Histories} $ED_{cqpa}(E, I) := H_s$: Given a subset of passages $E \subset P$, the task of the model $ED_{cqpa}$ is it to construct a realistic conversation with an intent $I$ over the corpus $E$. The result of applying $ED_{cqpa}(E,I)$ on a set of passages is a set of conversation histories $H_s = \{h_1, h_2, \dots, h_n\}$. $ED_{cqpa}$ can also be applied multiple times with different $i \in I$ in order to generate multiple different conversations $h_{j,s,1}, h_{j,s,2} \dots , h_{j,s,i}$ for a single subset of passages $E \subset P$.
+    \item \textit{Conversational Question-Context-Answer Histories} $ED_{cqpa}(E) := H_s$: Given a subset of passages $E \subset P$, the task of the model $ED_{cqpa}$ is it to construct a realistic conversation with an intent over the corpus $E$. The result of applying $ED_{cqpa}(E)$ on a set of passages is a set of conversation histories $H_s = \{h_1, h_2, \dots, h_n\}$. $ED_{cqpa}$ can also be applied multiple times with different intents in order to generate multiple different conversations $h_{s,j,1}, h_{s,j,2} \dots , h_{s,j,i}$ for a single subset of passages $E \subset P$.
 \end{enumerate}
 
 There are several ways to implemnt the models $ED_{qp}$, $ED_{qpa}$ or $ED_{cqpa}$. Implementations of those appraoches will be discussed in Chapter \ref{chap:eval}. 
@@ -370,28 +370,30 @@ Explicit approaches consist of two operations:
     rel_{CQU}(x, q_{i+1}) &:= 
     \begin{cases}
         \begin{aligned}
-            & x \in C, & \text{if } x \text{ is relevant for } q_{i+1}\\
-            & x \not\in C, & \text{if }  x \text{ is not relevant for } q_{i+1}
+            & x \in C_{q_{i+1}}, & \text{if } x \text{ is relevant for } q_{i+1}\\
+            & x \not\in C_{q_{i+1}}, & \text{if }  x \text{ is not relevant for } q_{i+1}
         \end{aligned}
     \end{cases} \\
     rep_{CQU}(C, q_{i+1}) &:= q_c
 \end{align}
 
-Where $rel_{CQU}$ is an operation to determine, for a string $x \subset h_{i-k,i}$ (which can be a token, word, or snippet of a turn $h_{i-k,i}$), if it is relevant context to enrich the question $q_{i+1}$. If so, it is added to the context set $C$. The operation $rep_{CQU}$ works over $C$ and $q_{i+1}$ to rephrase and generate a contextualized question $q_c$.
+Where $rel_{CQU}$ is an operation to determine, for a string $x \subset h_{i-k,i}$ (which can be a token, word, or snippet of a turn $h_{i-k,i}$), if it is relevant context to enrich the question $q_{i+1}$. If so, it is added to the context set $C_{q_{i+1}}$. The operation $rep_{CQU}$ works over $C_{q_{i+1}}$ and $q_{i+1}$ to rephrase and generate a contextualized question $q_c$.
 
-The relevance operation can be implemented in multiple ways. Some include \gls{s2s} models or entity matching. The rephrasing operation is a typical \gls{mrc} summary task. It's inputs are the set of context relevant information $C$ and the question $q_{i+1}$. 
+The relevance operation can be implemented in multiple ways. Some include \gls{s2s} models or entity matching. The rephrasing operation is a typical \gls{mrc} summary task. It's inputs are the set of context relevant information $C_{q_{i+1}}$ and the question $q_{i+1}$. 
+
+TODO: COULD TALK ABOUT THE DIFFERENT FOLLOW-UP QUESTIONS
 
 \subsection{Retriever}
 \label{subsec:retriever}
 
-In Section \ref{sec:conrag}, we have divided the main task of a model $\mathbf{M}$ for \gls{convqa} into multiple sub-tasks. The Retriever component handles the \textit{Passage Retrieval} task. The goal of this component is to identify relevant passages $p$ from the knowledge source $P$ given a contextualized question $q_c$. The contextualized question $q_c$ is generated by the \gls{cqu} unit (see Section \ref{subsec:cqu}). Approaches using instead of $q_c$ the whole history $H$ for retrieval will not be discussed in this thesis. The identification of passages includes a scoring of relevance for each passage $p$ given a question $q_c$. The scoring function $p_{\text{Ret}}(p|q_c)$ can be defined as follows:
+In Section \ref{sec:conrag}, we have divided the main task of a model $\mathbf{M}$ for \gls{convqa} into multiple sub-tasks. The Retriever component handles the \textit{Passage Retrieval} task. The goal of this component is to identify relevant passages $p$ from the knowledge source $P$ given a contextualized question $q_c$. The contextualized question $q_c$ is generated by the \gls{cqu} unit (see Section \ref{subsec:cqu}). Approaches, which are using instead of $q_c$ the whole history $H$ for retrieval, will not be discussed in this thesis. The identification of passages includes a scoring of relevance for each passage $p$ given a question $q_c$. The scoring function $p_{\text{Ret}}(p|q_c)$ can be defined as follows:
 
 \begin{equation}
     p_{\text{Ret}}(p|q_c) = \text{Score}(q_c,p)
     \label{eq:retriever}
 \end{equation}
 
-Here, $\text{Score}(q_c,p)$ is a value determining the relevance of a passage $p$, enabling the ranking of passages $p$ given a question $q_c$. Based on the score, the passages will be ordered in descending order, and the top-$k$ passages will be combined into an evidence set $E_{q_c}$. Within the evidence set $E_{q_c}$, a passage $p$ will be represented as a tuple $(p, \text{Score}(q_c,p))$. Concerning the evidence set $E_{q_c}$ in relation to the question $q$ and the underlying search intent $i$, the following cases exist:
+Here, $\text{Score}(q_c,p)$ is a value determining the relevance of a passage $p$ in relation to $q_c$, enabling the ranking of passages $p$ given a question $q_c$. Based on the score, the passages will be ordered in descending order, and the top-$k$ passages will be combined into an evidence set $E_{q_c}$. Within the evidence set $E_{q_c}$, a passage $p$ will be represented as a tuple $(p, \text{Score}(q_c,p))$. Concerning the evidence set $E_{q_c}$ in relation to the question $q$ and the underlying search intent, the following cases exist:
 
 \begin{equation}
     \forall q \in Q, \exists! E_{q_c} \subset P  := 
@@ -432,7 +434,7 @@ Here, $\theta$ is the set of trainable parameters, and $\Theta$ is a set of adju
         \forall p \in P: \text{Score}(q_c, p) &= f(r_1(q_c, p), r_2(q_c, p), \dots, r_{|R|}(q_c, p))
     \end{align}
     
-    Here, $f(\cdot)$ represents a function that combines the scores of the individual retrievers $r_j$, for example, using $max(\cdot)$, and $R$ is a set of retrievers $r$.
+    Here, $f(\cdot)$ represents a function that combines the scores of the individual retrievers $r_j$, for example, using $max(\cdot)$. $R$ is a set of retrievers $r$.
     
     \item \textbf{Weighting}: This approach involves running two retrievers in parallel and multiplying their scores for each passage $p$. It can be seen as a sub-case of Ensemble. Formally:
     
@@ -471,7 +473,9 @@ The process of fine-tuning needs adaptation when using \textit{synthetically gen
     \item Filter $\mathcal{TD_s}$ using $r_{\text{Ret}, \theta}$ and $r_{\text{Ret}, \text{OOD}}$ by removing all tuples $(q_i, p_i^+)$ where $p_i^+$ is not in the Evidence set $E_i$, given a parameter $k$, for either $r_{\text{Ret}, \theta}$ or $r_{\text{Ret}, \text{OOD}}$.
 \end{enumerate}
 
-Figure \ref{fig:retriever-fine-tuning} illustrates the fine-tuning process with synthetic data. Steps (2) and (3) are repeated cyclically, with step (3) concluding each cycle. After $s$ epochs, $\mathcal{TD_s}$ is filtered once, retrained for $s$ epochs, refiltered, and finally trained again for $s$ epochs. This process may appear counterintuitive, as the retriever is trained on the dataset it's supposed to filter. However, experiments from related work \cite{dai_promptagator_2022} have demonstrated that this approach still yields favorable results.
+Figure \ref{fig:retriever-fine-tuning} illustrates the fine-tuning process with synthetic data. Steps (2) and (3) are repeated cyclically, with step (3) concluding each cycle. After $s$ epochs, $\mathcal{TD_s}$ is filtered once, retrained for $s$ epochs, refiltered, and finally trained again for $s$ epochs. This process may appear counterintuitive, as the retriever is trained on the dataset it's supposed to filter. However, experiments from related work \cite{dai_promptagator_2022} have demonstrated that this approach still yields favorable results. 
+
+Alternative approaches to filter synthetic datasets may rely solely on high-performing $r_{\text{Ret}, OOD}$. For a synthetic question $q_s$, the evidence set $E_{q_s}$ is generated using $r_{\text{Ret}, OOD}$ with high values for $k$. If $E_{q_s} = \emptyset$, the tuple $(q_s, p_s^+)$ is excluded from $\mathcal{TD_s}$. This approach is simpler but may result in a performance loss. It can be improved by incorporating multiple different high-performing $r_{\text{Ret}, OOD}$ and combining via union their evidence sets $E_{q_s}$.
 
 
 \begin{figure}
@@ -500,14 +504,58 @@ Here, a passage $p$ is only added to the evidence set $E_m$ if the intersection 
 In the retrieval process itself, the two tasks of metadata-filtering ($m_{\text{Ret}}$) and scoring ($p_{\text{Ret}}$) can be executed sequentially or combined. This depends on the implementation of the actual index. Some approaches towards metadata-filtering in \gls{convqa} are the following:
 
 \begin{enumerate}
-    \item \textbf{Metadata Passage Integration:} In this approach, the metadata $M_p$ is integrated into the \textit{content} of a passage $p$. This enables a one-step approach to retrieval. The retriever will perform scoring and metadata filtering simultaneously. However, in this approach, the original form of the metadata $M_p$, a collection of key-value pairs, will not be utilized. Instead, the metadata will be added implicitly (e.g., embedding addition) or explicitly (e.g., attaching keywords) to the \textit{content} of $p$, leading to a loss in the functionality of the metadata, which could cause issues.
+    \item \textbf{Metadata Passage Integration:} In this approach, the metadata $M_p$ is integrated into the \textit{content} of a passage $p$. This enables a one-step approach to retrieval. The retriever will perform scoring and metadata filtering simultaneously. However, in this approach, the original form of the metadata $M_p$, a collection of key-value pairs, will not be utilized. Instead, the metadata will be added implicitly (e.g., embedding addition) or explicitly (e.g., attaching keywords) to the \textit{content} of $p$, leading to a loss in the functionality of the metadata, which could cause issues like a not fully applied filtering.
     \item \textbf{Separate Metadata Index:} In this approach, two indices are created and utilized, one representing the passages' \textit{content} and the other representing the passages' metadata. During retrieval, the retriever follows a two-step approach. Ideally, the metadata-filtering task is executed first, and then the scoring task is performed on $E_m$: $E_{q_c} = p_{\text{Ret}}(m_{\text{Ret}}(q_c,P))$.
-    \item \textbf{Hierarchical Index:} The hierarchical index employs a scoring function $p_{\text{Ret}}$ as the metadata filter. In this approach, alongside the passage index, a secondary metadata index is utilized, typically representing the set of documents $D$. Instead of using $M_d$ as key-value pairs, a document $d$ is encoded in this index as \textit{content}, resembling a passage $p$. This \textit{content} may include a document summary, a concatenation of metadata keywords, or similar information. During retrieval, the retriever initially generates an evidence set $E_m$ by executing $p_{\text{Ret}}(q_c, D)$, followed by the execution of $p_{\text{Ret}}(q_c, E_m)$ to form the ultimate evidence set $E_{q_c}$: $E_{q_c} = p_{\text{Ret}}(p_{\text{Ret}}(q_c, D))$.
+    \item \textbf{Hierarchical Index:} The hierarchical index utilizes a scoring function $p_{\text{Ret}}$ as the metadata filter. In this approach, in addition to the passage index, a secondary metadata index is employed, typically representing the set of documents $D$. Instead of using $M_d$ as key-value pairs, a document $d$ is encoded in this index as \textit{content}, resembling a passage $p$. This \textit{content} may include a document summary, a concatenation of metadata keywords, or similar information. During retrieval, the retriever initially generates an evidence set $E_m$ by executing $p_{\text{Ret}}(q_c, D)$, followed by the execution of $p_{\text{Ret}}(q_c, E_m)$ to form the ultimate evidence set $E_{q_c}$: $E_{q_c} = p_{\text{Ret}}(p_{\text{Ret}}(q_c, D))$. This approach carries the same issues as (1) but is useful when the metadata $M_d$ are not simple entity or number-based values, but rather more complex information like a document summary.
 \end{enumerate}
 
 \subsection{Reader}
 \label{subsec:reader}
 
+The Reader component handles the \textit{Response Generation} task. The goal of this component is to extract an answer $a$ based on the evidence set $E_{q_c}$ given a question $q$. The answer $a$ can be a single token, a span of tokens, or a set of tokens. The answer extraction can be defined as follows: $r_{\text{Read}}(E_{q_c}, q) := a$. Depending on the desired utility of the Reader, the Reader can also incorporate \textit{Context Query Understanding} capabilities and therefore receive, in addition to the evidence set $E_{q_c}$ and question $q$, the history $H$ as input. This leads to the following two variations:
+
+\begin{align}
+    r_{\text{1-Reader}}(E_{q_c}, q_c) &:= a \label{eq:reader} \\
+    r_{\text{k-Reader}}(E_{q_{i,c}}, q_{i}, H) &:= a_{i} \label{eq:reader_context}
+\end{align}
+
+Enhancing the theoretical model $\mathbf{M}$ from Definition \ref{def:task} with the system requirements defined in Section \ref{sec:overview}, the challenges for the Reader component can be broken down to the following:
+
+\begin{enumerate}
+    \item Generate an answer $a$ based on the evidence set $E_{q_c}$ that satisfies the search intent $\mathcal{I}(q_c, a) = 1$.
+    \item As stated in Equation \ref{eq:evidence_cases}, there are three cases for the evidence set $E_{q_c}$ in relation to the question $q$ and the underlying search intent. The Reader component has to identify the case at hand and determine the final gold-evidence set $\hat{E}_{q_c} \subset E_{q_c}, \quad \mathcal{I}(q_c, \hat{E}_{q_c}) = 1$.
+    \item Identify ambiguity in questions $q_{i}$ and determine a corresponding clarification question $a_{i}$ which steers the user towards a more specific question in the next turn $i+1$.
+    \item Chatlike behaviour is expected for \gls{convqa}. This may include the ability of \textit{Contextual Query Understanding}, but also challenges like (3). In general this challenge describes the models capability to generate a human like conversation. 
+\end{enumerate}
+
+The first challenge (1) is closely related to the task \gls{mrc} and classical \gls{qa}. Let's assume that the evidence set is the perfect evidence set which it takes to answer question $q_c$: $E_{q_c} = \hat{E}_{q_c}$. The model from Equation \ref{eq:reader} can be easily trained with a supervised dataset. To fulfill this task, a dataset consisting of question-context-answer triples is necessary, where the context corresponds to $\hat{E}_{q_c}$ and therefore is a list of passages. Depending on the dataset, the model can even be trained to fulfill multiple question types. This can be achieved by varying the question types of the questions in the triples.
+
+The second challenge (2) is more complicated, as in a modular implementation, the Retriever will always pass an evidence set $E_{q_c}$ with a fixed length $|E_{q_c}| = k$ to the Reader. The Reader, therefore, has to incorporate its own mechanism of passage identification. This naturally leads to a trade-off that has to be made. Setting a small $k$-value for the Retriever may reduce the \gls{hr}, and therefore the correct passages won't necessarily be included in the evidence set $E_{q_c}$. On the other hand, the Reader can't handle an arbitrary number of passages, due to the nature of the underlying \textit{Transformer} models. Solutions to this problem may include:
+
+\begin{itemize}
+    \item \textbf{Re-Ranker:} The idea of Re-Rankers was already introduced in Section \ref{subsec:retriever}. Basically, before handing $E_{q_c}$ to the Reader, the evidence set is re-ranked by a second Retriever. This second Retriever can be a simple filter over the scores of the passages or an even more complex model than the first Retriever.
+    \item \textbf{Trained Reader:} The core of this idea is to train a Reader on a dataset consisting of question-context-answer triples, where the context is a list of passages, which not necessarily is the gold-evidence set $E_{q_c} \not= \hat{E}_{q_c}$. The Reader will learn to identify the correct passages and therefore can be used to filter the evidence set $E_{q_c}$ himself.
+    \item \textbf{Parametric Knowledge:} This approach is the fundamental idea of \gls{rag}. The underlying \textit{Transformer} of the Reader gets trained on the knowledge source $P$ to store implicitly the knowledge. This may lead to a better understanding of the evidence set $E_{q_c}$ and give the Reader the ability to access knowledge, which is not included in $E_{q_c}$ (e.g., when $\hat{p} \not\in E_{q_c}$). The fine-tuning itself is the common adoption of a \gls{prlm} to a small new knowledge source $P$. During fine-tuning the \gls{prlm} is tasked to predict the next token and therefore learn the knowledge source $P$ specific language and knowledge.
+\end{itemize}
+
+For the (3) challenge, the Reader must be able to determine ambiguous questions $q_{i}$ and generate a clarification question $a_i$. This task consists of two steps:
+
+\begin{enumerate}
+    \item \textbf{Identify Ambiguity:} Given a question $q_i$, the Reader $r_{\text{Read}}(\cdot)$ has to determine if the question $q_i$ is ambiguous. A question is ambiguous if there are multiple answers that would fulfill the question's search intent, but themselves satisfy different intents ($\mathcal{I}(q_{i}, a_{i,1}) = 1 \quad \allowbreak \land \quad \allowbreak \mathcal{I}(q_{i}, a_{i,2}) = 1 \quad \allowbreak \land \quad \allowbreak \mathcal{I}(a_{i,1},a_{i,2}) = 0$). The ambiguity in $q_i$ can either originate in a factoid ambiguity (e.g., $\mathcal{I}(q_{i}, p_1) = 1 \quad \land \quad \mathcal{I}(q_{i}, p_2) = 1 \quad \land \quad \mathcal{I}(p_1, p_2) = 0$) or a linguistic ambiguity (e.g., ambiguous cross-references).
+    \item \textbf{Resolve Ambiguity:} Given an ambiguous question $q_i$, the Reader $r_{\text{Read}}(\cdot)$ has to generate a clarification question $a_i$ that resolves the ambiguity via the user's next question $q_{i+1}$. Meaning that $\exists! a_{i+1} : \mathcal{I}(q_{c,i+1}, a_{i+1}) = 1$.
+\end{enumerate}
+
+As can be observed, \textit{Clarification Questions} can only be generated and resolved in a dialog and not a single-turn \gls{qa} scenario. Therefore, it is necessary to train a Reader on a conversational dataset. The dataset should be a history $H$ providing for every turn a quadruple of question-contexts-answer-ambiguity flag. The answer would be an annotated clarification question in case of a positive ambiguity flag. Therefore, the \textit{Transformer} model can be trained to identify ambiguity in a question given context and generate a clarification question.
+
+This history-based dataset leads to challenge (4) of a Reader in this thesis context. Challenge (4) is a more abstract requirement towards the reader. It requires the language and generated text to linguistically mimic the language and behavior humans would use in a conversation. In order to fine-tune a \textit{Transformer} model to be able to perform text generation which is more human conversation-like, a dataset of human conversation histories $H$ is needed. This involves a diverse set of training and fine-tuning strategies, which will not be discussed in this thesis. As a reference for this topic, the reader is referred to the work of Touvron et al. \cite{touvron_llama_2023}.
+
+As can be observed, the Reader's qualities in solving the challenges (1-4) depend highly on the training datasets and fine-tuning methods. The in this thesis defined challenges do not even cover every possible requirement someone could have towards their \gls{convqa} system. Natrually larger and more capable models have a higher zero-shot performance. However, as this thesis aims at providing a solution for ressource constrained systems (See Section \ref{sec:overview} Objective 5 of the \gls{qa} system), in the following an approach will be presented which is based on prompting and recoupeling of zero- or few-shot \gls{llm}s.
+
+\vspace{\baselineskip}
+
+\textbf{Chain-of-Thought Reader:} Inspired by the work of Wei et. al. \cite{wei_chain--thought_2023} and Kuhn et. al. \cite{kuhn_clam_2023} the divers task of a Reader can be broken down in a sequential decission based procedure.
+
+MIR KAM DIE IDEE, DIE KOMPLEXE AUFGABE VON EINEM READER IN KLEINE TEILAUFGABEN AUFZUTEILEN UND DIESE JEWEILS AN EIN LLM ZU PROMPTEN. MIT GERTZ DISKUTIEREN, WENN DANN HEIR AUSARBEITEN UND AUF FUTURE WORK VERWEISEN, WENN READER SICH ALS BOTTLENECK ERWEIST.
 
 % \section{Question Answering over PDFs}
 % \label{sec:qa-over-pdfs}

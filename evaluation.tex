@@ -327,7 +327,7 @@ However, to address specific questions in the evaluation (See Section \ref{subse
 
 \begin{quote}
     \texttt{System Prompt:} \\
-    \texttt{You are an assistant who generates an answer given multiple contexts, which not necessarily contain the answer. You only respond to the "Assistant". Please generate an answer or state, "I can't provide an answer given the context." if you can not provide an answer based on the provided context.} \\
+    \texttt{You are an assistant who generates an answer given multiple contexts, which not necessarily contain the answer. You only respond to the 'Assistant'. Please generate an answer or state, 'I can't provide an answer given the context.' if you can not provide an answer based on the provided context.} \\
     \texttt{User:} \\
     \texttt{Please generate an answer for the following question:} \\
     \{question\} \\
@@ -367,7 +367,7 @@ This section evaluates the implemented system and the introduced framework, usin
 
 As detailed in Section \ref{subsec:index}, the two main indices, namely \textit{indexEnglish} and \textit{indexGerman}, are based on the corresponding \gls{er}s. During the generation of the question-context datasets, qualitative issues arose when using \textit{leo-hessianai-7B-chat-GPTQ}. As indicated by System Prompt \ref{prompt:system-prompt-data-generation}, the model was prompted to start the generated answer after a defined indication text. In multiple cases, the German model \textit{leo-hessianai-7B-chat-GPTQ} was unable to fulfill this request, necessitating post-processing as described in Section \ref{subsec:index}. This issue was not present when using the English model \textit{Llama2-7B-Chat-GPTQ}. 
 
-In addition to this qualitative issue, a quantitative evaluation is possible when comparing the retrieval performance on both datasets and their translated versions: \textit{translated-indexEnglish} and \textit{translated-indexGerman}. The performance results of the large \gls{dpr} retriever are shown in Figure \ref{fig:synthetic-data-generation-performance-comparison}. They indicate, despite a small language performance gap, a significant difference in performance between the two indices \textit{indexEnglish} and \textit{indexGerman} and their corresponding translated versions. Of course, a gap in question difficulty could also be the case, but as both models used the same examples, it can be assumed that they did not necessarily generate significantly different questions in terms of difficulty to answer (e.g., the English model could mainly generate extractive questions, which are easier to find the corresponding passage to). This can be excluded when taking a look at Figure \ref{fig:retriever-performance-bm25-vs-dpr}, this is indicating a high performance of the \textit{BM25} retriever which could relate to an at least keyword based close realtion between questions and passages, therefore easier extractive questions. This hypothesis can further be supported when taking a qualitative look at questions generated in the \textit{indexGerman}, an example:
+In addition to this qualitative issue, a quantitative evaluation is possible when comparing the retrieval performance on both datasets and their translated versions: \textit{translated-indexEnglish} and \textit{translated-indexGerman}. The performance results of the large \gls{dpr} retriever are shown in Figure \ref{fig:synthetic-data-generation-performance-comparison}. They indicate, despite a small language performance gap, a significant difference in performance between the two indices \textit{indexEnglish} and \textit{indexGerman} and their corresponding translated versions. Of course, a gap in question difficulty could also be the case, but as both models used the same examples, it can be assumed that they did not necessarily generate significantly different questions in terms of difficulty to answer (e.g., the English model could mainly generate extractive questions, which are easier to find the corresponding passage to). This can be excluded when taking a look at Figure \ref{fig:retriever-performance-bm25-vs-dpr}, this is indicating a higher performance of the \textit{BM25} retriever on the original datasets in comparison to the translated ones, whhich indicates at least keyword based close realtion between questions and passages, therefore easier extractive questions. This hypothesis can further be supported when taking a qualitative look at questions generated in the \textit{indexGerman}, an example:
 
 \begin{quote}
     % \begin{lstlisting}[breaklines, escapeinside={(*@}{@*)}]
@@ -387,9 +387,11 @@ MA (2022-10-05)
     % \end{lstlisting}
 \end{quote}
 
-This observation highlights a discernible zero-shot performance gap between the English model \textit{Llama2-7B-Chat-GPTQ} and the German model \textit{leo-hessianai-7B-chat-GPTQ}. Consequently, the subsequent evaluations will concentrate on the \textit{indexEnglish} and \textit{translated-indexEnglish} datasets.
+This observation highlights a zero-shot performance gap between the English model \textit{Llama2-7B-Chat-GPTQ} and the German model \textit{leo-hessianai-7B-chat-GPTQ}. Consequently, the subsequent evaluations will concentrate on the \textit{indexEnglish} and \textit{translated-indexEnglish} datasets.
 
-How does the gold-answer-generation performance differ between the models? 
+Regarding the gold-answer-generation performance Figure \ref{fig:reader-all-overview-performance} provides some insights. The values for $context length = 1$ give insights how close the smaller models are to the performance of \textit{gpt-3.5-turbo} when it comes to gold-answer-generation. It can be observed, that \textit{Llama2-7B-Chat-GPTQ} in general outperforms the German model \textit{leo-hessianai-7B-chat-GPTQ}. 
+
+HOW GOOD IS THE LARGE SET OF GOLD 
 
 
 \subsection{Retrieval Results}
@@ -397,53 +399,79 @@ How does the gold-answer-generation performance differ between the models?
 
 The evaluation based on the described metrics (See Section \ref{sec:metrics}) delivers multiple insights:
 
+
 % TODO: Needs correction as soon as benchmark is done
 \begin{enumerate}
-    \item COMPARISON BM25 AND DPR 
-    % \item \textit{BM25}'s \gls{hr} increases continousely when $k$ increases, potentially reaching a $100\%$ accuracy at a certain $k$. \textit{\gls{dpr}} on the other side plateaus quite early, reaching a maximum \gls{hr} of $HR = 0.65$ at $k = 10$. An increase in $k$ (NEEDS CORRECTION) 
-    \item The ensemble of \textit{BM25-CE} outperforms the regular \textit{BM25} retriever for three out of four indices (all except for the \textit{indexGerman}) when considering small values of $k$. Figure \ref{fig:retriever-performance-bm25-vs-bm25-ce-mrr} compares the \gls{mrr} between the standard \textit{BM25} retriever and \textit{BM25-CE} retriever with the BM25 $k$-value set to 500. As the \textit{Reader} component ideally takes as small a set of passages as possible as input, the \textit{BM25-CE} retriever is the better choice. The internal $k$-value of the first stage \textit{BM25} retriever can be as large as possible, as it only improves the performance of the ensemble. However, depending on the dataset and use-case, an increasing $k$-value may not necessarily improve performance, as it seems to exist an upper performance limit in the cross-encoder component (See Figure \ref{fig:retriever-performance-bm25-ce-k}).
-    \item LANGUAGE COMPARISON BM25 AND DPR
-    \item In the comparison of \textit{BM25} and \gls{dpr} retrievers for different languages, the final choice of the \textit{Retriever} component should consider the best \gls{mrr} value for English and German datasets for $k \leq 10$. Figure \ref{fig:retriever-performance-best-retriever} compares \textit{BM25-CE-500} with the large \textit{\gls{dpr}} retriever over all datasets. The \gls{dpr} retriever significantly outperforms the \textit{BM25-CE-500} retriever for all datasets, indicating a high multi-language zero-shot performance of the \textit{text-embedding-ada-002} model by OpenAI. Nevertheless, considering the diffference in parameters (350 million vs. 17 million), the \textit{BM25-CE-500} retriever is a good alternative.
+    \item Overall, the out-of-domain zero-shot performance of the large \gls{dpr} outperforms BM25 for all $k$-values, indices and languages. This can be observed in Figure \ref{fig:retriever-performance-bm25-vs-dpr}.
+    \item The ensemble of \textit{BM25-CE} outperforms the regular \textit{BM25} retriever for three out of four indices (all except for the \textit{indexGerman}) when considering small values of $k$. Figure \ref{fig:retriever-performance-bm25-vs-bm25-ce-mrr} compares the \gls{mrr} between the standard \textit{BM25} retriever and \textit{BM25-CE} retriever with the BM25 $k$-value set to 500. As the \textit{Reader} component ideally takes as small a set of passages as possible as input, the \textit{BM25-CE} retriever is the better choice. The internal $k$-value of the first stage \textit{BM25} retriever can be as large as possible, as it only improves the performance of the Re-Ranker. However, depending on the dataset and use-case, an increasing $k$-value may not necessarily improve performance, as it seems to exist an upper performance limit in the cross-encoder component.
+    \item Figure \ref{fig:retriever-performance-bm25-ce-k} compares different \textit{BM25-CE} Re-Ranker settings over the \textit{indexEnglish} index. It can be observed, that an increase in the first-stage Retriever's $k$-value does at some point not longer increase the performance of the Re-Ranker. This is true for the \gls{mrr} and \gls{hr}.
+    
+    \item In the comparison of \textit{BM25} and \textit{\gls{dpr}} retrievers for different languages, the final choice of the \textit{Retriever} component should consider the best \gls{mrr} value for English and German datasets for $k \leq 10$. Figure \ref{fig:retriever-performance-best-retriever} compares \textit{BM25-CE-500} with the large \textit{\gls{dpr}} retriever over all datasets. The \gls{dpr} retriever significantly outperforms the \textit{BM25-CE-500} retriever for all datasets, indicating a high multi-language zero-shot performance of the \textit{text-embedding-ada-002} model by OpenAI. Nevertheless, considering the diffference in parameters (350 million vs. 17 million), the \textit{BM25-CE-500} retriever is a good alternative.
 \end{enumerate}
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/BM25_vs_BM25_CE_MRR.png}
-    \caption{BM25 and BM25-CE MRR perfromance for $k = 10$}
-    \label{fig:retriever-performance-bm25-vs-bm25-ce-mrr}
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/Data_Generation/BM25_vs_BM25_CE_MRR.png}
+        \captionsetup{width=.9\linewidth}
+        \caption{BM25 and BM25-CE MRR performance for $k = 10$}
+        \label{fig:retriever-performance-bm25-vs-bm25-ce-mrr}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/Data_Generation/BM25_CE_k.png}
+        \captionsetup{width=.9\linewidth}
+        \caption{BM25-CE HR performance for different BM25 $k$-values}
+        \label{fig:retriever-performance-bm25-ce-k}
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/Data_Generation/best_retriever.png}
+        \captionsetup{width=.9\linewidth}
+        \caption{BM25-CE and DPR MRR performance for $k = 10$}
+        \label{fig:retriever-performance-best-retriever}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/Data_Generation/BM25_DPR_1000.png}
+        \captionsetup{width=.9\linewidth}
+        \caption{BM25 and Large DPR performance comparison for $k = 1000$}
+        \label{fig:retriever-performance-bm25-vs-dpr}
+    \end{subfigure}
+    \caption{Multiple Retriever Performance Comparisons}
+    \label{fig:retriever-performance}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/BM25_CE_k.png}
-    \caption{BM25-CE HR perfromance for different BM25 $k$-values}
-    \label{fig:retriever-performance-bm25-ce-k}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/BM25_vs_BM25_CE_MRR.png}
+%     \caption{BM25 and BM25-CE MRR perfromance for $k = 10$}
+%     \label{fig:retriever-performance-bm25-vs-bm25-ce-mrr}
+% \end{figure}
 
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/BM25_CE_k.png}
+%     \caption{BM25-CE HR perfromance for different BM25 $k$-values}
+%     \label{fig:retriever-performance-bm25-ce-k}
+% \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/de_vs_en.png}
-    \caption{DPR and BM25 performance comparison for indexEnglish and translated-indexEnglish}
-    \label{fig:retriever-performance-de-vs-en}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/best_retriever.png}
+%     \caption{BM25-CE and DPR MRR perfromance for $k = 10$}
+%     \label{fig:retriever-performance-best-retriever}
+% \end{figure}
 
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/BM25_DPR_1000.png}
+%     \caption{BM25 and Large DPR performance comparison for $k = 1000$}
+%     \label{fig:retriever-performance-bm25-vs-dpr}
+% \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/best_retriever.png}
-    \caption{BM25-CE and DPR MRR perfromance for $k = 10$}
-    \label{fig:retriever-performance-best-retriever}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/BM25_DPR_1000.png}
-    \caption{BM25 and Large DPR performance comparison for $k = 1000$}
-    \label{fig:retriever-performance-bm25-vs-dpr}
-\end{figure}
-
-The influence of the Retriever component will be further evaluated in Section \ref{subsec:convqa-results}. Here the bottlenecks of the system will be identified and discussed.
+The influence of the Retriever component will be further evaluated in Section \ref{subsec:convqa-results}. Here the bottlenecks of the system will be identified and discussed. A full set of evaluation results can be found in the tables in Appednix \ref{ref:appendixA-evaluation-retriever}.
 
 % \begin{figure}
 %     \centering
@@ -455,7 +483,16 @@ The influence of the Retriever component will be further evaluated in Section \r
 \subsection{Reader Results}
 \label{subsec:reader-results}
 
-QUESTIONS I WANT TO ANSWER:
+The evaluation of the Reader is based on the metrics introduced in Section \ref{sec:metrics}. Some adjustments have been made as follows: Firstly, whenever \textit{gpt-3.5-turbo} is evaluated on a dataset, it is assessed on a random sample of 1,000 elements based on that dataset. Secondly, when calculating the \gls{llm}-based accuracy, it is computed on a random sample set of 1000 elements of a model's predictions. These adjustments aim to mitigate the costs associated with the OpenAI API. Thirdly, two separate datasets have been generated based on the four already introduced indices: \textit{indexEnglish}, \textit{indexGerman}, \textit{translated indexEnglish}, and \textit{translated indexGerman}. The \textit{short} version of the datasets corresponds to 2,000 random samples, where \textit{gpt-3.5-turbo} is used to generate the gold-answers in the data augmentation stage. The \textit{filtered} version of the datasets drops question-context pairs if the gold-passage is not included in the evidence set of the \gls{dpr} retriever with $k = 1,000$ and generates the gold-answers using \textit{Llama2-7B-Chat-GPTQ} for \textit{indexEnglish} and \textit{translated indexGerman}, and \textit{leo-hessianai-7B-chat-GPTQ} for \textit{indexGerman} and \textit{translated indexEnglish}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Reader/all_indices_all_readers_no_shuffle.png}
+    \caption{Comparison of all Readers over all Indices without shuffled contexts}
+    \label{fig:reader-all-overview-performance}
+\end{figure}
+
+The Reader evaluation aims to answer the following questions:
 
 \begin{enumerate}
     \item How many context passages will still lead to a correct answer?

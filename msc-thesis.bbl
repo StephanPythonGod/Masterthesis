@@ -133,6 +133,10 @@ Gu, Y., Dong, L., Wei, F., and Huang, M. (2023).
 \newblock Knowledge {Distillation} of {Large} {Language} {Models}.
 \newblock arXiv:2306.08543 [cs].
 
+\bibitem[Guo et~al., 2021]{guo_abg-coqa_nodate}
+Guo, M., Zhang, M., Reddy, S., and Alikhani, M. (2021).
+\newblock Abg-{CoQA}: {Clarifying} {Ambiguity} in {Conversational} {Question} {Answering}.
+
 \bibitem[Gupta et~al., 2020]{gupta_conversational_2020}
 Gupta, S., Rawat, B. P.~S., and Yu, H. (2020).
 \newblock Conversational {Machine} {Comprehension}: a {Literature} {Review}.
@@ -232,6 +236,11 @@ Khattab, O. and Zaharia, M. (2020).
 \newblock {ColBERT}: {Efficient} and {Effective} {Passage} {Search} via {Contextualized} {Late} {Interaction} over {BERT}.
 \newblock arXiv:2004.12832 [cs].
 
+\bibitem[Kuhn et~al., 2023]{kuhn_clam_2023}
+Kuhn, L., Gal, Y., and Farquhar, S. (2023).
+\newblock {CLAM}: {Selective} {Clarification} for {Ambiguous} {Questions} with {Generative} {Language} {Models}.
+\newblock arXiv:2212.07769 [cs].
+
 \bibitem[{Langchain}, 2023]{noauthor_langchain-ailangchain_nodate}
 {Langchain} (2023).
 \newblock langchain-ai/langchain: {Building} applications with {LLMs} through composability.
@@ -239,6 +248,10 @@ Khattab, O. and Zaharia, M. (2020).
 \bibitem[Langchain, 2023]{noauthor_question_nodate}
 Langchain (2023).
 \newblock Question {Answering} {\textbar} {Langchain}.
+
+\bibitem[Larsson, 2002]{larsson_issue-based_2002}
+Larsson, S. (2002).
+\newblock Issue-based {Dialogue} {Management}.
 
 \bibitem[Lester et~al., 2021]{lester_power_2021}
 Lester, B., Al-Rfou, R., and Constant, N. (2021).
@@ -405,8 +418,8 @@ Plüster, B. (2023a).
 Plüster, B. (2023b).
 \newblock {LeoLM}: {Ein} {Impuls} für {Deutschsprachige} {LLM}-{Forschung} {\textbar} {LAION}.
 
-\bibitem[PyPDF2, ]{noauthor_welcome_nodate}
-PyPDF2.
+\bibitem[PyPDF2, 2023]{noauthor_welcome_nodate}
+PyPDF2 (2023).
 \newblock Welcome to {PyPDF2} — {PyPDF2} documentation.
 
 \bibitem[Raffel et~al., 2023]{raffel_exploring_2023}
@@ -451,6 +464,11 @@ Sachan, D.~S., Lewis, M., Yogatama, D., Zettlemoyer, L., Pineau, J., and Zaheer,
 Serban, I.~V., García-Durán, A., Gulcehre, C., Ahn, S., Chandar, S., Courville, A., and Bengio, Y. (2016).
 \newblock Generating {Factoid} {Questions} {With} {Recurrent} {Neural} {Networks}: {The} {30M} {Factoid} {Question}-{Answer} {Corpus}.
 \newblock In {\em Proceedings of the 54th {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} ({Volume} 1: {Long} {Papers})}, pages 588--598, Berlin, Germany. Association for Computational Linguistics.
+
+\bibitem[Tavakoli et~al., 2021]{tavakoli_analyzing_2021}
+Tavakoli, L., Zamani, H., Scholer, F., Croft, W., and Sanderson, M. (2021).
+\newblock Analyzing clarification in asynchronous information‐seeking conversations.
+\newblock {\em Journal of the Association for Information Science and Technology}, 73.
 
 \bibitem[Thakur et~al., 2021]{thakur_beir_2021}
 Thakur, N., Reimers, N., Rücklé, A., Srivastava, A., and Gurevych, I. (2021).
@@ -525,6 +543,11 @@ Yang, Z., Qi, P., Zhang, S., Bengio, Y., Cohen, W.~W., Salakhutdinov, R., and Ma
 \bibitem[Zaib et~al., 2021]{zaib_conversational_2021}
 Zaib, M., Zhang, W.~E., Sheng, Q.~Z., Mahmood, A., and Zhang, Y. (2021).
 \newblock Conversational {Question} {Answering}: {A} {Survey}.
+
+\bibitem[Zamani et~al., 2020]{zamani_analyzing_2020}
+Zamani, H., Mitra, B., Chen, E., Lueck, G., Diaz, F., Bennett, P.~N., Craswell, N., and Dumais, S.~T. (2020).
+\newblock Analyzing and {Learning} from {User} {Interactions} for {Search} {Clarification}.
+\newblock arXiv:2006.00166 [cs].
 
 \bibitem[Zamani et~al., 2023]{zamani_conversational_2023}
 Zamani, H., Trippas, J.~R., Dalton, J., and Radlinski, F. (2023).
