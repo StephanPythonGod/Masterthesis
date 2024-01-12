@@ -1,11 +1,11 @@
-The previous chapter, Chapter \ref{chap:main}, layed out a holistic framework for \gls{convqa}. This chapter aims to evaluate the applicability of the established system in a real-world scenario. Section \ref{sec:data} describes the available data for the real-world scenario and delves into applied data augmentation techniques. Section \ref{sec:metrics} introduces the metrics used to evaluate the performance of the individual system components, as well as the complete \gls{convqa} system. These metrics are selected based on those used in related work. Section \ref{sec:setup} details the experimental setup, implementation specifics, and provides an implementation framework for similar use cases. Finally, Section \ref{sec:results} presents both quantitative and qualitative results from the experiments.
+The previous chapter, Chapter \ref{chap:main}, layed out a holistic framework for \gls{convqa}. This chapter evaluates the applicability of the established system in a real-world scenario. Section \ref{sec:data} describes the available data for the real-world scenario and delves into applied data augmentation techniques. Section \ref{sec:metrics} introduces the metrics used to evaluate the performance of the individual system components, as well as the complete \gls{convqa} system. These metrics are selected based on those used in related work. Section \ref{sec:setup} details the experimental setup, implementation specifics, and provides an implementation framework for similar use cases. Finally, Section \ref{sec:results} presents both quantitative and qualitative results from the experiments.
 
 \section{Data}
 \label{sec:data}
 
-To evaluate the proposed system architecture and framework discussed in Chapter \ref{chap:main}, we will implement and assess its performance using the PDFs of the University of Heidelberg's examination regulations (\gls{er}). The university provides these regulations on two separate websites: one in German\footnote{\url{https://www.uni-heidelberg.de/de/studium/studienorganisation/downloadcenter/studien-und-pruefungsordnungen}} and the other in English\footnote{\url{https://www.uni-heidelberg.de/courses/download/examination_rules_regulations.html}}. It's important to note that only the German \gls{er} holds legal authority, and in cases of ambiguity between the English translation and the German original, the German \gls{er} version takes precedence.
+To evaluate the proposed system architecture and framework discussed in Chapter \ref{chap:main}, we will implement and assess its performance using the PDFs of the Heidelberg University's examination regulations (\gls{er}). The university provides these regulations on two separate websites: one in German\footnote{\url{https://www.uni-heidelberg.de/de/studium/studienorganisation/downloadcenter/studien-und-pruefungsordnungen}} and the other in English\footnote{\url{https://www.uni-heidelberg.de/courses/download/examination_rules_regulations.html}}. It's important to note that only the German \gls{er} holds legal authority, and in cases of ambiguity between the English translation and the German original, the German \gls{er} version takes precedence.
 
-Both websites offer structured access to the \gls{er} of nearly all faculties at the University of Heidelberg. However, it's worth mentioning that the German website is regularly updated, while the English version primarily contains outdated \gls{er}. Since there is no centralized source for accessing all English \gls{er}, the decission was made to utilize both the outdated English \gls{er} and the current German \gls{er} for this thesis. This decision aligns with the primary objective of this thesis, which is to demonstrate the \gls{poc} of the introduced framework. Obtaining the latest English \gls{er} of the University of Heidelberg is beyond the scope of this thesis.
+Both websites offer structured access to the \gls{er} of nearly all faculties at the Heidelberg University. However, it's worth mentioning that the German website is regularly updated, while the English version primarily contains outdated \gls{er}. Since there is no centralized source for accessing all English \gls{er}, the decission was made to utilize both the outdated English \gls{er} and the current German \gls{er} for this thesis. This decision aligns with the primary objective of this thesis, which is to demonstrate the \gls{poc} of the introduced framework. Obtaining the latest English \gls{er} of the Heidelberg University is beyond the scope of this thesis.
 
 As part of the experiments outlined in Section \ref{sec:setup}, the knowledge source of the German \gls{er} will be translated. Additional details on this process can be found in Section \ref{subsec:index}.
 
@@ -47,14 +47,14 @@ Figure \ref{fig:er-english-passage-document} presents the same statistics for th
 Figure \ref{fig:er-german-passage-length} depicts the distribution of passage lengths in the German dataset. It's evident that the majority of passages fall within the range of 200 to 350 characters. The same statistics for the English dataset are presented in Figure \ref{fig:er-english-passage-length}. As observed, they are quite similar. The shortest passage is 5 characters, as we applied a lower filter to the extracted passages. The longest passages are 1,300 characters long, also subjected to filtering. Considering statistics such as standard deviation, mean, and median, the English and German datasets do not significantly differ in terms of passage length.
 
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Grafiken/Statistiken/IndexEnglish_Passages_Distribution.png}
     \caption{Passages per Document of the English \gls{er} Dataset}
     \label{fig:er-english-passage-document}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Grafiken/Statistiken/IndexEnglish_Passage_Length_Statistics.png}
     \caption{Passage Length Distribution of the English \gls{er} Dataset}
@@ -62,25 +62,48 @@ Figure \ref{fig:er-german-passage-length} depicts the distribution of passage le
 \end{figure}
 
 
-\section{Evaluation Metrics}
+\section{Evaluation Approach}
 \label{sec:metrics}
 
-When it comes to Evaluation Metrics, it's important to differentiate between the components or models being evaluated. For the evaluation, we will categorize the evaluation scopes as follows:
+The evaluation of a \gls{rag} system, especially in the context of \gls{convqa}, is not trivial. Two known tools/frameworks for this task are RAGAS \cite{noauthor_ragas} and TruLens \cite{noauthor_truelens}. Additionally, the survey by Gao et al. \cite{gao_retrieval-augmented_2024} provides a holistic perspective on the evaluation of \gls{rag} systems. In general, it is useful to evaluate the performance of each individual component (Retriever and Reader) separately in relation to the user's question. The outputs of the Retriever and Reader, namely the Evidence Set and the Answer, can be assessed in different aspects concerning each other and the user's question:
 
-\begin{enumerate}
-    \item Retrieval
-    \item Reader
-    \item Conversational Question Answering
-\end{enumerate}
+\begin{itemize}
+    \item \textbf{Answer Relevance:} How relevant is the Answer in relation to the Question?
+    \item \textbf{Context Relevance:} How relevant is the Evidence Set in relation to the Question?
+    \item \textbf{Faithfulness:} Are the facts in the Answer based on the facts of the passages in the Evidence Set?
+    \item \textbf{Noise Robustness:} How robust is the Reader against noise in the Evidence Set and can it reflect that in the Answer?
+    \item \textbf{Negative Rejection:} How well can the Reader determine if the Evidence Set does not contain the answer to the Question and reflect that in the Answer?
+\end{itemize}
 
-Evaluating the \gls{cqu} component is only possible with high quality human supervised datasets, therefore for the performance of the \gls{cqu} section \ref{subsec:cqu-impl} refers to previously by other works performed benchmarks of the used zero-shot models. The exact metrics and paradigms for each individual evaluation will be discussed in the following sections.
+Figure \ref{fig:evaluation-dimensions} displays the composition of the specific entities and evaluation aspects.
 
-\subsection{Retrieval Evaluation}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Grafiken/Evaluation_Dimensions_RAGAS_Turelens.png}
+    \caption{Adapted Evaluation Aspects and Components by TruLens \cite{noauthor_truelens}}
+    \label{fig:evaluation-dimensions}
+\end{figure}
+
+Both the Reader and Retriever components will be evaluated offline using a synthetic dataset. This allows for the identification of the aforementioned aspects for the components in an isolated setting with only one turn, thus in a non-conversational setting. Section \ref{subsec:retrieval-eval} discusses metrics used for the Retriever evaluation, while Section \ref{subsec:answer-generation-eval} introduces metrics for the Reader evaluation.
+
+To evaluate the overall end-to-end performance of the final Conversational Retrieval-Augmented Generation (\gls{conrag}) system, an online approach will be taken. This means that real conversations will be collected, and based on these collected data, evaluation will be conducted. Other approaches may include the generation of synthetic conversations, but this approach will not be covered in this thesis as it cannot be guaranteed with the used smaller \gls{llm}s to create high-quality conversational data. Additionally, to the best of my knowledge, there currently exists no state-of-the-art method for conversation generation based on a knowledge base. Section \ref{subsec:convqa-eval} elaborates on this end-to-end approach and the used metrics.
+
+% When it comes to evaluation metrics, it's important to differentiate between the components or models being evaluated. For the evaluation, we will categorize the evaluation scopes as follows:
+
+% \begin{enumerate}
+%     \item Retrieval
+%     \item Reader
+%     \item Conversational Question Answering
+% \end{enumerate}
+
+% Evaluating the \gls{cqu} component is only possible with high quality human supervised datasets, therefore for the performance of the \gls{cqu} Section \ref{subsec:cqu-impl} refers to previously by other works performed benchmarks of the used zero-shot models. The exact metrics and paradigms for each individual evaluation will be discussed in the following sections.
+
+\subsection{Retrieval Evaluation Metrics}
 \label{subsec:retrieval-eval}
 
 Evaluating a Retriever largely depends on the use-case and the evaluation data available. Since the data introduced in Section \ref{sec:data} lacks a supervised dataset for $(question,\allowbreak passages)$ pairs, we will evaluate it using the synthetic dataset created, as also established in Section \ref{sec:data}. This dataset consists of $(question, passages)$ pairs, where for every question, there is an exact matching passage. Therefore, this dataset is essentially a binary task, where a passage is either the correct one or not. An alternative approach would be a graded relevance task, where each passage has a certain relevance score in relation to the question. However, for our use-case, we opted for the simpler metrics \gls{hr}@k and \gls{mrr}, instead of the Normalized Cumulative Gain (NDCG) used in benchmarks like BEIR \cite{thakur_beir_2021}. We chose these metrics because it's crucial for our system to retrieve the correct passage, and we don't have a relevance score for every passage in relation to every question.
 
-Given a pair of $(q,\hat{p})$, where $\hat{p}$ corresponds to the correct passage and $\forall q, \exists ! \hat{p} \in P$ and a retriever model $p_\eta(p|q) = \text{Score}(q,p)$ (as defined in Definition \ref{def:retrieval}) that assigns a score to every passage $p \in P$ in relation to the question $q$ is used. We can rank all passages based on their relevance to $q$. Each passage receives a rank $r_q,p$ based on its score in relation to $q$. These passages are then ranked in descending order of $r_q,p$, and the top $k$ passages are added to the retrieved set $R_q$.
+Given a pair of $(q,\hat{p})$, where $\hat{p}$ corresponds to the correct passage and $\forall q, \exists ! \hat{p} \in P$ and a retriever model $p_\eta(p|q) = \text{Score}(q,p)$ (as defined in Definition \ref{eq:retriever}) that assigns a score to every passage $p \in P$ in relation to the question $q$ is used. We can rank all passages based on their relevance to $q$. Each passage receives a rank $r_q,p$ based on its score in relation to $q$. These passages are then ranked in descending order of $r_q,p$, and the top $k$ passages are added to the retrieved set $R_q$.
 
 \begin{itemize}
     \item \textbf{\gls{hr}@k} This metric calculates the proportion of questions for which the correct passage is retrieved within the top $k$ retrieved passages.
@@ -100,12 +123,12 @@ Given a pair of $(q,\hat{p})$, where $\hat{p}$ corresponds to the correct passag
     In an ideal system, the \gls{mrr} would be 1, indicating that the correct passage is always retrieved in the first position ($r_{q,\hat{p}} = 1$) for all $q \in Q$.
 \end{itemize}
 
-\subsection{Reader Evaluation}
+\subsection{Reader Evaluation Metrics}
 \label{subsec:answer-generation-eval}
 
 Evaluating the task of answer generation, particularly the \gls{mrc} aspect of the reader component, presents challenges similar to those discussed for the retrieval task evaluation in Section \ref{subsec:retrieval-eval}. For automatic and manual evaluation, we will utilize the synthetic dataset generated in Section \ref{sec:data}. This dataset comprises triples of $(\text{question}, \text{passages}, \text{answer})$, where \textit{answer} refers to a gold answer that has been syntactically generated.
 
-In the context of a triple $(q, \hat{p}, \hat{a})$, where $\hat{p}$ corresponds to the correct passage and $\hat{a}$ corresponds to the correct answer in relation to a question $q$, we employ a reader model $p_\theta(a' \, | \, q, \hat{p}) := \hat{a}$ (as defined in Definition \ref{def:generation}) to predict the answer $\hat{a}$ given the question $q$ and the passage $\hat{p}$. The predicted answer $a'$ is then evaluated using the following metrics:
+In the context of a triple $(q, \hat{p}, \hat{a})$, where $\hat{p}$ corresponds to the correct passage and $\hat{a}$ corresponds to the correct answer in relation to a question $q$, we employ a reader model $r_{\text{k-Reader}}(E_{q_c}, q_c,H) := a_i$ (as defined in Definition \ref{eq:reader}) to predict the answer $\hat{a}$ given the question $q$ and the passage $\hat{p}$. The predicted answer $a'$ is then evaluated using the following metrics:
 
 \begin{itemize}
     \item \textbf{BLUE-1:} This precision-oriented metric compares the occurrence of unigrams (words $w \in \hat{a}$) in the predicted answer $a'$ and the gold answer $\hat{a}$.
@@ -155,39 +178,44 @@ In the context of a triple $(q, \hat{p}, \hat{a})$, where $\hat{p}$ corresponds 
         \item \textbf{Human-based:} A human evaluator is asked to assign a binary value of 0 or 1 to indicate whether there is a match in the underlying message of $a'$ and $\hat{a}$. 1 if the answer $a'$ covers the information from $\hat{a}$, and 0 if it does not. The evaluator is provided with the question $q$, the important passage $\hat{p}$, the gold answer $\hat{a}$, and the generated answer $a'$. This approach is particularly useful for evaluating generative questions and closely resembles real-world applications. For this thesis two evaluaters will receive the same 100 randomly sampled answers and will be asked to assign a binary value to each answer. The inter-rater agreement will be calculated using Cohen's Kappa \cite{cohen_coefficient_1960}. 
     \end{itemize}
 \end{itemize}
-    
-\subsection{Conversational Question Answering Evaluation}
-\label{subsec:convqa-eval}
 
-The most challenging aspect of evaluation within the context of the system developed here is assessing \gls{convqa} as a holistic system. Instead of presenting evaluation metrics in this section, we will explore the approaches for evaluating \gls{convqa}, and as final metrics, we will use those introduced in Sections \ref{subsec:answer-generation-eval} and \ref{subsec:retrieval-eval}. Generally, two approaches can be considered: 
+\subsection{End-to-End RAG Evaluation}
+\label{subsec:rag-eval}
 
-The first approach, known as \textbf{Manual Human Evaluation (\gls{mahueval})}, operates as follows:
+The most challenging aspect of evaluation within the context of the system developed here is assessing \gls{conrag} as a holistic system. To conduct the evaluation, a dataset of conversations needs to be generated. This will be achieved through interactions of human evaluators engaging in conversations with the system. No automatic metrics will be utilized. Instead, all evaluation aspects will be assessed by human evaluators. There exist evaluation approaches using \gls{llm}s or the embeddings of \gls{dpr} in order to automatically evaluate certain aspects, but those won't be utilized for this limited evaluation dataset. The evaluation process involves the following steps:
 
 \begin{enumerate}
-    \item A human evaluator initiates a conversation with a question, either based on their own intuition or using provided questions from the supervised dataset. Evaluators are encouraged to pose context-dependent questions.
+    \item A human evaluator initiates a conversation with a question, either based on their own intuition or using provided questions from the synthetic dataset. Evaluators are encouraged to pose context-dependent questions.
     \item The evaluator continues the conversation, asking follow-up questions or engaging in a general discussion with the \gls{convqa}-System for 8-10 turns.
-    \item After the conversation, the evaluator has access to the retrieved passages $p$ for each turn and all other passages $P$ in the index. The evaluator assesses the answer provided by the system and the relevance of the retrieved passages $p$. They are required to provide the following information:
+    \item After the conversation, the evaluator has access to the evidence set $E_{q_c}$ for each turn and all other passages $P$ in the index. The evaluator assesses the answer provided by the system and the retrieved evidence set $E_{q_c}$. They are required to provide the following information for every turn of the conversation:
         \begin{itemize}
-            \item \textit{Question Intent:} The evaluator specifies the intent of the question, which can be categorized as either \textit{extractive}, \textit{abstractive}, or \textit{boolean}.
-            \item \textit{Answer:} The evaluator assigns a binary value (0 or 1) to the system's answer. A score of 1 indicates a correct answer, while 0 represents an incorrect answer.
-            \item \textit{Passage:} The evaluator assigns a binary value (0 or 1) to the relevance of the retrieved passages $p$. A score of 1 indicates that the passages are relevant for generating the correct answer, while 0 indicates irrelevance.
+            \item \textit{Context Relevance:} The evaluator assigns a binary accuracy value (0 or 1), indicating if the evidence set contains the required information to answer the question. A score of 1 indicates that the evidence set contains the required information, while 0 indicates that the evidence set does not contain the required information.
+            \item \textit{Noise Robustness:} To have insights on the noise robustness, the evaluator has to indicate via number the position in the evidence set $E_{q_c}$ of the relevant passage. For example, 0 indicates that the first passage in the evidence set is the relevant passage, and 4 indicates that the fifth passage in the evidence set is the relevant passage.
+            \item \textit{Faithfulness:} The evaluator assigns a binary value (0 or 1), indicating whether the answer is based on the facts of the evidence set. A score of 1 indicates that the answer is based on the facts of the evidence set, while 0 indicates that the answer is not based on the facts of the evidence set. When the provided evidence set does not indicate any answer and the system provides an answer indicating that it does not have any information on the topic, the evaluator has to assign a score of 1.
+            \item \textit{Negative Rejection:} This can be evaluated indirectly via the combination of Context Relevance, Faithfulness, and Answer Relevance.
+            \item \textit{Answer Relevance:} The evaluator assigns a value between 0 and 1 to the system's answer. A score of 1 indicates a correct answer to the given question in relation to the conversation history, while 0 represents an incorrect answer.
+            \item \textit{Reason for Incorrectness:} The evaluator selects one of the following reasons for incorrectness, only if the answer relevance is 0 and Context Relevance 1: \textit{No Negative Rejection}, \textit{Nonsense Answer}, \textit{Hallucination}, \textit{Coreference Problem}, \textit{Other} (here the evaluator has to provide a short description of the reason for incorrectness) 
         \end{itemize}
-    \item Based on the provided scores, metrics for the retriever and reader will be calculated for each turn, the entire conversation history, and the entire dataset. \textit{Accuracy} will be computed for answers, and \textit{HR@k} will be computed for passages. All results will be grouped by turn, enabling deeper insights into the performance and errors of the system.
+    \item All results will be grouped by turn, enabling deeper insights into the performance and errors of the system.
 \end{enumerate}
 
-To mitigate bias, human manual evaluations are conducted by two different evaluators. Each evaluator conducts 10 conversations with the system in the first round. In the second round, the evaluators initiate conversations with the first question from the 10 conversations of the other evaluator. This results in a total of 40 conversations and, ideally, 20 overlapping conversations that can be used to calculate inter-rater agreement \cite{cohen_coefficient_1960}.
+To mitigate bias, human manual evaluations are carried out by two different evaluators. In the first round, each evaluator engages in 10 conversations with the system. In the second round, the evaluators initiate conversations using the first question from the 10 conversations of the other evaluator. This results in a total of 40 conversations, with ideally 20 overlapping conversations that can be used to calculate inter-rater agreement \cite{cohen_coefficient_1960}.
+    
+% \subsection{Conversational Question Answering Evaluation}
+% \label{subsec:convqa-eval}
+% The first approach, known as \textbf{\gls{mahueval}}, operates as follows:
 
-The second approach, \textbf{\gls{auev}}, operates as follows. In this approach, a synthetic dataset is provided, consisting of lists of triples $(q, \hat{p}, \hat{a})$, where each triple corresponds to one turn, and a list represents a conversation history $h \in H$:
+% The second approach, \textbf{\gls{auev}}, operates as follows. In this approach, a synthetic dataset is provided, consisting of lists of triples $(q, \hat{p}, \hat{a})$, where each triple corresponds to one turn, and a list represents a conversation history $h \in H$:
 
-\begin{enumerate}
-    \item Initially, the system is presented with the first question $q_1$ from the conversation history. The response $a'_1$ is evaluated using the \textit{F1-BERTscore} in comparison to the gold answer $\hat{a}$ of the history $h$. This score is computed for each turn, assessing the system's response against the gold answer for that turn.
-    \item Subsequently, to mitigate the impact of an incorrect system response on the ongoing conversation, the following question (e.g., $q_2$) is augmented with the gold answer $\hat{a}_1$. This augmentation helps address missing information or coreference problems caused by an erroneous response. This method, originally introduced by Li et al. \cite{li_ditch_2022}, improves the automatic evaluation of \gls{convqa} systems. The model used to resolve the relationship between the gold answer and the question is the standard CQU model. Additionally, within the \gls{convqa} history, the answer $a'_1$ is replaced by the gold answer $\hat{a}_1$ for the CQU unit.
-    \item After enhancing the question, the system is tasked with generating a response $a'_2$ to the augmented question $q'_2$. Once again, the response $a'_2$ is evaluated using the \textit{F1-BERTscore} against the gold answer $\hat{a}_2$ from the history $h$.
-    \item Steps (2) and (3) are repeated until the end of the conversation history $h$.
-    \item All scores will be groupable by turn depth, enabling deeper insights into the performance and errors of the system.
-\end{enumerate}
+% \begin{enumerate}
+%     \item Initially, the system is presented with the first question $q_1$ from the conversation history. The response $a'_1$ is evaluated using the \textit{F1-BERTscore} in comparison to the gold answer $\hat{a}$ of the history $h$. This score is computed for each turn, assessing the system's response against the gold answer for that turn.
+%     \item Subsequently, to mitigate the impact of an incorrect system response on the ongoing conversation, the following question (e.g., $q_2$) is augmented with the gold answer $\hat{a}_1$. This augmentation helps address missing information or coreference problems caused by an erroneous response. This method, originally introduced by Li et al. \cite{li_ditch_2022}, improves the automatic evaluation of \gls{convqa} systems. The model used to resolve the relationship between the gold answer and the question is the standard CQU model. Additionally, within the \gls{convqa} history, the answer $a'_1$ is replaced by the gold answer $\hat{a}_1$ for the CQU unit.
+%     \item After enhancing the question, the system is tasked with generating a response $a'_2$ to the augmented question $q'_2$. Once again, the response $a'_2$ is evaluated using the \textit{F1-BERTscore} against the gold answer $\hat{a}_2$ from the history $h$.
+%     \item Steps (2) and (3) are repeated until the end of the conversation history $h$.
+%     \item All scores will be groupable by turn depth, enabling deeper insights into the performance and errors of the system.
+% \end{enumerate}
 
-Both \gls{mahueval} and \gls{auev} will be employed to evaluate the \gls{convqa} system, and the results will be reported separately.
+% Both \gls{mahueval} and \gls{auev} will be employed to evaluate the \gls{convqa} system, and the results will be reported separately.
 
 \section{Experimental Setup and Implementation}
 \label{sec:setup}
@@ -260,9 +288,10 @@ This approach enables the retriever and reader to identify passages and their co
 \begin{quote}
    \texttt{System Prompt:}\\
     \texttt{You are an assistant generating one question given a context. Please start your generated question with the indicator 'Generated Question:' Here are some examples:} \\
-   \{i\}\texttt{-Example:} \\
-   \texttt{Context:} \{passage\} \\
-    \texttt{Generated Question:} \{question\} \\ \\
+    for example in examples:\\
+    \hspace*{1cm}\{i\}\texttt{-Example:} \\
+    \hspace*{1cm}\texttt{Context:} \{passage\} \\
+    \hspace*{1cm}\texttt{Generated Question:} \{question\} \\ \\
     \texttt{User:} \\
     \texttt{Generate the question based on the following context:}\\
     \{passage\}
@@ -296,7 +325,7 @@ The implemented retrievers can be found in Figure \ref{fig:retriever-implementat
 \begin{enumerate}
     \item \textbf{BM25:} This employs the standard lexical-based best match algorithm with hyperparameters $k_1=1.5$, $b=0.75$, and $\epsilon=0.25$. It is implemented using the open-source project \textit{rank-bm25} \footnote{\url{https://github.com/dorianbrown/rank_bm25}}.
     \item \textbf{BM25 + CE:} This uses a BM25 retriever in combination with a Cross-Encoder re-ranker, which serves as the baseline established in BEIR \cite{thakur_beir_2021}. This combination continues to perform as the state-of-the-art. The Cross-Encoder utilized is the same as the one in the BEIR baseline implementation: \textit{ms-marco-MiniLM-L-6-v2} \cite{wang_minilm_2020}, specifically the implementation provided on Hugging Face \footnote{\url{https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-6-v2}}. It has close to 17 million parameters. For German indices, a German version of \textit{ms-marco-MiniLM-L-6} is used: \textit{ms-marco-MiniLM-L-6-en-de-v1} \footnote{\url{https://huggingface.co/cross-encoder/msmarco-MiniLM-L6-en-de-v1}}.
-    \item \textbf{Large DPR:} For the large \gls{dpr}, the embedding model from OpenAI, \textit{text-embedding-ada-002} \footnote{\url{https://platform.openai.com/docs/models/embeddings}}, is employed. The parameter size of this model is estimated to be around 350 million parameters\cite{muennighoff_sgpt_2022}\footnote{As OpenAI does not publicly provide information on their model specs, there exists only estimates}.
+    \item \textbf{Large DPR:} For the large \gls{dpr}, the embedding model from OpenAI, \textit{text-embedding-ada-002} \footnote{\url{https://platform.openai.com/docs/models/embeddings}}, is employed. The parameter size of this model is estimated to be around 350 million parameters\cite{muennighoff_sgpt_2022}\footnote{As OpenAI does not publicly provide information on their model specs, there exist only estimates.}.
 \end{enumerate}
 
 These retrievers have been implemented and evaluated based on the synthetic data, and the results are presented in Section \ref{sec:results}.
@@ -333,7 +362,7 @@ However, to address specific questions in the evaluation (See Section \ref{subse
     \{question\} \\
     \texttt{Use the following contexts:} \\
     for context in contexts: \\
-    \{context\} \\
+    \hspace*{1cm}\{context\} \\
     \texttt{Assistant:} \\
 \end{quote}
 
@@ -349,6 +378,46 @@ This prompt is applied consistently across all models. In cases where the model 
 
 \subsection{CQU}
 \label{subsec:cqu-impl}
+
+Similar to the Reader and Retriever components, the implementation of the \gls{cqu} component can be observed in Figure \ref{fig:cqu-implementation}. Generally, the \gls{cqu} component utilizes a \gls{llm} for query rewriting based on the last-$k$ turns of the conversation history. $k$ is thereby not a fixed value, but rather the number of tokens for every turn will be calculated and only the last-$k$ turns until which the prompt does not overstep the token limit of the model, will be used. This follows the \textit{Rewriting Prompt} implementation by Mao et al. \cite{mao_large_2023}. Their work demonstrated that \gls{llm}s can achieve state-of-the-art benchmarks for \gls{cqu}. Mao et al. also explored other approaches to prompting beyond simple rewriting, which, while outperforming simple rewrite, are only applicable to \gls{dpr}-based retrievers.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Grafiken/CQU_Implementation.png}
+    \caption{Implemented CQU}
+    \label{fig:cqu-implementation}
+\end{figure}
+
+The simple rewrite prompt is implemented as follows:
+
+\begin{quote}
+    \texttt{System Prompt:}\\
+    \texttt{You are an assistant who reformulates the current question into a de-contextualized rewrite under the multi-turn information-seeking dialog context. Please provide the rewritten question after \break "Rewrite:". Here are some examples:} \\
+    for example in example:\\
+    \hspace*{1cm}\{example\}-\texttt{Example:} \\
+    \hspace*{1cm}for turn in turns:\\
+    \hspace*{1cm}\hspace*{1cm}\{turn\}-\texttt{Turn:} \\
+    \hspace*{1cm}\hspace*{1cm}\texttt{Question:} \\
+    \hspace*{1cm}\hspace*{1cm}\{question\} \\
+    \hspace*{2cm}\texttt{Rewrite:} \\
+    \hspace*{2cm}\{rewrite\} \\
+    \hspace*{1cm}\hspace*{1cm}\texttt{Answer:} \\
+    \hspace*{1cm}\hspace*{1cm}\{answer\} \\
+    \texttt{User:}\\
+    \texttt{Please rewrite the following question given this conversation history:}\\
+    for turn in turns - 1:\\
+    \hspace*{1cm}\{turn\}-\texttt{Turn:}\\
+    \hspace*{1cm}\texttt{Question:} \\ 
+    \hspace*{1cm}\{question\}\\
+    \hspace*{1cm}\texttt{Answer:}\\ 
+    \hspace*{1cm}\{answer\}\\
+    \texttt{Question:}\\
+    \{question\}\\
+    \texttt{Rewrite:}\\
+    \texttt{Assistant:}
+\end{quote}
+
+In terms of models, the same models as for the Reader component will be utilized: \textit{Llama2-7B-Chat-GPTQ} for English conversations and \textit{leo-hessianai-7B-chat-GPTQ} for German conversations. The \gls{cqu} component itself will not be evaluated since there is no dataset available. For evaluations of this approach on other datasets and \gls{llm}s, the reader is referred to the work of Mao et al. \cite{mao_large_2023}.
 
 \section{Experimental Results}
 \label{sec:results}

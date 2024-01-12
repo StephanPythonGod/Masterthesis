@@ -113,6 +113,11 @@ Gao, J., Xiong, C., Bennett, P., and Craswell, N. (2022).
 \newblock Neural {Approaches} to {Conversational} {Information} {Retrieval}.
 \newblock arXiv:2201.05176 [cs].
 
+\bibitem[Gao et~al., 2024]{gao_retrieval-augmented_2024}
+Gao, Y., Xiong, Y., Gao, X., Jia, K., Pan, J., Bi, Y., Dai, Y., Sun, J., Guo, Q., Wang, M., and Wang, H. (2024).
+\newblock Retrieval-{Augmented} {Generation} for {Large} {Language} {Models}: {A} {Survey}.
+\newblock arXiv:2312.10997 [cs].
+
 \bibitem[Gholami et~al., 2021]{gholami_survey_2021}
 Gholami, A., Kim, S., Dong, Z., Yao, Z., Mahoney, M.~W., and Keutzer, K. (2021).
 \newblock A {Survey} of {Quantization} {Methods} for {Efficient} {Neural} {Network} {Inference}.
@@ -267,18 +272,13 @@ Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttle
 \newblock Retrieval-{Augmented} {Generation} for {Knowledge}-{Intensive} {NLP} {Tasks}.
 \newblock arXiv:2005.11401 [cs].
 
-\bibitem[Li et~al., 2022a]{li_ditch_2022}
-Li, H., Gao, T., Goenka, M., and Chen, D. (2022a).
-\newblock Ditch the {Gold} {Standard}: {Re}-evaluating {Conversational} {Question} {Answering}.
-\newblock arXiv:2112.08812 [cs].
-
-\bibitem[Li et~al., 2022b]{li_dit_2022}
-Li, J., Xu, Y., Lv, T., Cui, L., Zhang, C., and Wei, F. (2022b).
+\bibitem[Li et~al., 2022a]{li_dit_2022}
+Li, J., Xu, Y., Lv, T., Cui, L., Zhang, C., and Wei, F. (2022a).
 \newblock {DiT}: {Self}-supervised {Pre}-training for {Document} {Image} {Transformer}.
 \newblock arXiv:2203.02378 [cs].
 
-\bibitem[Li et~al., 2022c]{li_explanations_2022}
-Li, S., Chen, J., Shen, Y., Chen, Z., Zhang, X., Li, Z., Wang, H., Qian, J., Peng, B., Mao, Y., Chen, W., and Yan, X. (2022c).
+\bibitem[Li et~al., 2022b]{li_explanations_2022}
+Li, S., Chen, J., Shen, Y., Chen, Z., Zhang, X., Li, Z., Wang, H., Qian, J., Peng, B., Mao, Y., Chen, W., and Yan, X. (2022b).
 \newblock Explanations from {Large} {Language} {Models} {Make} {Small} {Reasoners} {Better}.
 \newblock arXiv:2210.06726 [cs].
 
@@ -427,6 +427,10 @@ Raffel, C., Shazeer, N., Roberts, A., Lee, K., Narang, S., Matena, M., Zhou, Y.,
 \newblock Exploring the {Limits} of {Transfer} {Learning} with a {Unified} {Text}-to-{Text} {Transformer}.
 \newblock arXiv:1910.10683 [cs, stat].
 
+\bibitem[Ragas, 2024]{noauthor_ragas}
+Ragas (2024).
+\newblock Core {Concepts} {\textbar} {Ragas}.
+
 \bibitem[Rajpurkar et~al., 2016]{rajpurkar_squad_2016}
 Rajpurkar, P., Zhang, J., Lopyrev, K., and Liang, P. (2016).
 \newblock {SQuAD}: 100,000+ {Questions} for {Machine} {Comprehension} of {Text}.
@@ -490,6 +494,10 @@ Touvron, H., Martin, L., Stone, K., Albert, P., Almahairi, A., Babaei, Y., Bashl
 Treviso, M., Lee, J.-U., Ji, T., Aken, B.~V., Cao, Q., Ciosici, M.~R., Hassid, M., Heafield, K., Hooker, S., Raffel, C., Martins, P.~H., Martins, A. F.~T., Forde, J.~Z., Milder, P., Simpson, E., Slonim, N., Dodge, J., Strubell, E., Balasubramanian, N., Derczynski, L., Gurevych, I., and Schwartz, R. (2023).
 \newblock Efficient {Methods} for {Natural} {Language} {Processing}: {A} {Survey}.
 \newblock {\em Transactions of the Association for Computational Linguistics}, 11:826--860.
+
+\bibitem[TruLens, 2024]{noauthor_truelens}
+TruLens (2024).
+\newblock {RAG} {Triad} - {TruLens}.
 
 \bibitem[Voorhees, 1999]{voorhees_trec-8_1999}
 Voorhees, E. (1999).
