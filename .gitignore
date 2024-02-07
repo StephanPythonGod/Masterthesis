@@ -28,3 +28,17 @@
 .gitignore
 msc-thesis.bbl
 code/data/ocr.zip
+
+# Ignore all files in folder code/data
+code/data/*
+code/data-reader/*
+
+# Ignore all files in benchmarks-reader
+code/benchmarks-reader/*
+code/bechmarks-retriever/*
+
+# ignore all files in folders with venv in their name
+*venv*/
+
+# Ignore all folders output-data
+**/output-data/*

@@ -86,7 +86,7 @@ Figure \ref{fig:evaluation-dimensions} displays the composition of the specific 
 
 Both the Reader and Retriever components will be evaluated offline using a synthetic dataset. This allows for the identification of the aforementioned aspects for the components in an isolated setting with only one turn, thus in a non-conversational setting. Section \ref{subsec:retrieval-eval} discusses metrics used for the Retriever evaluation, while Section \ref{subsec:answer-generation-eval} introduces metrics for the Reader evaluation.
 
-To evaluate the overall end-to-end performance of the final Conversational Retrieval-Augmented Generation (\gls{conrag}) system, an online approach will be taken. This means that real conversations will be collected, and based on these collected data, evaluation will be conducted. Other approaches may include the generation of synthetic conversations, but this approach will not be covered in this thesis as it cannot be guaranteed with the used smaller \gls{llm}s to create high-quality conversational data. Additionally, to the best of my knowledge, there currently exists no state-of-the-art method for conversation generation based on a knowledge base. Section \ref{subsec:convqa-eval} elaborates on this end-to-end approach and the used metrics.
+To evaluate the overall end-to-end performance of the final Conversational Retrieval-Augmented Generation (\gls{conrag}) system, an online approach will be taken. This means that real conversations will be collected, and based on these collected data, evaluation will be conducted. Other approaches may include the generation of synthetic conversations, but this approach will not be covered in this thesis as it cannot be guaranteed with the used smaller \gls{llm}s to create high-quality conversational data. Additionally, to the best of our knowledge, there currently exists no state-of-the-art method for conversation generation based on a knowledge base. Section \ref{subsec:rag-eval} elaborates on this end-to-end approach and the used metrics.
 
 % When it comes to evaluation metrics, it's important to differentiate between the components or models being evaluated. For the evaluation, we will categorize the evaluation scopes as follows:
 
@@ -174,8 +174,8 @@ In the context of a triple $(q, \hat{p}, \hat{a})$, where $\hat{p}$ corresponds 
             \texttt{Predicted Answer:} a' \\
             \texttt{Is the predicted answer correct?} Yes/No
         \end{quote}
-        This appraoch is especially useful for evaluating generative questions, as it allows for semantic matching.
-        \item \textbf{Human-based:} A human evaluator is asked to assign a binary value of 0 or 1 to indicate whether there is a match in the underlying message of $a'$ and $\hat{a}$. 1 if the answer $a'$ covers the information from $\hat{a}$, and 0 if it does not. The evaluator is provided with the question $q$, the important passage $\hat{p}$, the gold answer $\hat{a}$, and the generated answer $a'$. This approach is particularly useful for evaluating generative questions and closely resembles real-world applications. For this thesis two evaluaters will receive the same 100 randomly sampled answers and will be asked to assign a binary value to each answer. The inter-rater agreement will be calculated using Cohen's Kappa \cite{cohen_coefficient_1960}. 
+        This approach is especially useful for evaluating generative questions, as it allows for semantic matching.
+        \item \textbf{Human-based:} In this approach, a human evaluator is asked to assign a binary value of 0 or 1, indicating whether there is a match in the underlying message of $a'$ and $\hat{a}$. The evaluator assigns 1 if the answer $a'$ covers the information from $\hat{a}$ and 0 if it does not. The evaluator is provided with the question $q$, the important passage $\hat{p}$, the gold answer $\hat{a}$, and the generated answer $a'$. This approach is particularly useful for evaluating generative questions and closely resembles real-world applications. In addition to indicating accuracy, the evaluator gives a binary value of 0 or 1 to indicate whether the generated gold answer is correct and another binary value, if the question is an \textit{extractive} question, which is answerable given the context. For this thesis, two evaluators will assess 50 randomly sampled datapoints with the context present in the evidence set and another 50 where the context was dropped. They will assign a binary value to each answer. The inter-rater agreement will be calculated using Cohen's Kappa \cite{cohen_coefficient_1960}.
     \end{itemize}
 \end{itemize}
 
@@ -185,7 +185,7 @@ In the context of a triple $(q, \hat{p}, \hat{a})$, where $\hat{p}$ corresponds 
 The most challenging aspect of evaluation within the context of the system developed here is assessing \gls{conrag} as a holistic system. To conduct the evaluation, a dataset of conversations needs to be generated. This will be achieved through interactions of human evaluators engaging in conversations with the system. No automatic metrics will be utilized. Instead, all evaluation aspects will be assessed by human evaluators. There exist evaluation approaches using \gls{llm}s or the embeddings of \gls{dpr} in order to automatically evaluate certain aspects, but those won't be utilized for this limited evaluation dataset. The evaluation process involves the following steps:
 
 \begin{enumerate}
-    \item A human evaluator initiates a conversation with a question, either based on their own intuition or using provided questions from the synthetic dataset. Evaluators are encouraged to pose context-dependent questions.
+    \item A human evaluator initiates a conversation with a question, either based on their own intuition or using provided questions from the synthetic dataset. Evaluators are encouraged to pose context-dependent questions, which can be answered given a specific passage of the POs or not at all. Complex multi passage questions should be avoided, as this complicates the evaluation process.
     \item The evaluator continues the conversation, asking follow-up questions or engaging in a general discussion with the \gls{convqa}-System for 8-10 turns.
     \item After the conversation, the evaluator has access to the evidence set $E_{q_c}$ for each turn and all other passages $P$ in the index. The evaluator assesses the answer provided by the system and the retrieved evidence set $E_{q_c}$. They are required to provide the following information for every turn of the conversation:
         \begin{itemize}
@@ -220,7 +220,7 @@ To mitigate bias, human manual evaluations are carried out by two different eval
 \section{Experimental Setup and Implementation}
 \label{sec:setup}
 
-This section outlines the experimental setup and provides details on the implementation of the System Architecture and Framework introduced in Chapter \ref{chap:main}. First and foremost, we apply the theoretically outlined model ($M$) to create an implementation decision map. Figure \ref{fig:extract-pipeline-implementation-grid} illustrates a decision tree showcasing the possible implementations of the \textit{Extract} pipeline. Figure \ref{fig:all-components-conrag-grid} displays the main components, namely the \textit{Retriever}, \textit{Reader}, and \textit{\gls{cqu}}, in a similar decision matrix, where each column represents a decision to be made during implementation. Opting not to make a decision is also a valid choice. Developing an implementation can then be easily achieved using a decision tree, as shown in Figure \ref{fig:example-implementation-tree}. For the implementation and benchmarking, ressources of the BwUniCluster\footnote{\url{https://wiki.bwhpc.de/e/BwUniCluster2.0}} have been used.
+This section outlines the experimental setup and provides details on the implementation of the System Architecture and Framework introduced in Chapter \ref{chap:main}. First and foremost, we apply the theoretically outlined model ($M$) to create an implementation decision map. Figure \ref{fig:extract-pipeline-implementation-grid} illustrates a decision tree showcasing the possible implementations of the \textit{Extract} pipeline. Figure \ref{fig:all-components-conrag-grid} displays the main components, namely the \textit{Retriever}, \textit{Reader}, and \textit{\gls{cqu}}, in a similar decision matrix, where each column represents a decision to be made during implementation. Opting not to make a decision is also a valid choice. Developing an implementation can then be easily achieved using a decision tree, as shown in Figure \ref{fig:example-implementation-tree}. For the implementation and benchmarking, ressources of the BwUniCluster\footnote{\url{https://wiki.bwhpc.de/e/BwUniCluster2.0}} have been used. For further details on the model parameters used for all tasks, please refer to the Appendix \ref{ref:appendixA-evaluation-model-configurations}.
 
 \begin{figure}
     \centering
@@ -356,7 +356,8 @@ However, to address specific questions in the evaluation (See Section \ref{subse
 
 \begin{quote}
     \texttt{System Prompt:} \\
-    \texttt{You are an assistant who generates an answer given multiple contexts, which not necessarily contain the answer. You only respond to the 'Assistant'. Please generate an answer or state, 'I can't provide an answer given the context.' if you can not provide an answer based on the provided context.} \\
+    \texttt{You are an assistant helping a student with examination regulations of the Heidelberg University. Generate a concise answer based on the provided contexts. If the answer isn't in the contexts, state 'I can't answer this question'. If there's ambiguity, ask clarifying questions.} \\
+    \{previous chat history\}\\
     \texttt{User:} \\
     \texttt{Please generate an answer for the following question:} \\
     \{question\} \\
@@ -392,29 +393,33 @@ The simple rewrite prompt is implemented as follows:
 
 \begin{quote}
     \texttt{System Prompt:}\\
-    \texttt{You are an assistant who reformulates the current question into a de-contextualized rewrite under the multi-turn information-seeking dialog context. Please provide the rewritten question after \break "Rewrite:". Here are some examples:} \\
+    \texttt{As an assistant, you're tasked to decontextualize and reformulate the current question considering a multi-turn information-seeking dialogue. Please provide only the rewritten question after 'Rewrite:'. It will be used for passage retrieval. Here are some examples:} \\
     for example in example:\\
     \hspace*{1cm}\{example\}-\texttt{Example:} \\
     \hspace*{1cm}for turn in turns:\\
     \hspace*{1cm}\hspace*{1cm}\{turn\}-\texttt{Turn:} \\
     \hspace*{1cm}\hspace*{1cm}\texttt{Question:} \\
     \hspace*{1cm}\hspace*{1cm}\{question\} \\
-    \hspace*{2cm}\texttt{Rewrite:} \\
-    \hspace*{2cm}\{rewrite\} \\
+    % \hspace*{2cm}\texttt{Rewrite:} \\
+    % \hspace*{2cm}\{rewrite\} \\
     \hspace*{1cm}\hspace*{1cm}\texttt{Answer:} \\
     \hspace*{1cm}\hspace*{1cm}\{answer\} \\
+    \hspace*{1cm}\texttt{Question:} \\
+    \hspace*{1cm}\{question\} \\
+    \hspace*{1cm}\texttt{Rewrite:} \\
+    \hspace*{1cm}\{rewritten last user question\} \\
+    \{previous chat history\} \\
     \texttt{User:}\\
     \texttt{Please rewrite the following question given this conversation history:}\\
-    for turn in turns - 1:\\
-    \hspace*{1cm}\{turn\}-\texttt{Turn:}\\
-    \hspace*{1cm}\texttt{Question:} \\ 
-    \hspace*{1cm}\{question\}\\
-    \hspace*{1cm}\texttt{Answer:}\\ 
-    \hspace*{1cm}\{answer\}\\
+    % for turn in turns - 1:\\
+    % \hspace*{1cm}\{turn\}-\texttt{Turn:}\\
+    % \hspace*{1cm}\texttt{Question:} \\ 
+    % \hspace*{1cm}\{question\}\\
+    % \hspace*{1cm}\texttt{Answer:}\\ 
+    % \hspace*{1cm}\{answer\}\\
     \texttt{Question:}\\
     \{question\}\\
     \texttt{Rewrite:}\\
-    \texttt{Assistant:}
 \end{quote}
 
 In terms of models, the same models as for the Reader component will be utilized: \textit{Llama2-7B-Chat-GPTQ} for English conversations and \textit{leo-hessianai-7B-chat-GPTQ} for German conversations. The \gls{cqu} component itself will not be evaluated since there is no dataset available. For evaluations of this approach on other datasets and \gls{llm}s, the reader is referred to the work of Mao et al. \cite{mao_large_2023}.
@@ -424,43 +429,26 @@ In terms of models, the same models as for the Reader component will be utilized
 
 This section evaluates the implemented system and the introduced framework, using metrics introduced in Section \ref{sec:metrics}. The evaluation covers the following components: \textit{Extraction}, especially synthetic data generation (Section \ref{subsec:data-augmentation-quality}), \textit{Retriever} (Section \ref{subsec:retrieval-results}), \textit{Reader} (Section \ref{subsec:reader-results}), and the complete \gls{convqa} system (Section \ref{subsec:convqa-results}). The evaluation is based on the synthetic dataset described in Section \ref{subsec:index}, generated from the dataset introduced in Section \ref{sec:data}.
 
-\subsection{Data Augmentation Quality}
+\subsection{Evaluation Limitations}
 \label{subsec:data-augmentation-quality}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Data_Generation/hr_dpr_all_400.png}
-    \caption{Retriever performance comparison over all datasets}
-    \label{fig:synthetic-data-generation-performance-comparison}
-\end{figure}
+The outlined limitations primarily pertain to the Reader Evaluation. The Retriever Evaluation should be minimally affected, mainly by the usefulness of the generated questions. This section serves as a guide for future work, particularly when dealing with synthetic data generation. For more robust insights into \gls{rag} and the reader component in a conversational scenario, refer to Section \ref{subsec:convqa-results}, which is based on real-world data rather than synthetically generated data.
 
-As detailed in Section \ref{subsec:index}, the two main indices, namely \textit{indexEnglish} and \textit{indexGerman}, are based on the corresponding \gls{er}s. During the generation of the question-context datasets, qualitative issues arose when using \textit{leo-hessianai-7B-chat-GPTQ}. As indicated by System Prompt \ref{prompt:system-prompt-data-generation}, the model was prompted to start the generated answer after a defined indication text. In multiple cases, the German model \textit{leo-hessianai-7B-chat-GPTQ} was unable to fulfill this request, necessitating post-processing as described in Section \ref{subsec:index}. This issue was not present when using the English model \textit{Llama2-7B-Chat-GPTQ}. 
+\vspace{\baselineskip}
+\noindent\textbf{LLM Performance:} As detailed in Section \ref{subsec:index}, the two main indices, namely \textit{indexEnglish} and \textit{indexGerman}, are based on the corresponding \gls{er}s. During the generation of the question-context datasets, qualitative issues arose when using \textit{leo-hessianai-7B-chat-GPTQ}. As indicated by System Prompt \ref{prompt:system-prompt-data-generation}, the model was prompted to start the generated answer after a defined indication text. In multiple cases, the German model \textit{leo-hessianai-7B-chat-GPTQ} was unable to fulfill this request, necessitating post-processing as described in Section \ref{subsec:index}. This issue was not present when using the English model \textit{Llama2-7B-Chat-GPTQ}. This observation highlights a zero-shot performance gap between the English model \textit{Llama2-7B-Chat-GPTQ} and the German model \textit{leo-hessianai-7B-chat-GPTQ}. Consequently, the subsequent evaluations will concentrate on the \textit{indexEnglish} and \textit{translated-indexEnglish} datasets.
 
-In addition to this qualitative issue, a quantitative evaluation is possible when comparing the retrieval performance on both datasets and their translated versions: \textit{translated-indexEnglish} and \textit{translated-indexGerman}. The performance results of the large \gls{dpr} retriever are shown in Figure \ref{fig:synthetic-data-generation-performance-comparison}. They indicate, despite a small language performance gap, a significant difference in performance between the two indices \textit{indexEnglish} and \textit{indexGerman} and their corresponding translated versions. Of course, a gap in question difficulty could also be the case, but as both models used the same examples, it can be assumed that they did not necessarily generate significantly different questions in terms of difficulty to answer (e.g., the English model could mainly generate extractive questions, which are easier to find the corresponding passage to). This can be excluded when taking a look at Figure \ref{fig:retriever-performance-bm25-vs-dpr}, this is indicating a higher performance of the \textit{BM25} retriever on the original datasets in comparison to the translated ones, whhich indicates at least keyword based close realtion between questions and passages, therefore easier extractive questions. This hypothesis can further be supported when taking a qualitative look at questions generated in the \textit{indexGerman}, an example:
+%one line skip
+\vspace{\baselineskip}
+\noindent\textbf{Gold-Answer-Generation Performance:} The \textit{Human-based} reader's accuracy evaluation (Table \ref{tab:human-reader-evaluation}) shows a low rate of correct gold answers, approximately 22.25\%. The main reason for incorrectness is hallucination by smaller \gls{llm}s, leading to mostly incorrect gold answers. This impacts the performance of different evaluation metrics for the reader. The \textit{F1-BERTscore} operates only on the gold answer $\hat{a}$ and the predicted answer $a'$, potentially lacking sufficient insights. In contrast, the \textit{LLM-based} accuracy considers a triplet of question $q$, gold answer $\hat{a}$, and predicted answer $a'$, making it more robust to hallucination within gold answers. Across all models and indices, there is a gap of approximately 20.4\% between \textit{Human-based} and \textit{LLM-based} results. The \textit{short} versions of the indices, which use gold answers generated by \textit{gpt-3.5-turbo} with less hallucination, show a gap of 9.11\% when filtered for only useful gold answers. Therefore, the evaluation will focus on the \textit{short} versions of the indices for the reader.
 
-\begin{quote}
-    % \begin{lstlisting}[breaklines, escapeinside={(*@}{@*)}]
-    \begin{verbatim}
-Generierte Antwort:
-Was ist der Wert von $(4+5) \\times {(4+5) \\div {2 \\div {1 \\
-times {2}}}}$, wobei die mündliche Prüfung von einer Person 
-abgenommen wird, die nicht prüft?
+\vspace{\baselineskip}
+\noindent\textbf{Generated Question Usefulness:} As observed in Section \ref{subsec:index}, the approach for synthetic question generation aims to create various question types, including extractive and conceptual questions. However, the \textit{Human-based} Evaluation reveals that only 51.25\% of the generated questions are extractive, meaning they can be answered with information from the passage they are based on. This poses a significant challenge for automatically evaluating the reader and retriever components, as only a portion of the question-context tuples can be assessed in such constellations. Others may not make sense as the desired information might not be in the answer or even provided in the knowledge base. Despite this, in Figure \ref{fig:retriever-performance-bm25-vs-dpr}, retrievers show diminishing returns in performance improvement at approximately $k = 300$, reaching \gls{hr}s between 0.71 and 0.96. However, for future work, the entire evaluation pipeline using synthetic data must be reconsidered, especially for evaluating complex question types.
 
-Gegebener Kontext:
-Das Ergebnis ist der zu prüfenden Person im Anschluss an die münd-
-liche Prüfung bekannt zu geben.\n\n(4) (5) Mündliche Prüfungen 
-werden vor einer prüfenden Person in Gegenwart einer beisitzen-
-den Person gem. 6 Abs.\n\n4 abgelegt. - Prüfungsordnung Mathematik 
-MA (2022-10-05)
-    \end{verbatim}
-    % \end{lstlisting}
-\end{quote}
+\vspace{\baselineskip}
+\noindent\textbf{Negative Rejection Evaluation:} The chosen approach to automatically evaluate negative rejection, as described in Section \ref{subsec:reader-results}, faces two major challenges. Firstly, multiple passages are identical across the knowledge base, rendering the removal of the gold passage from the evidence set redundant. Secondly, as discussed in the \textbf{Generated Question Usefulness} section, the removal of the gold passage may still leave sufficient information in the evidence set to answer the question. This does not create an ideal scenario for evaluating negative rejection capabilities. A more suitable approach would be to manually generate a set of questions that are unanswerable by the knowledge base and then evaluate the models on this set. However, this approach may not be feasible with synthetic data.
 
-This observation highlights a zero-shot performance gap between the English model \textit{Llama2-7B-Chat-GPTQ} and the German model \textit{leo-hessianai-7B-chat-GPTQ}. Consequently, the subsequent evaluations will concentrate on the \textit{indexEnglish} and \textit{translated-indexEnglish} datasets.
-
-Regarding the gold-answer-generation performance Figure \ref{fig:reader-all-overview-performance} provides some insights. The values for $context length = 1$ give insights how close the smaller models are to the performance of \textit{gpt-3.5-turbo} when it comes to gold-answer-generation. It can be observed, that \textit{Llama2-7B-Chat-GPTQ} in general outperforms the German model \textit{leo-hessianai-7B-chat-GPTQ}. 
-
-HOW GOOD IS THE LARGE SET OF GOLD 
+\vspace{\baselineskip}
+\noindent\textbf{BLUE and ROUGE Metrics:} The applicability of \textit{BLUE} and \textit{ROUGE} metrics in the context of generative readers for question answering needs to be questioned. Applying these metrics to evaluate the reader in the given setup leads to random results. This is because these metrics are designed to determine a vocabulary-based overlap between two texts, which is only applicable in the case of extractive readers, not generative readers as used in \gls{rag}.
 
 
 \subsection{Retrieval Results}
@@ -478,7 +466,7 @@ The evaluation based on the described metrics (See Section \ref{sec:metrics}) de
     \item In the comparison of \textit{BM25} and \textit{\gls{dpr}} retrievers for different languages, the final choice of the \textit{Retriever} component should consider the best \gls{mrr} value for English and German datasets for $k \leq 10$. Figure \ref{fig:retriever-performance-best-retriever} compares \textit{BM25-CE-500} with the large \textit{\gls{dpr}} retriever over all datasets. The \gls{dpr} retriever significantly outperforms the \textit{BM25-CE-500} retriever for all datasets, indicating a high multi-language zero-shot performance of the \textit{text-embedding-ada-002} model by OpenAI. Nevertheless, considering the diffference in parameters (350 million vs. 17 million), the \textit{BM25-CE-500} retriever is a good alternative.
 \end{enumerate}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \begin{subfigure}{.5\textwidth}
         \centering
@@ -552,24 +540,120 @@ The influence of the Retriever component will be further evaluated in Section \r
 \subsection{Reader Results}
 \label{subsec:reader-results}
 
-The evaluation of the Reader is based on the metrics introduced in Section \ref{sec:metrics}. Some adjustments have been made as follows: Firstly, whenever \textit{gpt-3.5-turbo} is evaluated on a dataset, it is assessed on a random sample of 1,000 elements based on that dataset. Secondly, when calculating the \gls{llm}-based accuracy, it is computed on a random sample set of 1000 elements of a model's predictions. These adjustments aim to mitigate the costs associated with the OpenAI API. Thirdly, two separate datasets have been generated based on the four already introduced indices: \textit{indexEnglish}, \textit{indexGerman}, \textit{translated indexEnglish}, and \textit{translated indexGerman}. The \textit{short} version of the datasets corresponds to 2,000 random samples, where \textit{gpt-3.5-turbo} is used to generate the gold-answers in the data augmentation stage. The \textit{filtered} version of the datasets drops question-context pairs if the gold-passage is not included in the evidence set of the \gls{dpr} retriever with $k = 1,000$ and generates the gold-answers using \textit{Llama2-7B-Chat-GPTQ} for \textit{indexEnglish} and \textit{translated indexGerman}, and \textit{leo-hessianai-7B-chat-GPTQ} for \textit{indexGerman} and \textit{translated indexEnglish}.
+
+The evaluation of the Reader is based on the metrics introduced in Section \ref{sec:metrics}. Some adjustments have been made as follows: Firstly, whenever \textit{gpt-3.5-turbo} is evaluated on a dataset, it is assessed on a random sample of 1,000 elements based on that dataset. Secondly, when calculating the \gls{llm}-based accuracy, it is computed on a random sample set of 1000 elements of a model's predictions. These adjustments aim to mitigate the costs associated with the OpenAI API. Thirdly, two separate datasets have been generated based on the four already introduced indices: \textit{indexEnglish}, \textit{indexGerman}, \textit{translated indexEnglish}, and \textit{translated indexGerman}. The \textit{short} version of the datasets corresponds to 2,000 random samples, where \textit{gpt-3.5-turbo} is used to generate the gold-answers in the data augmentation stage. The \textit{filtered} version of the datasets drops question-context pairs if the gold-passage is not included in the evidence set of the \gls{dpr} retriever with $k = 1,000$ and generates the gold-answers using \textit{Llama2-7B-Chat-GPTQ} for \textit{indexEnglish} and \textit{translated indexGerman}, and \textit{leo-hessianai-7B-chat-GPTQ} for \textit{indexGerman} and \textit{translated indexEnglish}. In order to test the \textit{Negative Rejection}, with a randomness of 20\% the correct passage was removed from the evidence set of the \gls{dpr} retriever. Those evaluation datasets will be refered to as \textit{dropped} datasets. 
+
+Table \ref{tab:human-reader-evaluation} presents the evaluation results for the reader component based on filtered versions of the datasets. Specifically, the \textit{gpt-3.5-turbo} model is assessed on the \textit{indexEnglish} and \textit{translated indexEnglish} datasets, while the \textit{leo-hessianai-7B-chat-GPTQ} and \textit{Llama2-7B-Chat-GPTQ} models are evaluated on the \textit{indexGerman} and \textit{translated indexGerman} datasets. The Cohen's Kappa coefficient indicates a moderate agreement between the two evaluators, scoring $0.72$.
+
+\begin{table}[h]
+    \renewcommand{\arraystretch}{1.1}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{p{0.35\textwidth}p{0.1\textwidth}cccccc}
+    \hline
+    \multicolumn{2}{l}{\multirow{2}{*}{Index}}                              & \multicolumn{2}{c}{\textit{gpt-3.5-turbo}}                                                                            & \multicolumn{2}{c}{\textit{leo-hessianai-7B-chat-GPTQ}}                                                                 & \multicolumn{2}{c}{\textit{Llama2-7B-Chat-GPTQ}}                                                   \\ \cline{3-8} 
+    \multicolumn{2}{l}{}                                                    & accuracy                  & accuracy qat*                                                              & accuracy                  & accuracy qat*                                                                 & accuracy                  & accuracy qat*                                            \\ \hline
+    \multirow{2}{*}{IndexEnglish}            & \multicolumn{1}{c|}{all}     & \multicolumn{1}{c|}{0.68} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}1.0\\ (34.5/10)\end{tabular}} & \multicolumn{2}{c|}{\multirow{2}{*}{-}}                                                                   & \multicolumn{1}{c|}{0.24} & \begin{tabular}[c]{@{}c@{}}0.3571\\ (16/14)\end{tabular} \\ \cline{2-4} \cline{7-8} 
+                                             & \multicolumn{1}{c|}{dropped} & \multicolumn{1}{c|}{0.56} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}0.675\\ (40)\end{tabular}}  & \multicolumn{2}{c|}{}                                                                                     & \multicolumn{1}{c|}{0.52} & \begin{tabular}[c]{@{}c@{}}0.5334\\ (30)\end{tabular}    \\ \hline
+    \multirow{2}{*}{translated IndexEnglish} & \multicolumn{1}{c|}{all}     & \multicolumn{1}{c|}{0.62} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}0.9545\\ (39/10.5)\end{tabular}} & \multicolumn{1}{c|}{0.2}  & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}0.2367\\ (13/10)\end{tabular}} & \multicolumn{2}{c}{\multirow{2}{*}{-}}                                               \\ \cline{2-6}
+                                             & \multicolumn{1}{c|}{dropped} & \multicolumn{1}{c|}{0.58} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}0.6364\\ (44)\end{tabular}} & \multicolumn{1}{c|}{0.44} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}0.6786\\ (28.5)\end{tabular}}    & \multicolumn{2}{c}{}                                                                 \\ \hline
+    \multicolumn{8}{l}{\footnotesize * \textit{qat} stands for \textit{question and answer true}, meaning only those datapoints are considered where the question is extractive and the gold answer is correct.} \\
+    \multicolumn{8}{l}{\footnotesize (x/y) Number of \textit{extractive questions} and \textit{correct gold answer} in parentheses.} \\
+    \end{tabular}%
+    }
+    \caption{Human-based Reader Evaluation for context length of 3 and no shuffled contexts}
+    \label{tab:human-reader-evaluation}
+\end{table}
+
+The following insights can be drawn from the evaluation results, keeping in mind the evaluation limitations mentioned in Section \ref{subsec:data-augmentation-quality}: 
+
+\begin{enumerate}
+    \item In Figure \ref{fig:reader-all-overview-performance} and Figure \ref{fig:reader-all-overview-performance-f1}, the accuracy of the \textit{gpt-3.5-turbo} model increases as the size of the evidence set ($k$) grows. Conversely, the performance of smaller \gls{llm}s like \textit{leo-hessianai-7B-chat-GPTQ} and \textit{Llama2-7B-Chat-GPTQ} declines with larger $k$ values, possibly due to their limited capacity to process extensive evidence sets.
+    \item Figure \ref{fig:reader-all-overview-performance} compares \textit{LLM-based} accuracy across both \textit{indexEnglish} and \textit{translated indexEnglish} without shuffled contexts, while Figure \ref{fig:reader-all-overview-performance-f1} compares \textit{F1-BERTScore} for the same. Both metrics exhibit a similar trend, although \textit{F1-BERTScore} shows a notable disparity across languages.
+    \item Figures \ref{fig:reader-importance-order-contexts-en} and \ref{fig:reader-importance-order-contexts-en} illustrate that context order has minimal impact for a maximum context length of 10, irrespective of language.
+    \item Regarding \textit{Negative Rejection}, the \textit{Human-based} evaluation suggests a performance of 0.675 for \textit{gpt-3.5-turbo} and 0.5334 for \textit{Llama2-7B-Chat-GPTQ} on the \textit{indexEnglish} dataset, and 0.6364 for \textit{gpt-3.5-turbo} and 0.6786 for \textit{leo-hessianai-7B-chat-GPTQ} on the translated dataset. Due to limitations, automated evaluations will be excluded. This indicates a relatively moderate \textit{Negative Rejection} capability.
+    \item Overall, \textit{gpt-3.5-turbo} outperforms smaller models consistently across languages and settings. For instance, at $k = 10$ without shuffled contexts, the gap between \textit{gpt-3.5-turbo} and \textit{Llama2-7B-Chat-GPTQ} is 0.63 for \textit{indexEnglish} and 0.82 for \textit{translated IndexEnglish}.
+    \item Language gap analysis indicates no significant performance difference for \textit{gpt-3.5-turbo} across languages in this setting. However, the smaller models \textit{leo-hessianai-7B-chat-GPTQ} and \textit{Llama2-7B-Chat-GPTQ} show a gap of approximately 0.1 accuracy between English and German models, consistent across automatic and \textit{Human-based} evaluations.
+\end{enumerate}
+
+As discussed in Section \ref{subsec:data-augmentation-quality}, we strongly recommend readers to refer to the evaluation results presented in the next Section \ref{subsec:convqa-results}. This is because the evaluation of the reader component itself, based on synthetic data, is severely constrained.
+
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Grafiken/Evaluation/Reader/all_indices_all_readers_no_shuffle.png}
-    \caption{Comparison of all Readers over all Indices without shuffled contexts}
-    \label{fig:reader-all-overview-performance}
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/Reader/all_models_filtered_indices.png}
+        \captionsetup{width=.9\linewidth}
+        \caption{Comparison of all readers LLM accuracy over two indices without shuffled contexts}
+        \label{fig:reader-all-overview-performance}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/Reader/all_models_filtered_indices_f1.png}
+        \captionsetup{width=.9\linewidth}
+        \caption{Comparison of all readers F1 Bertscore over two indices without shuffled contexts}
+        \label{fig:reader-all-overview-performance-f1}
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/Reader/is_the_order_important_de.png}
+        \captionsetup{width=.9\linewidth}
+        \caption{Importance of the order of the contexts for German models}
+        \label{fig:reader-importance-order-contexts-de}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/Reader/is_the_order_important_en.png}
+        \captionsetup{width=.9\linewidth}
+        \caption{Importance of the order of the contexts for English models}
+        \label{fig:reader-importance-order-contexts-en}
+    \end{subfigure}
+    \caption{Multiple Reader Performance Comparisons}
+    \label{fig:reader-performance}
 \end{figure}
 
-The Reader evaluation aims to answer the following questions:
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/Reader/all_models_filtered_indices.png}
+%     \caption{Comparison of all readers LLM accuracy over two indices without shuffled contexts}
+%     \label{fig:reader-all-overview-performance}
+% \end{figure}
 
-\begin{enumerate}
-    \item How many context passages will still lead to a correct answer?
-    \item Is the order of the contexts important?
-    \item Can the reader identify if the correct context was not provided?
-    \item How much do the models differ in language?
-    \item How much better is OpenAI?
-\end{enumerate}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/Reader/all_models_filtered_indices_f1.png} 
+%     \caption{Comparison of all readers F1 Bertscore over two indices without shuffled contexts}
+%     \label{fig:reader-all-overview-performance-f1}
+% \end{figure}
 
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/Reader/is_the_order_important_de.png} 
+%     \caption{Importance of the order of the contexts for German models}
+%     \label{fig:reader-importance-order-contexts-de}
+% \end{figure}
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/Reader/is_the_order_important_en.png} 
+%     \caption{Importance of the order of the contexts for English models}
+%     \label{fig:reader-importance-order-contexts-en}
+% \end{figure}
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=.8\textwidth]{Grafiken/Evaluation/Reader/context_dropped.png} 
+%     \caption{Comparison of the influence of context dropping on the performance of the readers}
+%     \label{fig:reader-context-drop}
+% \end{figure}
+
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/Reader/all_indices_all_readers_no_shuffle.png}
+%     \caption{Comparison of all Readers over all Indices without shuffled contexts}
+%     \label{fig:reader-all-overview-performance}
+% \end{figure}
 \subsection{Conversational Question Answering Results}
 \label{subsec:convqa-results}

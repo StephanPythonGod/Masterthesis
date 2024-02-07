@@ -1,4 +1,5 @@
-This chapter outlines the methods and techniques employed in the development of a conversational question-answering system designed for the use with a collection of documents as knowledge source. The chapter is structured as follows: Section \ref{sec:overview} provides an overview of the desired use case, its objectives, and constraints concerning a Conversational Question Answering System. Section \ref{sec:problem_statement} will introduce the fundamental document enquiry model, and Section \ref{sec:conrag} presents a general framework that can be utilized for the implementation of a Conversational Question Answering System. Its subsections will highlight and discuss the components introduced within the framework.
+This chapter outlines the methods and techniques employed in the development of a conversational question-answering system designed for the use with a collection of documents as knowledge source. The chapter is structured as follows: Section \ref{sec:overview} provides an overview of the desired use case, its objectives, and constraints concerning a Conversational Question Answering System. Section \ref{sec:problem_statement} will introduce the fundamental document enquiry model, and Section \ref{sec:conrag} presents a general framework that can be utilized for the implementation of a Conversational Question Answering System. Its subsections will highlight and discuss the components introduced within the framework. Section \ref{sec:conclusion_contribution} will summarize the contribution of this thesis to the field of Conversational Question Answering Systems.
+
 
 \section{Overview and Objective}
 \label{sec:overview}
@@ -12,7 +13,7 @@ The primary use case addressed in this thesis can be summarized as follows: Imag
     \label{fig:use-case}
 \end{figure}
 
-Currently, to the best of my knowledge, there is no scientific paper or similar resource offering a comprehensive framework or pipeline to address this use case. This thesis aims to bridge this gap by presenting a framework and pipeline designed to tackle this specific scenario. Figure \ref{fig:overview-system-architecture} provides an overview of the system architecture. The system follows the \gls{rag} architecture, as detailed in Section \ref{subsec:qa_retrieval}, which extends the classical Retriever-Reader with a \gls{llm} as a Reader, capable of incorporating parametric knowledge. To extend \gls{rag} to a \gls{convqa}, a \gls{cqu} unit, as introduced in Section \ref{subsec:cqa_contextual_query_understanding}, is essential. This novel architecture will be termed \textbf{\gls{conrag}}. The extraction pipeline will be discussed in Section \ref{subsec:extract}, with its primary tasks being the extraction of passages from the provided set of documents, the creation of an index, and the optional generation of synthetic training data. The three major modules comprising the architecture, namely the \textit{Retriever}, \textit{Reader}, and \textit{\gls{cqu}}, will be elaborated in their respective sections: \ref{subsec:retriever}, \ref{subsec:reader}, and \ref{subsec:cqu}.
+Currently, to the best of our knowledge, there is no scientific paper or similar resource offering a comprehensive framework or pipeline to address this use case. This thesis aims to bridge this gap by presenting a framework and pipeline designed to tackle this specific scenario. Figure \ref{fig:overview-system-architecture} provides an overview of the system architecture. The system follows the \gls{rag} architecture, as detailed in Section \ref{subsec:qa_retrieval}, which extends the classical Retriever-Reader with a \gls{llm} as a Reader, capable of incorporating parametric knowledge. To extend \gls{rag} to a \gls{convqa}, a \gls{cqu} unit, as introduced in Section \ref{subsec:cqa_contextual_query_understanding}, is essential. This novel architecture will be termed \textbf{\gls{conrag}}. The extraction pipeline will be discussed in Section \ref{subsec:extract}, with its primary tasks being the extraction of passages from the provided set of documents, the creation of an index, and the optional generation of synthetic training data. The three major modules comprising the architecture, namely the \textit{Retriever}, \textit{Reader}, and \textit{\gls{cqu}}, will be elaborated in their respective sections: \ref{subsec:retriever}, \ref{subsec:reader}, and \ref{subsec:cqu}.
 
 \begin{figure}
     \centering
@@ -68,7 +69,7 @@ Answer 3: Either 04.08.1961 or 05.09.1962 I'm not sure.
 The intent of the question is fullfilled given answer 1, so the answer contains the information the user was looking for, when starting the search, but answer 2 misses the search intent. Answer 3 is somewhere inbetween, as it understands the search intent, but doesn't fullfill it correctly. Therefore intent can be summarized as the users true information need he had when generating a search query. Mathematically we define intent the following way:
 
 \begin{definition}
-    \textbf{(Intent)} Given two elements, which either can be questions, answers or passages, there exists an operation Intent $\mathcal{I}(x, y)$. This operation returns a value between 0 and 1, which indicates the overlap of the two intents of $x$ and $y$, $\mathcal{I}(x, y) = [0,1]$ 
+    \textbf{(Intent)} Given two elements, which either can be questions, answers or passages, there exists an operation Intent $\mathcal{I}(x, y)$. This operation returns a value between 0 and 1, which indicates the overlap of the two intents of $x$ and $y$, $\mathcal{I}(x, y) = [0,1]$.
     \label{def:intent}
 \end{definition}
 
@@ -79,7 +80,7 @@ Next we need to define what a \textit{Question} is. For this problem, a question
     \label{def:question_model}
 \end{definition}
 
-Naturally where there is a \textit{Question}, there has to be an \textit{Answer}. An \textit{Answer} $a$ is a string, which is the answer to a \textit{Question} $q$. It can be considered a gold answer, when $\mathcal{I}(q,a) = 1$. Formally we define an \textit{Answer} as:
+Naturally where there is a \textit{Question}, there has to be an \textit{Answer}. An \textit{Answer} $a$ is a string, which is the answer to a \textit{Question} $q$. It can be considered a gold answer, when $\mathcal{I}(q,a) = 1$. Formally, we define an \textit{Answer} as:
 
 \begin{definition}
     \textbf{(Answer Model)} An answer $a$ is a string, that answers a given question $q$. To which extend answer $a$ answers question $q$ is measured by the \textit{Intent}. If $\mathcal{I}(q,a) = 1$, $a$ is considered a gold answer to $q$.
@@ -112,7 +113,7 @@ In order to now create a system architecture, which fullfills the task of model 
 
 \begin{enumerate}
     \item \textbf{Information Extraction:} Given a set of documents $D$, extract the textual content $C_d$ of each document $d \in D$ and create a knowledge source $P$ based on $C_d$ of every document $d \in D$.
-    \item \textbf{Contextual Query Understanding:} Given a history $H$ and a new question $q_{i+1}$, generate a contextualized question $q_c$ based on $H$, that $\mathcal{I}(q_c,q_{i+1}) = 1$.
+    \item \textbf{Contextual Query Understanding:} Given a history $H$ and a new question $q_{i+1}$, generate a contextualized question $q_c$ based on $H$, such that $\mathcal{I}(q_c,q_{i+1}) = 1$.
     \item \textbf{Passage Retrieval:} Given a contextualized question $q_c$ and a knowledge source $P$, retrieve the most relevant passages $p$ from $P$ and combine them in an evidence set $E$.
     \item \textbf{Response Generation:} Given a contextualized question $q_c$ and a set of passages $E$, generate an answer $a$ to $q_c$ based on $E$, so that $\mathcal{I}(q_{i+1},a) = 1$.
 \end{enumerate}
@@ -257,7 +258,7 @@ Figure \ref{fig:conrag_concept_system_architecture} illustrates the combination 
 \subsection{Extract}
 \label{subsec:extract}
 
-The sub-task of \textit{Inforamtion Extraction} was defined in the previous Section as sub-task (1) of the model $\mathbf{M}$. Given a set of documents $D$, the knowledge source $P$ needs to be extracted using \textit{Information Extraction} techniques in combination with \textit{Passage Extraction} operations. As synthetic data generation is also part of the extraction component according to Section \ref{sec:overview}, it will also be discussed in this section. This is originally not part of the model $\mathbf{M}$, but makes from a system architecture sense, to place these operations in this system component. Synthetic Data can be seen as an seperate task, which has nothing to do with the original task of \gls{convqa}, but is a necessary step in order to train components of the model $\mathbf{M}$ or evaluate those.
+The sub-task of \textit{Inforamtion Extraction} was defined in the previous section as sub-task (1) of the model $\mathbf{M}$. Given a set of documents $D$, the knowledge source $P$ needs to be extracted using \textit{Information Extraction} techniques in combination with \textit{Passage Extraction} operations. As synthetic data generation is also part of the extraction component according to Section \ref{sec:overview}, it will also be discussed in this section. This is originally not part of the model $\mathbf{M}$, but makes from a system architecture sense, to place these operations in this system component. Synthetic Data can be seen as an seperate task, which has nothing to do with the original task of \gls{convqa}, but is a necessary step in order to train components of the model $\mathbf{M}$ or evaluate those.
 
 \vspace{\baselineskip} % Add one line space
 
@@ -388,7 +389,7 @@ In general \gls{cqu} is an ongoing field of research, especially for follow-up q
 \subsection{Retriever}
 \label{subsec:retriever}
 
-Previously we have divided the main task of a model $\mathbf{M}$ for \gls{convqa} into multiple sub-tasks. The Retriever component handles the \textit{Passage Retrieval} task. The goal of this component is to identify relevant passages $p$ from the knowledge source $P$ given a contextualized question $q_c$. The contextualized question $q_c$ is generated by the \gls{cqu} unit (see Section \ref{subsec:cqu}). Approaches, which are using instead of $q_c$ the whole history $H$ for retrieval, will not be discussed in this thesis. The identification of passages includes a scoring of relevance for each passage $p$ given a question $q_c$. The scoring function $p_{\text{Ret}}(p|q_c)$ is defined as following:
+Previously we have divided the main task of a model $\mathbf{M}$ for \gls{convqa} into multiple sub-tasks. The Retriever component handles the \textit{Passage Retrieval} task. The goal of this component is to identify relevant passages $p$ from the knowledge source $P$ given a contextualized question $q_c$. The contextualized question $q_c$ is generated by the \gls{cqu} unit (see Section \ref{subsec:cqu}). Approaches, which are using instead of $q_c$ the whole history $H$ for retrieval, will not be discussed in this thesis. The identification of passages includes a scoring of relevance for each passage $p$ given a question $q_c$. The scoring function $p_{\text{Ret}}(p|q_c)$ is defined as:
 
 \begin{equation}
     p_{\text{Ret}}(p|q_c) = \text{Score}(q_c,p)
@@ -438,7 +439,7 @@ Here, $\theta$ is the set of trainable parameters, and $\Theta$ is a set of adju
     
     Here, $f(\cdot)$ represents a function that combines the scores of the individual retrievers $r_j$, for example, using $max(\cdot)$. $R$ is a set of retrievers $r$.
     
-    \item \textbf{Weighting}: This approach involves running two retrievers in parallel and multiplying their scores for each passage $p$. It can be seen as a sub-case of Ensemble. Formally:
+    \item \textbf{Weighting}: This approach involves running two retrievers in parallel and multiplying their scores for each passage $p$. It can be seen as a sub-case of ensemble. Formally:
     
     \begin{equation}
         \forall p \in P: \text{Score}(q_c, p) = \prod_{j=1}^{|R|} \alpha_j \cdot r_j(q_c, p), \sum_{j=1}^{|R|} \alpha_j = 1
@@ -541,7 +542,7 @@ At the core of the Reader's implementation is the evidence set $E_{q_c}$. It is 
     \label{fig:scale-passages-implementation}
 \end{figure}
 
-Most datasets used for \gls{qa}, \gls{convqa}, or training of \gls{prlm} find themselves on the right end of this scale. So, the \gls{llm}s get trained on semantically correct and most of the time content-complete passages $p$. Exceptions are datasets for multi-hop \gls{qa} where the passages are not content-complete, but the aggregation of multiple passages is needed. This evokes the question of how to construct the passages, keeping in mind how the used \textit{Transformer} models have been trained. However, this thesis will not further evaluate the influence of different passage extraction variations, as there is currently no comprehensive research on this topic to the best of my knowledge.
+Most datasets used for \gls{qa}, \gls{convqa}, or training of \gls{prlm} find themselves on the right end of this scale. So, the \gls{llm}s get trained on semantically correct and most of the time content-complete passages $p$. Exceptions are datasets for multi-hop \gls{qa} where the passages are not content-complete, but the aggregation of multiple passages is needed. This evokes the question of how to construct the passages, keeping in mind how the used \textit{Transformer} models have been trained. However, this thesis will not further evaluate the influence of different passage extraction variations, as there is currently no comprehensive research on this topic to the best of our knowledge.
 
 The first challenge (1) of the Reader is closely related to the task \gls{mrc} and classical \gls{qa}. Let's assume that the evidence set is the perfect evidence set which it takes to answer question $q_c$: $E_{q_c} = \hat{E}_{q_c}$. The model from Equation \ref{eq:reader} can be easily trained with a supervised dataset. To fulfill this task, a dataset consisting of question-context-answer triples is necessary, where the context corresponds to $\hat{E}_{q_c}$ and therefore is a list of passages. Depending on the dataset, the model can even be trained to fulfill multiple question types. This can be achieved by varying the question types of the questions in the triples.
 
@@ -555,7 +556,7 @@ The second challenge (2) is more complicated, as in a modular implementation, th
     \item \textbf{Parametric Knowledge:} This approach is the fundamental idea of \gls{rag}. The underlying \textit{Transformer} of the Reader gets trained on the knowledge source $P$ to store implicitly the knowledge. This may lead to a better understanding of the evidence set $E_{q_c}$ and give the Reader the ability to access knowledge, which is not included in $E_{q_c}$ (e.g., when $\hat{p} \not\in E_{q_c}$). The fine-tuning itself is the common adoption of a \gls{prlm} to a small new knowledge source $P$. During fine-tuning the \gls{prlm} is tasked to predict the next token and therefore learn the knowledge source $P$ specific language and knowledge.
 \end{itemize}
 
-For the (3) challenge, the Reader must be able to determine ambiguous questions $q_{i}$ and generate a clarification question $a_i$. This task consists of two steps:
+Given the (3) challenge, the Reader must be able to determine ambiguous questions $q_{i}$ and generate a clarification question $a_i$. This task consists of two steps:
 
 \begin{enumerate}
     \item \textbf{Identify Ambiguity:} Given a question $q_i$, the Reader $r_{\text{Read}}(\cdot)$ has to determine if the question $q_i$ is ambiguous. A question is ambiguous if there are multiple answers that fulfill the question's search intent, but themselves satisfy different intents ($\mathcal{I}(q_{i}, a_{i,1}) = 1 \quad \allowbreak \land \quad \allowbreak \mathcal{I}(q_{i}, a_{i,2}) = 1 \quad \allowbreak \land \quad \allowbreak \mathcal{I}(a_{i,1},a_{i,2}) = 0$). The ambiguity in $q_i$ can either originate in a factoid ambiguity (e.g., $\mathcal{I}(q_{i}, p_1) = 1 \quad \land \quad \mathcal{I}(q_{i}, p_2) = 1 \quad \land \quad \mathcal{I}(p_1, p_2) = 0$) or a linguistic ambiguity (e.g., ambiguous cross-references).
@@ -571,6 +572,18 @@ As observed, the Reader's ability to address challenges (1-4) is highly dependen
 \vspace{\baselineskip}
 
 \textbf{Chain-, Chain-of-Thought- and Agent-Reader:} Drawing inspiration from the work of Langchain \cite{noauthor_langchain-ailangchain_nodate}, Wei et al. \cite{wei_chain--thought_2023} and Kuhn et al. \cite{kuhn_clam_2023}, the diverse task of a Reader can be broken down into a sequential decision-based procedure. The core idea is to break down the multiple challenges a Reader has to solve into smaller tasks that are easier to solve independently. An easy implementation could involve breaking down the holistic task of the reader into simple sub-tasks that follow a sequential order. One sub-task is for example: \textit{Is the question ambiguous?}. The Reader will be prompted to solve this sub-task, and depending on the result, other sub-tasks will be triggered. This is a rigid activity diagram-like implementation and is similar to the concept of \textit{Chains} in \textit{Langchain}. This can be further improved by adding more flexibility, where the Reader is fine-tuned in a \textit{\gls{cot}} manner to reason over a question, given the evidence and the history. The single challenges or sub-tasks can, therefore, be interpreted as reasoning steps. This requires a whole new dataset for fine-tuning. Extending this idea further, the Reader is developed into an agent, similar to the \textit{ReAct} approach, where it can reason over a question given the evidence and the history, and also has the ability to take certain actions, such as retrieving more evidence or re-running retrieval with a variation of the contextualized question. These are just some ideas on how the Reader is further extended to increase the quality of the \gls{qa} system. However, this thesis will not further evaluate this idea, as it is not the main focus.
+
+\section{Summary Contribution}
+\label{sec:conclusion_contribution}
+
+The main contribution of this thesis is a holistic framework covering the entire \gls{convqa} system, from a collection of documents to detailed approaches used for specific components. To the best of our knowledge, no related work has yet provided such a comprehensive perspective on the problem field of \gls{convqa}.
+
+An often overlooked aspect in related research work is the step of \textit{Extraction}. This is due to the fact that most research work is based on already existing datasets. However, in real-world scenarios, the extraction of passages from documents is a crucial step. This thesis breaks down the extraction into simple operations that can be combined to form an extraction pipeline. The parameters of the pipeline can be adjusted to determine the final passage model.
+
+The thesis does not elaborate on new approaches/algorithms to retrievers itself but rather identifies the problems and tasks the retriever component has in a \gls{convqa} system. Given a retriever and a knowledge base, problems can arise from the retriever towards the data (e.g., misalignment between the underlying formats of the passages and the formats on which the retriever was trained). Therefore, the thesis introduces a fine-tuning method based on generated data using a \gls{llm} and multiple state-of-the-art optimizations. Other problems can arise from the retriever towards the evidence set, namely that the evidence set's quality is not sufficient. In order to address this, the thesis elaborates on the concept of \textit{Mixture-of-Experts} as it is an approach that can be used to enhance the retrieval quality without the need to reinvent a new retriever.
+
+Lastly, this thesis introduces the approach of breaking down the task of a reader into challenges. These challenges can be of any nature (e.g., identifying ambiguity in questions or assessing the completeness of the evidence set). Previous related work has not yet broken down the challenges towards a reader in such a manner to the best of our knowledge. Given these small and well-defined challenges, it's easy to identify possible solutions regarding the reader. In this thesis, multiple such solutions based on related work are introduced, and new ones for specific challenges are proposed, mainly focusing on fine-tuning. On top of that, the thesis introduces the idea of using these smaller, finite, and simpler challenges of the whole reader task to create a sequential decision-based procedure, which could enable smaller \gls{llm}s to solve the reader task without performance losses compared to larger \gls{llm}s.
+
 
 % \section{Question Answering over PDFs}
 % \label{sec:qa-over-pdfs}

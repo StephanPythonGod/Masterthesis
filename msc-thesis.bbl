@@ -88,6 +88,11 @@ Farea, A., Yang, Z., Duong, K., Perera, N., and Emmert-Streib, F. (2022).
 \newblock Evaluation of {Question} {Answering} {Systems}: {Complexity} of judging a natural language.
 \newblock arXiv:2209.12617 [cs].
 
+\bibitem[Feng, 2021]{feng_dialdoc_2021}
+Feng, S. (2021).
+\newblock {DialDoc} 2021 {Shared} {Task}: {Goal}-{Oriented} {Document}-grounded {Dialogue} {Modeling}.
+\newblock In {\em Proceedings of the 1st {Workshop} on {Document}-grounded {Dialogue} and {Conversational} {Question} {Answering} ({DialDoc} 2021)}, pages 1--7, Online. Association for Computational Linguistics.
+
 \bibitem[Ferrucci, 2012]{ferrucci_introduction_2012}
 Ferrucci, D.~A. (2012).
 \newblock Introduction to “{This} is {Watson}”.
@@ -366,10 +371,20 @@ Muennighoff, N. (2022).
 \newblock {SGPT}: {GPT} {Sentence} {Embeddings} for {Semantic} {Search}.
 \newblock arXiv:2202.08904 [cs].
 
+\bibitem[Nakano et~al., 2022]{nakano_webgpt_2022}
+Nakano, R., Hilton, J., Balaji, S., Wu, J., Ouyang, L., Kim, C., Hesse, C., Jain, S., Kosaraju, V., Saunders, W., Jiang, X., Cobbe, K., Eloundou, T., Krueger, G., Button, K., Knight, M., Chess, B., and Schulman, J. (2022).
+\newblock {WebGPT}: {Browser}-assisted question-answering with human feedback.
+\newblock arXiv:2112.09332 [cs].
+
 \bibitem[Nassiri and Akhloufi, 2023]{nassiri_transformer_2023}
 Nassiri, K. and Akhloufi, M. (2023).
 \newblock Transformer models used for text-based question answering systems.
 \newblock {\em Applied Intelligence}, 53(9):10602--10635.
+
+\bibitem[Naveed et~al., 2023]{naveed_comprehensive_2023}
+Naveed, H., Khan, A.~U., Qiu, S., Saqib, M., Anwar, S., Usman, M., Akhtar, N., Barnes, N., and Mian, A. (2023).
+\newblock A {Comprehensive} {Overview} of {Large} {Language} {Models}.
+\newblock arXiv:2307.06435 [cs].
 
 \bibitem[Neelakantan et~al., 2022]{neelakantan_text_2022}
 Neelakantan, A., Xu, T., Puri, R., Radford, A., Han, J.~M., Tworek, J., Yuan, Q., Tezak, N., Kim, J.~W., Hallacy, C., Heidecke, J., Shyam, P., Power, B., Nekoul, T.~E., Sastry, G., Krueger, G., Schnurr, D., Such, F.~P., Hsu, K., Thompson, M., Khan, T., Sherbakov, T., Jang, J., Welinder, P., and Weng, L. (2022).
@@ -478,6 +493,11 @@ Tavakoli, L., Zamani, H., Scholer, F., Croft, W., and Sanderson, M. (2021).
 Thakur, N., Reimers, N., Rücklé, A., Srivastava, A., and Gurevych, I. (2021).
 \newblock {BEIR}: {A} {Heterogenous} {Benchmark} for {Zero}-shot {Evaluation} of {Information} {Retrieval} {Models}.
 \newblock arXiv:2104.08663 [cs].
+
+\bibitem[Thoppilan et~al., 2022]{thoppilan_lamda_2022}
+Thoppilan, R., De~Freitas, D., Hall, J., Shazeer, N., Kulshreshtha, A., Cheng, H.-T., Jin, A., Bos, T., Baker, L., Du, Y., Li, Y., Lee, H., Zheng, H.~S., Ghafouri, A., Menegali, M., Huang, Y., Krikun, M., Lepikhin, D., Qin, J., Chen, D., Xu, Y., Chen, Z., Roberts, A., Bosma, M., Zhao, V., Zhou, Y., Chang, C.-C., Krivokon, I., Rusch, W., Pickett, M., Srinivasan, P., Man, L., Meier-Hellstern, K., Morris, M.~R., Doshi, T., Santos, R.~D., Duke, T., Soraker, J., Zevenbergen, B., Prabhakaran, V., Diaz, M., Hutchinson, B., Olson, K., Molina, A., Hoffman-John, E., Lee, J., Aroyo, L., Rajakumar, R., Butryna, A., Lamm, M., Kuzmina, V., Fenton, J., Cohen, A., Bernstein, R., Kurzweil, R., Aguera-Arcas, B., Cui, C., Croak, M., Chi, E., and Le, Q. (2022).
+\newblock {LaMDA}: {Language} {Models} for {Dialog} {Applications}.
+\newblock arXiv:2201.08239 [cs].
 
 \bibitem[Tito et~al., 2021]{tito_document_2021}
 Tito, R., Karatzas, D., and Valveny, E. (2021).

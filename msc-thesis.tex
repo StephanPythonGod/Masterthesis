@@ -52,7 +52,13 @@
 \usepackage{float}
 \usepackage{rotating}
 \usepackage{subcaption}
-\usepackage{caption}
+% \usepackage{caption}
+
+\usepackage[width=.75\textwidth]{caption}
+
+\usepackage{breakcites}
+\usepackage{multirow}
+\usepackage{diagbox}
 
 
 
@@ -124,7 +130,11 @@
 \newacronym{poc}{PoC}{proof-of-concept}
 \newacronym{leolm}{LeoLM}{Linguistisch Erweitertes Offenes Language Model}
 
-\newtheorem{definition}{Definition}
+\usepackage{amsmath} % für \@addtoreset
+\makeatletter
+\@addtoreset{definition}{chapter}
+\makeatother
+\newtheorem{definition}{Definition}[chapter]
 
 \glsaddall
 
@@ -139,9 +149,9 @@
 \begin{center}
 \vspace*{3cm}
 \textbf{ 
-\Large Universität Heidelberg\\
+\Large Heidelberg University\\
 \smallskip
-\Large Institut für Informatik\\
+\Large Institut of Computer Science\\
 \smallskip
 \Large Data Science Group\\
 \smallskip
@@ -149,11 +159,12 @@
 
 \vspace{3cm}
 
-\textbf{\large Master-Arbeit} % Bachelor-Arbeit 
+\textbf{\large Master's Thesis} % Bachelor-Arbeit 
 
 \vspace{0.5\baselineskip}
 {\huge
-\textbf{Building Conversational Question Answering Systems}
+\textbf{Building Conversational Question} \vspace{0.2cm}\\
+\textbf{Answering Systems}
 }
 \end{center}
 
@@ -162,9 +173,9 @@
 {\large
 \begin{tabular}[l]{ll}
 Name: & Stephan Lenert\\
-Matrikelnummer: & Matrikelnummer  der Autorin/des Autors\\
-Betreuer: & Name der Betreuerin / des Betreuers\\
-Datum der Abgabe: & \today
+Matriculation Number: & 3734583\\
+Supervisor: & Prof. Dr. Michael Gertz\\
+Submission Date: & \today
 \end{tabular}
 }
 
@@ -200,7 +211,6 @@ Abgabedatum: \today
 % Table of contents (Inhaltsverzeichnis)
 \tableofcontents
 \cleardoublepage
-\pagenumbering{arabic} 
 
 % List of acronyms (Abkürzungsverzeichnis):
 \chapter*{List of Acronyms}
@@ -219,6 +229,7 @@ Abgabedatum: \today
 
 \chapter{Introduction}
 \label{chap:intro}
+\pagenumbering{arabic} 
 \input{introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
