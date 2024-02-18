@@ -41,6 +41,26 @@
 \subsection{Model Configurations}
 \label{ref:appendixA-evaluation-model-configurations}
 
+\begin{table}[H]
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{llrrrr}
+    \hline
+    Application           & Model-Language         & \textit{top k} & \textit{top p} & \textit{temperature} & \textit{repetition penalty} \\ \hline
+    \multirow{4}{*}{CQU}  & gpt-3.5-turbo-de       & -*             & 1              & 1                    & 0                           \\
+                          & gpt-3.5-turbo-en       & -*             & 1              & 1                    & 0                           \\
+                          & leo-hessian-7B-chat-de & 60             & 0.95           & 0.9                  & 1.2                         \\
+                          & Llama2-7B-chat-en      & 1              & 0.1            & 0.3                  & 1.4                         \\ \hline
+    \multirow{4}{*}{Chat} & gpt-3.5-turbo-de       & -*             & 1              & 1                    & 0                           \\
+                          & gpt-3.5-turbo-en       & -*             & 1              & 1                    & 0                           \\
+                          & leo-hessian-7B-chat-de & 10             & 0.6            & 0.4                  & 0                           \\
+                          & Llama2-7B-chat-en      & 40             & 0.8            & 0.5                  & 1.5                         \\ \hline
+    \end{tabular}%
+    }
+    {\footnotesize * OpenAI does not expose the \textit{top k} parameter for the GPT-3.5-turbo models.}
+    \caption{Parameters used for Models in End-to-End Evaluation}
+    \label{tab:appendix-parameters-ete}
+\end{table}
+
 
 \subsection{Retriever}
 \label{ref:appendixA-evaluation-retriever}

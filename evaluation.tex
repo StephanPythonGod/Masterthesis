@@ -186,20 +186,32 @@ The most challenging aspect of evaluation within the context of the system devel
 
 \begin{enumerate}
     \item A human evaluator initiates a conversation with a question, either based on their own intuition or using provided questions from the synthetic dataset. Evaluators are encouraged to pose context-dependent questions, which can be answered given a specific passage of the POs or not at all. Complex multi passage questions should be avoided, as this complicates the evaluation process.
-    \item The evaluator continues the conversation, asking follow-up questions or engaging in a general discussion with the \gls{convqa}-System for 8-10 turns.
+    \item The evaluator continues the conversation, asking follow-up questions or engaging in a general discussion with the \gls{convqa}-System for 4-10 turns.
     \item After the conversation, the evaluator has access to the evidence set $E_{q_c}$ for each turn and all other passages $P$ in the index. The evaluator assesses the answer provided by the system and the retrieved evidence set $E_{q_c}$. They are required to provide the following information for every turn of the conversation:
         \begin{itemize}
             \item \textit{Context Relevance:} The evaluator assigns a binary accuracy value (0 or 1), indicating if the evidence set contains the required information to answer the question. A score of 1 indicates that the evidence set contains the required information, while 0 indicates that the evidence set does not contain the required information.
-            \item \textit{Noise Robustness:} To have insights on the noise robustness, the evaluator has to indicate via number the position in the evidence set $E_{q_c}$ of the relevant passage. For example, 0 indicates that the first passage in the evidence set is the relevant passage, and 4 indicates that the fifth passage in the evidence set is the relevant passage.
+            \item \textit{Noise Robustness:} To have insights on the noise robustness, the evaluator has to indicate via number the position in the evidence set $E_{q_c}$ of the relevant passage. For example, 0 indicates that the first passage in the evidence set is the relevant passage, and 4 indicates that the fifth passage in the evidence set is the relevant passage. If multiple passages are relevant, the evaluator has to indicate the position of the most relevant passage.
             \item \textit{Faithfulness:} The evaluator assigns a binary value (0 or 1), indicating whether the answer is based on the facts of the evidence set. A score of 1 indicates that the answer is based on the facts of the evidence set, while 0 indicates that the answer is not based on the facts of the evidence set. When the provided evidence set does not indicate any answer and the system provides an answer indicating that it does not have any information on the topic, the evaluator has to assign a score of 1.
             \item \textit{Negative Rejection:} This can be evaluated indirectly via the combination of Context Relevance, Faithfulness, and Answer Relevance.
-            \item \textit{Answer Relevance:} The evaluator assigns a value between 0 and 1 to the system's answer. A score of 1 indicates a correct answer to the given question in relation to the conversation history, while 0 represents an incorrect answer.
-            \item \textit{Reason for Incorrectness:} The evaluator selects one of the following reasons for incorrectness, only if the answer relevance is 0 and Context Relevance 1: \textit{No Negative Rejection}, \textit{Nonsense Answer}, \textit{Hallucination}, \textit{Coreference Problem}, \textit{Other} (here the evaluator has to provide a short description of the reason for incorrectness) 
+            \item \textit{Answer Relevance:} The evaluator assigns a value between 0 and 1 to the system's answer. A score of 1 indicates a correct answer to the given question in relation to the conversation history, while 0 represents an incorrect answer. A positive negative rejection is indicated by a score of 1.
+            \item \textit{Reason for Incorrectness:} The evaluator selects one of the following reasons for incorrectness, only if the answer was incorrect:
+            \begin{itemize}
+            \item \textit{Metadata Error:} Irrelevant passages in the evidence set could have been excluded with metadata filtering.
+            \item \textit{Wrong Crop:} The evidence set contains the correct passage, but crucial information is missing due to a flawed crop in the text corpus.
+            \item \textit{Coreference Error:} The system failed to resolve a coreference problem.
+            \item \textit{Not all Evidence Found:} The system failed to retrieve all necessary passages.
+            \item \textit{Correct Evidence Not Found:} The system failed to retrieve the correct passage.
+            \item \textit{Overlapping Evidence:} Multiple passages from different documents contain the exact same information.
+            \item \textit{Hallucination:} The system provided an answer not based on the evidence set.
+            \item \textit{No Negative Rejection:} The system failed to indicate insufficient information to answer the question.
+            \item \textit{Nonsense Answer:} The system provided an answer with syntactical, semantic errors, or other random occurrences.
+            \item \textit{Wrong Answer:} The system provided an incorrect answer given the evidence set and context.
+            \end{itemize}
         \end{itemize}
     \item All results will be grouped by turn, enabling deeper insights into the performance and errors of the system.
 \end{enumerate}
 
-To mitigate bias, human manual evaluations are carried out by two different evaluators. In the first round, each evaluator engages in 10 conversations with the system. In the second round, the evaluators initiate conversations using the first question from the 10 conversations of the other evaluator. This results in a total of 40 conversations, with ideally 20 overlapping conversations that can be used to calculate inter-rater agreement \cite{cohen_coefficient_1960}.
+To mitigate bias, human manual evaluations are conducted by two separate evaluators. Each evaluator engages in 10 conversations across four different system settings. To ensure comparability across settings, both evaluators aim to conduct similar conversations with all four systems for all 10 interactions. Consequently, a total of 80 conversations will be conducted.
     
 % \subsection{Conversational Question Answering Evaluation}
 % \label{subsec:convqa-eval}
@@ -657,3 +669,123 @@ As discussed in Section \ref{subsec:data-augmentation-quality}, we strongly reco
 % \end{figure}
 \subsection{Conversational Question Answering Results}
 \label{subsec:convqa-results}
+
+The evaluation procedure for the \gls{convqa} system is detailed in Section \ref{subsec:rag-eval}. Four system settings are assessed: \textit{gpt-3.5-turbo-de}, \textit{gpt-3.5-turbo-en}, \textit{leo-hessian-7B-chat-de}, and \textit{Llama2-7B-chat-en}. The suffixes \textit{de} and \textit{en} denote the language of the prompts (German and English, respectively), and indicate the corresponding index used (\textit{IndexGerman} for German and \textit{translated IndexGerman} for English settings). For precise model parameters, please consult Table \ref{tab:appendix-parameters-ete} in the appendix.
+
+\begin{table}[h]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{lrrrrrrrrrrrrrr}
+        \toprule
+        & \multicolumn{2}{c}{GPT-3.5-de} & \multicolumn{2}{c}{GPT-3.5-en} & \multicolumn{2}{c}{Llama2-7B-chat-en} & \multicolumn{2}{c}{leo-hessian-7B-chat-de} \\
+        Question Type & avg. AR* & Count & avg. AR* & Count & avg. AR* & Count & avg. AR* & Count \\
+        \midrule
+        Abstract & \textbf{0.478} & 18 & 0.421 & 14 & 0.200 & 31 & 0.258 & 12 \\
+        Complex & \textbf{0.327} & 11 & 0.263 & 8 & 0.000 & 5 & 0.167 & 3 \\
+        Factoid & 0.435 & 31 & \textbf{0.477} & 26 & 0.323 & 40 & 0.154 & 52 \\
+        List & 0.550 & 4 & 0.467 & 6 & \textbf{0.600} & 2 & 0.225 & 4 \\
+        Yes/No & \textbf{0.500} & 2 & 0.200 & 2 & 0.067 & 3 & 0.420 & 5 \\
+        \bottomrule
+    \end{tabular}%
+    }
+    {\raggedright\footnotesize * \textit{AR} stands for \textit{Answer Relevance}\par}
+    \caption{Answer Relevance per Model, Language and Question Type}
+    \label{tab:answer-relevance-per-model}
+\end{table}
+
+\noindent\textbf{Answer Relevance:} Table \ref{tab:answer-relevance-per-model} provides insights into answer relevance based on the number of datapoints per question type. Qualitative analysis is feasible for abstract and factoid questions. Notably, \textit{gpt-3.5-turbo-de} and \textit{gpt-3.5-turbo-en} outperform other models, exhibiting a 0.43 and 0.375 improvement, respectively, in German and English settings. However, \textit{leo-hessian-7B-chat} shows better performance on complex questions compared to simple factoid questions, while \textit{Llama2-7B-chat-en} excels in factoid questions. Additionally, Figure \ref{fig:combined-errors} underscores that smaller models significantly underperform compared to \textit{gpt-3.5-turbo}. Notably, in system settings with smaller models, almost half of the errors stem from weak \gls{llm} performance, contrasting with \textit{gpt-3.5-turbo}, where model-related errors comprise only around 18\% of total errors. It's noteworthy that the \textit{Nonsense Answer} error occurs only for the smaller models, indicating weaker consistent text generation performance compared to larger models. Additionally, comparing the total occurrences of \textit{Wrong Answer} errors, it's evident that the smaller models have nearly three times as many occurrences of this error type as the larger \gls{llm}.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation/EndToEnd/Turns-Errors.png}
+    \caption{Error Type Distribution per Turn}
+    \label{fig:question-type-turn}
+\end{figure}
+
+\noindent\textbf{Context Relevance:} The system exhibits a significant weakness in the Retriever component combined with the Extraction pipeline. Figure \ref{fig:combined-errors} illustrates that approximately 18.5\% of errors in each system setting stem directly from Extraction issues, such as incorrect cropping or metadata filtering. Moreover, a major drawback, accounting for around 46.5\% of errors in settings with the robust \gls{llm} \textit{gpt-3.5-turbo}, is evidence retrieval performance. This can be attributed to Extraction or the Retriever component itself. Table \ref{tab:context-relevance-per-question-type} further underscores these challenges, indicating that the Retriever found relevant passages in only 49\% of \textit{Factoid} questions and a mere 28\% in \textit{Complex} questions. Although the exact bottleneck is unclear from this evaluation, the Retrieval evaluation in Section \ref{subsec:retrieval-results} suggests improvements are needed in the Retriever Component. Additionally, approximately 11.6\% of errors result from coreference errors in the Conversational \gls{qa} component, particularly notable in longer conversations as shown in Figure \ref{fig:question-type-turn}.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/EndToEnd/gpt-de.png}
+        \caption{gpt-3.5-turbo-de Errors}
+        \label{fig:gpt-de-errors}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/EndToEnd/gpt-en.png}
+        \caption{gpt-3.5-turbo-en Errors}
+        \label{fig:gpt-en-errors}
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/EndToEnd/leo.png}
+        \caption{leo-hessian-7B-chat-de Errors}
+        \label{fig:leo-de-errors}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Grafiken/Evaluation/EndToEnd/llama.png}
+        \caption{Llama2-7B-chat-en Errors}
+        \label{fig:llama-en-errors}
+    \end{subfigure}
+    \caption{Error Distribution per Model}
+    \label{fig:combined-errors}
+\end{figure}
+
+\noindent\textbf{Faithfulness:} Regarding faithfulness and avoidance of hallucination, Table \ref{tab:average-faithfullness-and-context-relevance-per-model-language} illustrates that \textit{gpt-3.5-turbo} exhibits hallucination in approximately 10\% of cases. In contrast, \textit{Llama2-7B-chat} and \textit{leo-hessian-7B-chat} demonstrate higher rates, with around 27\% and 38\% respectively. This significant drawback of the smaller models results in a notable proportion of incorrect answers, which is particularly undesirable in applications where factual accuracy is crucial.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lrr}
+        \toprule
+         & avg. Context Relevance & Count \\
+        Question Type &  &  \\
+        \midrule
+        Abstract & 0.404040 & 99 \\
+        Complex & 0.282051 & 39 \\
+        Factoid & 0.492308 & 195 \\
+        List & 0.833333 & 18 \\
+        Yes/No & 0.428571 & 14 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Average Context Relevance per Question Type}
+    \label{tab:context-relevance-per-question-type}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{lrrrrrrr}
+        \toprule
+        & avg. Faithfullness & Count & avg. AR1* & Count & avg. AR>1** & Count & Negative Rejection Specificity\\
+        Model Language &  &  &  &  &  &  &  \\
+        \midrule
+        GPT-3.5-de & 0.892 & 93 & 0.692 & 26 & 0.654 & 13 & 0.607 \\
+        GPT-3.5-en & 0.908 & 98 & 0.550 & 20 & 0.613 & 8 & 0.826 \\
+        Llama2-7B-chat-en & 0.726 & 95 & 0.395 & 19 & 0.373 & 15 & 0.128 \\
+        leo-hessian-7B-chat-de & 0.620 & 92 & 0.300 & 23 & 0.200 & 24 & 0.467 \\
+        \bottomrule
+    \end{tabular}%
+    }
+    {\raggedright\footnotesize * \textit{AR1} stands for \textit{Answer Relevance} where the \textit{Context Position = 1}\par}
+    {\raggedright\footnotesize ** \textit{AR>1} stands for \textit{Answer Relevance} where the \textit{Context Position > 1}\par}
+    \caption{Multiple Metrics per Model and Language}
+    \label{tab:average-faithfullness-and-context-relevance-per-model-language}
+\end{table}
+
+\noindent\textbf{Noise Robustness:} Table \ref{tab:average-faithfullness-and-context-relevance-per-model-language} illustrates the noise robustness of the system with an evidence set size of 10 for all models. Except for \textit{leo-hessian-7B-chat}, the average answer relevance remains consistent regardless of whether the relevant context is in the first position or elsewhere in the evidence set. This suggests robustness against noise in evidence sets of length 10. However, for \textit{leo-hessian-7B-chat}, there is a notable 10\% drop in average answer relevance when the relevant context is not in the first position, indicating a lack of robustness against noise in evidence sets of length 10. This aligns with findings in Section \ref{subsec:reader-results}, where this model showed reduced performance with increasing $k$ in the evidence set.
+
+\noindent\textbf{Negative Rejection:} The negative rejection performance varies significantly between the models. As shown in Table \ref{tab:average-faithfullness-and-context-relevance-per-model-language}, \textit{Llama2-7B-chat} exhibits the lowest negative rejection performance with a specificity of 0.128, while \textit{gpt-3.5-turbo-en} demonstrates the highest specificity at 0.826. However, beyond the general trend of better performance with larger models, no further insights can be gleaned from this evaluation.
+
+
+
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=\textwidth]{Grafiken/Evaluation/EndToEnd/Error-QuestionType-Correlation.png}
+%     \caption{Error Distribution per Question Type}
+%     \label{fig:question-type-error}
+% \end{figure}
+
