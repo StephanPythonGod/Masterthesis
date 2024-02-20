@@ -484,6 +484,10 @@ Serban, I.~V., García-Durán, A., Gulcehre, C., Ahn, S., Chandar, S., Courville
 \newblock Generating {Factoid} {Questions} {With} {Recurrent} {Neural} {Networks}: {The} {30M} {Factoid} {Question}-{Answer} {Corpus}.
 \newblock In {\em Proceedings of the 54th {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} ({Volume} 1: {Long} {Papers})}, pages 588--598, Berlin, Germany. Association for Computational Linguistics.
 
+\bibitem[Shewale, 2024]{demandsage2022chatgpt}
+Shewale, R. (2024).
+\newblock Chatgpt statistics.
+
 \bibitem[Tavakoli et~al., 2021]{tavakoli_analyzing_2021}
 Tavakoli, L., Zamani, H., Scholer, F., Croft, W., and Sanderson, M. (2021).
 \newblock Analyzing clarification in asynchronous information‐seeking conversations.
