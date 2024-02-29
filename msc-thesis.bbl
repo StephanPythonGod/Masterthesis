@@ -8,21 +8,17 @@ Anil, R., Dai, A.~M., Firat, O., Johnson, M., Lepikhin, D., Passos, A.~T., Shake
 \bibitem[AutoGPTQ, 2023]{william_autogptq_2023}
 AutoGPTQ (2023).
 \newblock Autogptq. \url{https://github.com/PanQiWei/AutoGPTQ}.
-\newblock Original date: 2023-04-13. Accessed: 2023-10-02.
-
-\bibitem[Bajaj et~al., 2016]{bajaj2016ms}
-Bajaj, P., Campos, D., Craswell, N., Deng, L., Gao, J., Liu, X., Majumder, R., McNamara, A., Mitra, B., Nguyen, T., et~al. (2016).
-\newblock Ms marco: A human generated machine reading comprehension dataset.
-\newblock {\em arXiv preprint arXiv:1611.09268}.
+\newblock Accessed: 2023-10-02.
 
 \bibitem[Brown et~al., 2020]{brown_language_2020}
 Brown, T.~B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D.~M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., and Amodei, D. (2020).
 \newblock Language models are few-shot learners.
 \newblock In {\em Proceedings of the 34th International Conference on Neural Information Processing Systems}, NIPS'20, Red Hook, NY, USA. Curran Associates Inc.
 
-\bibitem[Chen, 2021]{chen_improving_2021}
-Chen, H. (2021).
+\bibitem[Chen and Ma, 2021]{chen_improving_2021}
+Chen, H. and Ma, D. (2021).
 \newblock Improving {Out}-of-{Domain} {Question} {Answering} with {Mixture} of {Experts}.
+\newblock Technical report, Department of Computer Science, Stanford University.
 
 \bibitem[Cohen, 1960]{cohen_coefficient_1960}
 Cohen, J. (1960).
@@ -30,9 +26,9 @@ Cohen, J. (1960).
 \newblock {\em Educational and Psychological Measurement}, 20(1):37--46.
 
 \bibitem[Dai et~al., 2022a]{dai_dialog_2022}
-Dai, Z., Chaganty, A.~T., Zhao, V., Amini, A., Rashid, Q.~M., Green, M., and Guu, K. (2022a).
-\newblock Dialog {Inpainting}: {Turning} {Documents} into {Dialogs}.
-\newblock Publisher: arXiv Version Number: 2.
+Dai, Z., Chaganty, A.~T., Zhao, V.~Y., Amini, A., Rashid, Q.~M., Green, M., and Guu, K. (2022a).
+\newblock Dialog inpainting: Turning documents into dialogs.
+\newblock In Chaudhuri, K., Jegelka, S., Song, L., Szepesv{\'{a}}ri, C., Niu, G., and Sabato, S., editors, {\em International Conference on Machine Learning, {ICML} 2022, 17-23 July 2022, Baltimore, Maryland, {USA}}, volume 162 of {\em Proceedings of Machine Learning Research}, pages 4558--4586. {PMLR}.
 
 \bibitem[Dai et~al., 2022b]{dai_promptagator_2022}
 Dai, Z., Zhao, V.~Y., Ma, J., Luan, Y., Ni, J., Lu, J., Bakalov, A., Guu, K., Hall, K.~B., and Chang, M.-W. (2022b).
@@ -42,7 +38,7 @@ Dai, Z., Zhao, V.~Y., Ma, J., Luan, Y., Ni, J., Lu, J., Bakalov, A., Guu, K., Ha
 \bibitem[Dalton et~al., 2020]{dalton_trec_2020}
 Dalton, J., Xiong, C., and Callan, J. (2020).
 \newblock {TREC} cast 2019: The conversational assistance track overview.
-\newblock {\em CoRR}, abs/2003.13624.
+\newblock arXiv. \url{https://arxiv.org/abs/2003.13624}.
 
 \bibitem[Dasigi et~al., 2021]{dasigi_dataset_2021}
 Dasigi, P., Lo, K., Beltagy, I., Cohan, A., Smith, N.~A., and Gardner, M. (2021).
@@ -88,12 +84,11 @@ Feng, S. (2021).
 Ferrucci, D.~A. (2012).
 \newblock Introduction to “{This} is {Watson}”.
 \newblock {\em IBM Journal of Research and Development}, 56(3.4):1:1--1:15.
-\newblock Conference Name: IBM Journal of Research and Development.
 
 \bibitem[Frantar and Alistarh, 2022]{frantar_optimal_2023}
 Frantar, E. and Alistarh, D. (2022).
 \newblock Optimal brain compression: {A} framework for accurate post-training quantization and pruning.
-\newblock In Koyejo, S., Mohamed, S., Agarwal, A., Belgrave, D., Cho, K., and Oh, A., editors, {\em Advances in Neural Information Processing Systems 35: Annual Conference on Neural Information Processing Systems 2022, NeurIPS 2022, New Orleans, LA, USA, November 28 - December 9, 2022}.
+\newblock In Koyejo, S., Mohamed, S., Agarwal, A., Belgrave, D., Cho, K., and Oh, A., editors, {\em Advances in Neural Information Processing Systems 35: Annual Conference on Neural Information Processing Systems 2022, NeurIPS 2022, New Orleans, LA, USA}.
 
 \bibitem[Frantar and Alistarh, 2023]{frantar_sparsegpt_2023}
 Frantar, E. and Alistarh, D. (2023).
@@ -141,7 +136,8 @@ Gu, Y., Dong, L., Wei, F., and Huang, M. (2023).
 
 \bibitem[Guo et~al., 2021]{guo_abg-coqa_nodate}
 Guo, M., Zhang, M., Reddy, S., and Alikhani, M. (2021).
-\newblock Abg-{CoQA}: {Clarifying} {Ambiguity} in {Conversational} {Question} {Answering}.
+\newblock Abg-coqa: Clarifying ambiguity in conversational question answering.
+\newblock In Chen, D., Berant, J., McCallum, A., and Singh, S., editors, {\em 3rd Conference on Automated Knowledge Base Construction, {AKBC} 2021, October 4-8, 2021}, Online.
 
 \bibitem[Gupta et~al., 2020]{gupta_conversational_2020}
 Gupta, S., Rawat, B. P.~S., and Yu, H. (2020).
@@ -152,7 +148,6 @@ Gupta, S., Rawat, B. P.~S., and Yu, H. (2020).
 Gururangan, S., Marasović, A., Swayamdipta, S., Lo, K., Beltagy, I., Downey, D., and Smith, N.~A. (2020).
 \newblock Don’t {Stop} {Pretraining}: {Adapt} {Language} {Models} to {Domains} and {Tasks}.
 \newblock {\em Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics}, pages 8342--8360.
-\newblock Conference Name: Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics Place: Online Publisher: Association for Computational Linguistics.
 
 \bibitem[Guu et~al., 2020]{guu_realm_2020}
 Guu, K., Lee, K., Tung, Z., Pasupat, P., and Chang, M.-W. (2020).
@@ -168,11 +163,11 @@ Hao, T., Li, X., He, Y., Wang, F.~L., and Qu, Y. (2022).
 Harabagiu, S.~M., Maiorano, S.~J., and Paşca, M.~A. (2003).
 \newblock Open-domain textual question answering techniques.
 \newblock {\em Natural Language Engineering}, 9(3):231--267.
-\newblock Publisher: Cambridge University Press.
 
-\bibitem[He et~al., 2020]{he_deberta_2020}
-He, P., Liu, X., Gao, J., and Chen, W. (2020).
-\newblock {DEBERTA}: {DECODING}-{ENHANCED} {BERT} {WITH} {DISENTANGLED} {ATTENTION}.
+\bibitem[He et~al., 2021]{he_deberta_2020}
+He, P., Liu, X., Gao, J., and Chen, W. (2021).
+\newblock Deberta: decoding-enhanced bert with disentangled attention.
+\newblock In {\em 9th International Conference on Learning Representations, {ICLR} 2021, Virtual Event, Austria, May 3-7, 2021}. OpenReview.net.
 
 \bibitem[Hinton et~al., 2015]{hinton_distilling_2015}
 Hinton, G., Vinyals, O., and Dean, J. (2015).
@@ -184,9 +179,10 @@ Houlsby, N., Giurgiu, A., Jastrzebski, S., Morrone, B., de~Laroussilhe, Q., Gesm
 \newblock Parameter-efficient transfer learning for {NLP}.
 \newblock In Chaudhuri, K. and Salakhutdinov, R., editors, {\em Proceedings of the 36th International Conference on Machine Learning, {ICML} 2019, 9-15 June 2019, Long Beach, California, {USA}}, volume~97 of {\em Proceedings of Machine Learning Research}, pages 2790--2799. {PMLR}.
 
-\bibitem[Hu et~al., 2021]{hu_lora_nodate}
-Hu, E., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., and Chen, W. (2021).
-\newblock {LORA}: {LOW}-{RANK} {ADAPTATION} {OF} {LARGE} {LAN}- {GUAGE} {MODELS}.
+\bibitem[Hu et~al., 2022]{hu_lora_nodate}
+Hu, E.~J., Shen, Y., Wallis, P., Allen{-}Zhu, Z., Li, Y., Wang, S., Wang, L., and Chen, W. (2022).
+\newblock Lora: Low-rank adaptation of large language models.
+\newblock In {\em The Tenth International Conference on Learning Representations, {ICLR} 2022, Virtual Event, April 25-29, 2022}. OpenReview.net.
 
 \bibitem[Huang et~al., 2022]{huang_-context_2022}
 Huang, Y., Chen, Y., Yu, Z., and McKeown, K. (2022).
@@ -208,10 +204,10 @@ Izacard, G. and Grave, E. (2021).
 \newblock Leveraging {Passage} {Retrieval} with {Generative} {Models} for {Open} {Domain} {Question} {Answering}.
 \newblock In {\em Proceedings of the 16th {Conference} of the {European} {Chapter} of the {Association} for {Computational} {Linguistics}: {Main} {Volume}}, pages 874--880, Online. Association for Computational Linguistics.
 
-\bibitem[Izacard et~al., 2022]{izacard_atlas_2022}
-Izacard, G., Lewis, P., Lomeli, M., Hosseini, L., Petroni, F., Schick, T., Dwivedi-Yu, J., Joulin, A., Riedel, S., and Grave, E. (2022).
-\newblock Atlas: {Few}-shot {Learning} with {Retrieval} {Augmented} {Language} {Models}.
-\newblock Publisher: arXiv Version Number: 3.
+\bibitem[Izacard et~al., 2023]{izacard_atlas_2022}
+Izacard, G., Lewis, P. S.~H., Lomeli, M., Hosseini, L., Petroni, F., Schick, T., Dwivedi{-}Yu, J., Joulin, A., Riedel, S., and Grave, E. (2023).
+\newblock Atlas: Few-shot learning with retrieval augmented language models.
+\newblock {\em J. Mach. Learn. Res.}, 24:251:1--251:43.
 
 \bibitem[Jiang et~al., 2023]{jiang_lion_2023}
 Jiang, Y., Chan, C., Chen, M., and Wang, W. (2023).
@@ -265,7 +261,8 @@ Langchain (2023).
 
 \bibitem[Larsson, 2002]{larsson_issue-based_2002}
 Larsson, S. (2002).
-\newblock Issue-based {Dialogue} {Management}.
+\newblock {\em Issue-based Dialogue Management}.
+\newblock PhD thesis, Department of Linguistics, Goeteborg University.
 
 \bibitem[Lester et~al., 2021]{lester_power_2021}
 Lester, B., Al-Rfou, R., and Constant, N. (2021).
@@ -309,8 +306,8 @@ Ling, C., Zhao, X., Lu, J., Deng, C., Zheng, C., Wang, J., Chowdhury, T., Li, Y.
 
 \bibitem[Liu et~al., 2022]{liu_few-shot_2022}
 Liu, H., Tam, D., Muqeeth, M., Mohta, J., Huang, T., Bansal, M., and Raffel, C. (2022).
-\newblock Few-{Shot} {Parameter}-{Efficient} {Fine}-{Tuning} is {Better} and {Cheaper} than {In}-{Context} {Learning}.
-\newblock Publisher: arXiv Version Number: 2.
+\newblock Few-shot parameter-efficient fine-tuning is better and cheaper than in-context learning.
+\newblock In Koyejo, S., Mohamed, S., Agarwal, A., Belgrave, D., Cho, K., and Oh, A., editors, {\em Advances in Neural Information Processing Systems 35: Annual Conference on Neural Information Processing Systems 2022, NeurIPS 2022, New Orleans, LA, USA, November 28 - December 9, 2022}.
 
 \bibitem[Liu et~al., 2023a]{liu_gpt_2021}
 Liu, X., Zheng, Y., Du, Z., Ding, M., Qian, Y., Yang, Z., and Tang, J. (2023a).
@@ -325,7 +322,7 @@ Liu, Y., Hashimoto, K., Zhou, Y., Yavuz, S., Xiong, C., and Yu, P. (2021).
 \bibitem[Liu et~al., 2019]{liu_roberta_2019}
 Liu, Y., Ott, M., Goyal, N., Du, J., Joshi, M., Chen, D., Levy, O., Lewis, M., Zettlemoyer, L., and Stoyanov, V. (2019).
 \newblock Roberta: {A} robustly optimized {BERT} pretraining approach.
-\newblock {\em CoRR}, abs/1907.11692.
+\newblock arXiv. \url{http://arxiv.org/abs/1907.11692}.
 
 \bibitem[Liu et~al., 2023b]{liu_llm-qat_2023}
 Liu, Z., Oguz, B., Zhao, C., Chang, E., Stock, P., Mehdad, Y., Shi, Y., Krishnamoorthi, R., and Chandra, V. (2023b).
@@ -333,8 +330,9 @@ Liu, Z., Oguz, B., Zhao, C., Chang, E., Stock, P., Mehdad, Y., Shi, Y., Krishnam
 \newblock arXiv. \url{http://arxiv.org/abs/2305.17888}.
 
 \bibitem[Liusie et~al., 2022]{liusie_university_nodate}
-Liusie, A., Qian, M., Li, X., and Gales, M. (2022).
-\newblock {UNIVERSITY} {OF} {CAMBRIDGE} {AT} {TREC} {CAST} 2022.
+Liusie, A., Qian, M., Li, X., and Gales, M. J.~F. (2022).
+\newblock University of cambridge at {TREC} cast 2022.
+\newblock In Soboroff, I. and Ellis, A., editors, {\em Proceedings of the Thirty-First Text REtrieval Conference, {TREC} 2022, online, November 15-19, 2022}, volume 500-338 of {\em {NIST} Special Publication}. National Institute of Standards and Technology {(NIST)}.
 
 \bibitem[Luo et~al., 2022]{luo_choose_2022}
 Luo, M., Hashimoto, K., Yavuz, S., Liu, Z., Baral, C., and Zhou, Y. (2022).
@@ -352,9 +350,9 @@ Magic, N. (2023).
 \newblock Accessed: 2023-10-02.
 
 \bibitem[Mao et~al., 2023]{mao_large_2023}
-Mao, K., Dou, Z., Chen, H., Mo, F., and Qian, H. (2023).
-\newblock Large {Language} {Models} {Know} {Your} {Contextual} {Search} {Intent}: {A} {Prompting} {Framework} for {Conversational} {Search}.
-\newblock Publisher: arXiv Version Number: 1.
+Mao, K., Dou, Z., Mo, F., Hou, J., Chen, H., and Qian, H. (2023).
+\newblock Large language models know your contextual search intent: A prompting framework for conversational search.
+\newblock In {\em Findings of the Association for Computational Linguistics: EMNLP 2023}, pages 1211--1225.
 
 \bibitem[Mathew et~al., 2021]{mathew_document_2021}
 Mathew, M., Tito, R., Karatzas, D., Manmatha, R., and Jawahar, C.~V. (2021).
@@ -367,10 +365,9 @@ McDonald, T., Tsan, B., Saini, A., Ordonez, J., Gutierrez, L., Nguyen, P., Mason
 \newblock arXiv. \url{http://arxiv.org/abs/2210.01959}.
 
 \bibitem[Meuschke et~al., 2023]{meuschke_benchmark_2023}
-Meuschke, N., Jagdale, A., Spinde, T., Mitrović, J., and Gipp, B. (2023).
-\newblock A {Benchmark} of {PDF} {Information} {Extraction} {Tools} using a {Multi}-{Task} and {Multi}-{Domain} {Evaluation} {Framework} for {Academic} {Documents}.
-\newblock volume 13972, pages 383--405.
-\newblock arXiv:2303.09957 [cs].
+Meuschke, N., Jagdale, A., Spinde, T., Mitrovic, J., and Gipp, B. (2023).
+\newblock A benchmark of {PDF} information extraction tools using a multi-task and multi-domain evaluation framework for academic documents.
+\newblock In Sserwanga, I., Goulding, A., Sandy, H.~M., Du, J.~T., Soares, A.~L., Hessami, V., and Frank, R.~D., editors, {\em Information for a Better World: Normality, Virtuality, Physicality, Inclusivity - 18th International Conference, iConference 2023, Virtual Event, March 13-17, 2023, Proceedings, Part {II}}, volume 13972 of {\em Lecture Notes in Computer Science}, pages 383--405. Springer.
 
 \bibitem[Mishra and Jain, 2016]{mishra_survey_2016}
 Mishra, A. and Jain, S.~K. (2016).
@@ -402,6 +399,11 @@ Neelakantan, A., Xu, T., Puri, R., Radford, A., Han, J.~M., Tworek, J., Yuan, Q.
 \newblock Text and code embeddings by contrastive pre-training.
 \newblock arXiv. \url{https://arxiv.org/abs/2201.10005}.
 
+\bibitem[Nguyen et~al., 2016]{bajaj2016ms}
+Nguyen, T., Rosenberg, M., Song, X., Gao, J., Tiwary, S., Majumder, R., and Deng, L. (2016).
+\newblock {MS} {MARCO:} {A} human generated machine reading comprehension dataset.
+\newblock In Besold, T.~R., Bordes, A., d'Avila Garcez, A.~S., and Wayne, G., editors, {\em Proceedings of the Workshop on Cognitive Computation: Integrating neural and symbolic approaches 2016 co-located with the 30th Annual Conference on Neural Information Processing Systems {(NIPS} 2016), Barcelona, Spain, December 9, 2016}, volume 1773 of {\em {CEUR} Workshop Proceedings}. CEUR-WS.org.
+
 \bibitem[Ni et~al., 2022]{ni_large_2021}
 Ni, J., Qu, C., Lu, J., Dai, Z., Hernandez~Abrego, G., Ma, J., Zhao, V., Luan, Y., Hall, K., Chang, M.-W., and Yang, Y. (2022).
 \newblock Large dual encoders are generalizable retrievers.
@@ -411,7 +413,6 @@ Ni, J., Qu, C., Lu, J., Dai, Z., Hernandez~Abrego, G., Ma, J., Zhao, V., Luan, Y
 Nishida, K., Saito, I., Otsuka, A., Asano, H., and Tomita, J. (2018).
 \newblock Retrieve-and-{Read}: {Multi}-task {Learning} of {Information} {Retrieval} and {Reading} {Comprehension}.
 \newblock In {\em Proceedings of the 27th {ACM} {International} {Conference} on {Information} and {Knowledge} {Management}}, pages 647--656.
-\newblock arXiv:1808.10628 [cs].
 
 \bibitem[{OpenAI}, 2023]{noauthor_chatgpt_2023}
 {OpenAI} (2023).
@@ -425,7 +426,8 @@ Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C.~L., Mishkin, P., Zhan
 
 \bibitem[Owoicho et~al., 2022]{owoicho_trec_2022}
 Owoicho, P., Dalton, J., Aliannejadi, M., Azzopardi, L., Trippas, J.~R., and Vakulenko, S. (2022).
-\newblock {TREC} {CAsT} 2022: {Going} {Beyond} {User} {Ask} and {System} {Retrieve} with {Initiative} and {Response} {Generation}.
+\newblock {TREC} cast 2022: Going beyond user ask and system retrieve with initiative and response generation.
+\newblock In Soboroff, I. and Ellis, A., editors, {\em Proceedings of the Thirty-First Text REtrieval Conference, {TREC} 2022, online, November 15-19, 2022}, volume 500-338 of {\em {NIST} Special Publication}. National Institute of Standards and Technology {(NIST)}.
 
 \bibitem[Papineni et~al., 2002]{papineni_bleu_2002}
 Papineni, K., Roukos, S., Ward, T., and Zhu, W.-J. (2002).
@@ -437,12 +439,8 @@ Pereira, J.~A., do~Nascimento~Fidalgo, R., de~Alencar~Lotufo, R., and Nogueira, 
 \newblock Visconde: Multi-document {QA} with {GPT-3} and neural reranking.
 \newblock In Kamps, J., Goeuriot, L., Crestani, F., Maistro, M., Joho, H., Davis, B., Gurrin, C., Kruschwitz, U., and Caputo, A., editors, {\em Advances in Information Retrieval - 45th European Conference on Information Retrieval, {ECIR} 2023, Dublin, Ireland, April 2-6, 2023, Proceedings, Part {II}}, volume 13981 of {\em Lecture Notes in Computer Science}, pages 534--543. Springer.
 
-\bibitem[Plüster, 2023a]{pluster_leolm_nodate}
-Plüster, B. (2023a).
-\newblock {LeoLM}: {Ein} {Impuls} für {Deutschsprachige} {LLM}-{Forschung} {\textbar} {LAION}.
-
-\bibitem[Plüster, 2023b]{pluster_leolm_2023}
-Plüster, B. (2023b).
+\bibitem[Plüster, 2023]{pluster_leolm_2023}
+Plüster, B. (2023).
 \newblock Leolm: Ein impuls für deutschsprachige llm-forschung | laion. \url{https://laion.ai/blog-de/leo-lm/}.
 \newblock Accessed: 2023-10-17.
 
@@ -499,7 +497,7 @@ Serban, I.~V., García-Durán, A., Gulcehre, C., Ahn, S., Chandar, S., Courville
 \bibitem[Shen et~al., 2023]{chung_scaling_2022}
 Shen, S., Hou, L., Zhou, Y., Du, N., Longpre, S., Wei, J., Chung, H.~W., Zoph, B., Fedus, W., Chen, X., Vu, T., Wu, Y., Chen, W., Webson, A., Li, Y., Zhao, V., Yu, H., Keutzer, K., Darrell, T., and Zhou, D. (2023).
 \newblock Flan-moe: Scaling instruction-finetuned language models with sparse mixture of experts.
-\newblock {\em CoRR}, abs/2305.14705.
+\newblock arXiv. \url{https://arxiv.org/abs/2305.14705}.
 
 \bibitem[Shewale, 2024]{demandsage2022chatgpt}
 Shewale, R. (2024).
@@ -530,7 +528,7 @@ Tito, R., Karatzas, D., and Valveny, E. (2021).
 \bibitem[{Touvron} et~al., 2023]{touvron_llama_2023}
 {Touvron}, H., {Martin}, L., {Stone}, K., {Albert}, P., {Almahairi}, A., {Babaei}, Y., {Bashlykov}, N., {Batra}, S., {Bhargava}, P., {Bhosale}, S., {Bikel}, D., {Blecher}, L., {Canton Ferrer}, C., {Chen}, M., {Cucurull}, G., {Esiobu}, D., {Fernandes}, J., {Fu}, J., {Fu}, W., {Fuller}, B., {Gao}, C., {Goswami}, V., {Goyal}, N., {Hartshorn}, A., {Hosseini}, S., {Hou}, R., {Inan}, H., {Kardas}, M., {Kerkez}, V., {Khabsa}, M., {Kloumann}, I., {Korenev}, A., {Singh Koura}, P., {Lachaux}, M.-A., {Lavril}, T., {Lee}, J., {Liskovich}, D., {Lu}, Y., {Mao}, Y., {Martinet}, X., {Mihaylov}, T., {Mishra}, P., {Molybog}, I., {Nie}, Y., {Poulton}, A., {Reizenstein}, J., {Rungta}, R., {Saladi}, K., {Schelten}, A., {Silva}, R., {Smith}, E.~M., {Subramanian}, R., {Tan}, X.~E., {Tang}, B., {Taylor}, R., {Williams}, A., {Kuan}, J.~X., {Xu}, P., {Yan}, Z., {Zarov}, I., {Zhang}, Y., {Fan}, A., {Kambadur}, M., {Narang}, S., {Rodriguez}, A., {Stojnic}, R., {Edunov}, S., and {Scialom}, T. (2023).
 \newblock {Llama 2: Open Foundation and Fine-Tuned Chat Models}.
-\newblock {\em arXiv e-prints}.
+\newblock arXiv. \url{https://arxiv.org/abs/2307.09288}.
 
 \bibitem[Treviso et~al., 2023]{treviso_efficient_2023}
 Treviso, M., Lee, J.-U., Ji, T., Aken, B.~V., Cao, Q., Ciosici, M.~R., Hassid, M., Heafield, K., Hooker, S., Raffel, C., Martins, P.~H., Martins, A. F.~T., Forde, J.~Z., Milder, P., Simpson, E., Slonim, N., Dodge, J., Strubell, E., Balasubramanian, N., Derczynski, L., Gurevych, I., and Schwartz, R. (2023).
@@ -543,14 +541,14 @@ TruLens (2024).
 \newblock Accessed: 2024-01-11.
 
 \bibitem[Voorhees, 1999]{voorhees_trec-8_1999}
-Voorhees, E. (1999).
-\newblock The {TREC}-8 {Question} {Answering} {Track} {Report}.
+Voorhees, E.~M. (1999).
+\newblock The {TREC-8} question answering track report.
+\newblock In Voorhees, E.~M. and Harman, D.~K., editors, {\em Proceedings of The Eighth Text REtrieval Conference, {TREC} 1999, Gaithersburg, Maryland, USA, November 17-19, 1999}, volume 500-246 of {\em {NIST} Special Publication}. National Institute of Standards and Technology {(NIST)}.
 
 \bibitem[Voskarides et~al., 2020]{voskarides_query_2020}
 Voskarides, N., Li, D., Ren, P., Kanoulas, E., and de~Rijke, M. (2020).
 \newblock Query {Resolution} for {Conversational} {Search} with {Limited} {Supervision}.
 \newblock In {\em Proceedings of the 43rd {International} {ACM} {SIGIR} {Conference} on {Research} and {Development} in {Information} {Retrieval}}, pages 921--930.
-\newblock arXiv:2005.11723 [cs].
 
 \bibitem[Wang et~al., 2020]{wang_minilm_2020}
 Wang, W., Wei, F., Dong, L., Bao, H., Yang, N., and Zhou, M. (2020).
@@ -560,7 +558,7 @@ Wang, W., Wei, F., Dong, L., Bao, H., Yang, N., and Zhou, M. (2020).
 \bibitem[Wang, 2022]{wang_modern_2022}
 Wang, Z. (2022).
 \newblock Modern {Question} {Answering} {Datasets} and {Benchmarks}: {A} {Survey}.
-\newblock Publisher: arXiv Version Number: 1.
+\newblock arXiv. \url{https://arxiv.org/abs/2206.15030}.
 
 \bibitem[Wang et~al., 2019]{wang_multi-passage_2019}
 Wang, Z., Ng, P., Ma, X., Nallapati, R., and Xiang, B. (2019).
@@ -575,21 +573,22 @@ Wei, J., Wang, X., Schuurmans, D., Bosma, M., Ichter, B., Xia, F., Chi, E.~H., L
 \bibitem[White et~al., 2023]{white_prompt_2023}
 White, J., Fu, Q., Hays, S., Sandborn, M., Olea, C., Gilbert, H., Elnashar, A., Spencer{-}Smith, J., and Schmidt, D.~C. (2023).
 \newblock A prompt pattern catalog to enhance prompt engineering with chatgpt.
-\newblock {\em CoRR}, abs/2302.11382.
+\newblock arXiv. \url{https://arxiv.org/abs/2302.11382}.
 
 \bibitem[Yang et~al., 2019]{yang_query_2019}
-Yang, J.-H., Lin, S.-C., Lin, J., Tsai, M.-F., and Wang, C.-J. (2019).
-\newblock Query and {Answer} {Expansion} from {Conversation} {History}.
+Yang, J., Lin, S., Wang, C., Lin, J., and Tsai, M. (2019).
+\newblock Query and answer expansion from conversation history.
+\newblock In Voorhees, E.~M. and Ellis, A., editors, {\em Proceedings of the Twenty-Eighth Text REtrieval Conference, {TREC} 2019, Gaithersburg, Maryland, USA, November 13-15, 2019}, volume 1250 of {\em {NIST} Special Publication}. National Institute of Standards and Technology {(NIST)}.
 
 \bibitem[Yang et~al., 2018]{yang_hotpotqa_2018}
 Yang, Z., Qi, P., Zhang, S., Bengio, Y., Cohen, W., Salakhutdinov, R., and Manning, C.~D. (2018).
 \newblock {H}otpot{QA}: A dataset for diverse, explainable multi-hop question answering.
 \newblock In Riloff, E., Chiang, D., Hockenmaier, J., and Tsujii, J., editors, {\em Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing}, pages 2369--2380, Brussels, Belgium. Association for Computational Linguistics.
 
-\bibitem[{Zaib} et~al., 2021]{zaib_conversational_2021}
-{Zaib}, M., {Zhang}, W.~E., {Sheng}, Q.~Z., {Mahmood}, A., and {Zhang}, Y. (2021).
-\newblock {Conversational Question Answering: A Survey}.
-\newblock {\em arXiv e-prints}, page arXiv:2106.00874.
+\bibitem[Zaib et~al., 2022]{zaib_conversational_2021}
+Zaib, M., Zhang, W.~E., Sheng, Q.~Z., Mahmood, A., and Zhang, Y. (2022).
+\newblock Conversational question answering: a survey.
+\newblock {\em Knowl. Inf. Syst.}, 64(12):3151--3195.
 
 \bibitem[Zamani et~al., 2020]{zamani_analyzing_2020}
 Zamani, H., Mitra, B., Chen, E., Lueck, G., Diaz, F., Bennett, P.~N., Craswell, N., and Dumais, S.~T. (2020).
@@ -624,7 +623,7 @@ Zhao, W.~X., Zhou, K., Li, J., Tang, T., Wang, X., Hou, Y., Min, Y., Zhang, B., 
 \bibitem[Zhu et~al., 2021]{zhu_retrieving_2021}
 Zhu, F., Lei, W., Wang, C., Zheng, J., Poria, S., and Chua, T. (2021).
 \newblock Retrieving and reading: {A} comprehensive survey on open-domain question answering.
-\newblock {\em CoRR}, abs/2101.00774.
+\newblock arXiv. \url{https://arxiv.org/abs/2101.00774}.
 
 \bibitem[Zhu et~al., 2023]{zhu_survey_2023}
 Zhu, X., Li, J., Liu, Y., Ma, C., and Wang, W. (2023).
@@ -632,7 +631,8 @@ Zhu, X., Li, J., Liu, Y., Ma, C., and Wang, W. (2023).
 \newblock arXiv. \url{https://arxiv.org/abs/2308.07633v3}.
 
 \bibitem[Zhu et~al., 2022]{zhu_teach_nodate}
-Zhu, Y., Liu, N., Xu, Z., Liu, X., Meng, W., and Wang, Y. (2022).
-\newblock Teach {Less}, {Learn} {More}: {On} the {Undistillable} {Classes} in {Knowledge} {Distillation}.
+Zhu, Y., Liu, N., Xu, Z., Liu, X., Meng, W., Wang, L., Ou, Z., and Tang, J. (2022).
+\newblock Teach less, learn more: On the undistillable classes in knowledge distillation.
+\newblock In Koyejo, S., Mohamed, S., Agarwal, A., Belgrave, D., Cho, K., and Oh, A., editors, {\em Advances in Neural Information Processing Systems 35: Annual Conference on Neural Information Processing Systems 2022, NeurIPS 2022, New Orleans, LA, USA, November 28 - December 9, 2022}.
 
 \end{thebibliography}
