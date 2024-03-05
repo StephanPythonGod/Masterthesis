@@ -34,7 +34,10 @@
 %\usepackage{docxx}
 % Include PDF links
 %\usepackage[pdftex, bookmarks=true]{hyperref}
+% \usepackage[acronym, nonumberlist]{glossaries}
+
 \usepackage[acronym, nonumberlist]{glossaries}
+\usepackage{glossaries-extra}
 
 \usepackage{csquotes}
 
@@ -131,6 +134,7 @@
 \newacronym{leolm}{LeoLM}{Linguistisch Erweitertes Offenes Language Model}
 \newacronym{cast}{CAsT}{Conversational Assistance Track}
 
+
 \usepackage{amsmath} % für \@addtoreset
 \makeatletter
 \@addtoreset{definition}{chapter}
@@ -214,8 +218,8 @@ Abgabedatum: \today
 \cleardoublepage
 
 % List of acronyms (Abkürzungsverzeichnis):
-\chapter*{List of Acronyms}
-\printglossary[type=\acronymtype]
+% \chapter*{List of Acronyms}
+\printglossary[type=\acronymtype, title=List of Acronyms]
 
 % List of figures (Abbildungsverzeichnis):
 \listoffigures

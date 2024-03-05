@@ -52,7 +52,7 @@ Devlin, J., Chang, M.-W., Lee, K., and Toutanova, K. (2019).
 
 \bibitem[Dimitrakis et~al., 2020]{dimitrakis_survey_2020}
 Dimitrakis, E., Sgontzos, K., and Tzitzikas, Y. (2020).
-\newblock A survey on question answering systems over linked data and documents.
+\newblock A survey on question-answering systems over linked data and documents.
 \newblock {\em Journal of Intelligent Information Systems}, 55(2):233--259.
 
 \bibitem[Ding et~al., 2022]{ding_v-doc_2022}
@@ -67,7 +67,7 @@ Elgohary, A., Peskov, D., and Boyd-Graber, J. (2019).
 
 \bibitem[Etezadi and Shamsfard, 2023]{etezadi_state_2023}
 Etezadi, R. and Shamsfard, M. (2023).
-\newblock The state of the art in open domain complex question answering: a survey.
+\newblock The state of the art in open domain complex question-answering: a survey.
 \newblock {\em Applied Intelligence}, 53(4):4124--4144.
 
 \bibitem[Farea et~al., 2022]{farea_evaluation_2022}
@@ -156,12 +156,12 @@ Guu, K., Lee, K., Tung, Z., Pasupat, P., and Chang, M.-W. (2020).
 
 \bibitem[Hao et~al., 2022]{hao_recent_2022}
 Hao, T., Li, X., He, Y., Wang, F.~L., and Qu, Y. (2022).
-\newblock Recent progress in leveraging deep learning methods for question answering.
+\newblock Recent progress in leveraging deep learning methods for question-answering.
 \newblock {\em Neural Computing and Applications}, 34(4):2765--2783.
 
 \bibitem[Harabagiu et~al., 2003]{harabagiu_open-domain_2003}
 Harabagiu, S.~M., Maiorano, S.~J., and Paşca, M.~A. (2003).
-\newblock Open-domain textual question answering techniques.
+\newblock Open-domain textual question-answering techniques.
 \newblock {\em Natural Language Engineering}, 9(3):231--267.
 
 \bibitem[He et~al., 2021]{he_deberta_2020}
@@ -371,7 +371,7 @@ Meuschke, N., Jagdale, A., Spinde, T., Mitrovic, J., and Gipp, B. (2023).
 
 \bibitem[Mishra and Jain, 2016]{mishra_survey_2016}
 Mishra, A. and Jain, S.~K. (2016).
-\newblock A survey on question answering systems with classification.
+\newblock A survey on question-answering systems with classification.
 \newblock {\em Journal of King Saud University - Computer and Information Sciences}, 28(3):345--361.
 
 \bibitem[Muennighoff, 2022]{muennighoff_sgpt_2022}
@@ -386,7 +386,7 @@ Nakano, R., Hilton, J., Balaji, S., Wu, J., Ouyang, L., Kim, C., Hesse, C., Jain
 
 \bibitem[Nassiri and Akhloufi, 2023]{nassiri_transformer_2023}
 Nassiri, K. and Akhloufi, M. (2023).
-\newblock Transformer models used for text-based question answering systems.
+\newblock Transformer models used for text-based question-answering systems.
 \newblock {\em Applied Intelligence}, 53(9):10602--10635.
 
 \bibitem[Naveed et~al., 2023]{naveed_comprehensive_2023}
@@ -587,7 +587,7 @@ Yang, Z., Qi, P., Zhang, S., Bengio, Y., Cohen, W., Salakhutdinov, R., and Manni
 
 \bibitem[Zaib et~al., 2022]{zaib_conversational_2021}
 Zaib, M., Zhang, W.~E., Sheng, Q.~Z., Mahmood, A., and Zhang, Y. (2022).
-\newblock Conversational question answering: a survey.
+\newblock Conversational question-answering: a survey.
 \newblock {\em Knowl. Inf. Syst.}, 64(12):3151--3195.
 
 \bibitem[Zamani et~al., 2020]{zamani_analyzing_2020}
