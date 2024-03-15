@@ -1,7 +1,7 @@
 \begin{thebibliography}{}
 
 \bibitem[Anil et~al., 2023]{anil_palm_2023}
-Anil, R., Dai, A.~M., Firat, O., Johnson, M., Lepikhin, D., Passos, A.~T., Shakeri, S., Taropa, E., Bailey, P., Chen, Z., Chu, E., Clark, J., Shafey, L.~E., Huang, Y., Meier-Hellstern, K.~S., Mishra, G., Moreira, E., Omernick, M., Robinson, K., Ruder, S., Tay, Y., Xiao, K., Xu, Y., Zhang, Y., Abrego, G.~H., Ahn, J., Austin, J., Barham, P., Botha, J.~A., Bradbury, J., Brahma, S., Brooks, K.~M., Catasta, M., Cheng, Y., Cherry, C., Choquette-Choo, C.~A., Chowdhery, A., Cr{\'e}py, C., Dave, S., Dehghani, M., Dev, S., Devlin, J., D'iaz, M.~C., Du, N., Dyer, E., Feinberg, V., Feng, F., Fienber, V., Freitag, M., Garc{\'i}a, X., Gehrmann, S., Gonz{\'a}lez, L., Gur-Ari, G., Hand, S., Hashemi, H., Hou, L., Howland, J., Hu, A.~R., Hui, J., Hurwitz, J., Isard, M., Ittycheriah, A., Jagielski, M., Jia, W.~H., Kenealy, K., Krikun, M., Kudugunta, S., Lan, C., Lee, K., Lee, B., Li, E., Li, M.-L., Li, W., Li, Y., Li, J.~Y., Lim, H., Lin, H., Liu, Z.-Z., Liu, F., Maggioni, M., Mahendru, A., Maynez, J., Misra, V., Moussalem, M., Nado, Z., Nham, J., Ni, E., Nystrom, A., Parrish, A., Pellat, M., Polacek, M., Polozov, O., Pope, R., Qiao, S., Reif, E., Richter, B., Riley, P., Ros, A., Roy, A., Saeta, B., Samuel, R., Shelby, R.~M., Slone, A., Smilkov, D., So, D.~R., Sohn, D., Tokumine, S., Valter, D., Vasudevan, V., Vodrahalli, K., Wang, X., Wang, P., Wang, Z., Wang, T., Wieting, J., Wu, Y., Xu, K., Xu, Y., Xue, L.~W., Yin, P., Yu, J., Zhang, Q., Zheng, S., Zheng, C., Zhou, W., Zhou, D., Petrov, S., and Wu, Y. (2023).
+Anil, R., Dai, A.~M., Firat, O., Johnson, M., Lepikhin, D., Passos, A.~T., Shakeri, S., Taropa, E., Bailey, P., and Chen, Z. (2023).
 \newblock Palm 2 technical report.
 \newblock arXiv. \url{https://arxiv.org/abs/2305.10403}.
 
@@ -11,7 +11,7 @@ AutoGPTQ (2023).
 \newblock Accessed: 2023-10-02.
 
 \bibitem[Brown et~al., 2020]{brown_language_2020}
-Brown, T.~B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D.~M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., and Amodei, D. (2020).
+Brown, T.~B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., and Askell, A. (2020).
 \newblock Language models are few-shot learners.
 \newblock In {\em Proceedings of the 34th International Conference on Neural Information Processing Systems}, NIPS'20, Red Hook, NY, USA. Curran Associates Inc.
 
@@ -111,7 +111,7 @@ Gao, J., Xiong, C., Bennett, P., and Craswell, N. (2023).
 \newblock Springer.
 
 \bibitem[Gao et~al., 2024]{gao_retrieval-augmented_2024}
-Gao, Y., Xiong, Y., Gao, X., Jia, K., Pan, J., Bi, Y., Dai, Y., Sun, J., Guo, Q., Wang, M., and Wang, H. (2024).
+Gao, Y., Xiong, Y., Gao, X., Jia, K., Pan, J., Bi, Y., Dai, Y., Sun, J., Guo, Q., and Wang, M. (2024).
 \newblock Retrieval-{Augmented} {Generation} for {Large} {Language} {Models}: {A} {Survey}.
 \newblock arXiv. \url{http://arxiv.org/abs/2312.10997}.
 
@@ -275,7 +275,7 @@ Lewis, M., Liu, Y., Goyal, N., Ghazvininejad, M., Mohamed, A., Levy, O., Stoyano
 \newblock In Jurafsky, D., Chai, J., Schluter, N., and Tetreault, J., editors, {\em Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics}, pages 7871--7880, Online. Association for Computational Linguistics.
 
 \bibitem[Lewis et~al., 2020b]{lewis_retrieval-augmented_2021}
-Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., K\"{u}ttler, H., Lewis, M., Yih, W.-t., Rockt\"{a}schel, T., Riedel, S., and Kiela, D. (2020b).
+Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., K\"{u}ttler, H., Lewis, M., Yih, W.-t., and Rockt\"{a}schel, T. (2020b).
 \newblock Retrieval-augmented generation for knowledge-intensive nlp tasks.
 \newblock In {\em Proceedings of the 34th International Conference on Neural Information Processing Systems}, NIPS'20, Red Hook, NY, USA. Curran Associates Inc.
 
@@ -285,7 +285,7 @@ Li, J., Xu, Y., Lv, T., Cui, L., Zhang, C., and Wei, F. (2022a).
 \newblock In {\em Proceedings of the 30th ACM International Conference on Multimedia}, MM '22, page 3530–3539, New York, NY, USA. Association for Computing Machinery.
 
 \bibitem[Li et~al., 2022b]{li_explanations_2022}
-Li, S., Chen, J., Shen, Y., Chen, Z., Zhang, X., Li, Z., Wang, H., Qian, J., Peng, B., Mao, Y., Chen, W., and Yan, X. (2022b).
+Li, S., Chen, J., Shen, Y., Chen, Z., Zhang, X., Li, Z., Wang, H., Qian, J., Peng, B., and Mao, Y. (2022b).
 \newblock Explanations from {Large} {Language} {Models} {Make} {Small} {Reasoners} {Better}.
 \newblock arXiv. \url{http://arxiv.org/abs/2210.06726}.
 
@@ -300,7 +300,7 @@ Lin, C.-Y. (2004).
 \newblock In {\em Text {Summarization} {Branches} {Out}}, pages 74--81, Barcelona, Spain. Association for Computational Linguistics.
 
 \bibitem[Ling et~al., 2023]{ling_domain_2023}
-Ling, C., Zhao, X., Lu, J., Deng, C., Zheng, C., Wang, J., Chowdhury, T., Li, Y., Cui, H., Zhang, X., Zhao, T., Panalkar, A., Cheng, W., Wang, H., Liu, Y., Chen, Z., Chen, H., White, C., Gu, Q., Pei, J., and Zhao, L. (2023).
+Ling, C., Zhao, X., Lu, J., Deng, C., Zheng, C., Wang, J., Chowdhury, T., Li, Y., Cui, H., and Zhang, X. (2023).
 \newblock Domain {Specialization} as the {Key} to {Make} {Large} {Language} {Models} {Disruptive}: {A} {Comprehensive} {Survey}.
 \newblock arXiv. \url{http://arxiv.org/abs/2305.18703}.
 
@@ -380,7 +380,7 @@ Muennighoff, N. (2022).
 \newblock arXiv. \url{http://arxiv.org/abs/2202.08904}.
 
 \bibitem[Nakano et~al., 2022]{nakano_webgpt_2022}
-Nakano, R., Hilton, J., Balaji, S., Wu, J., Ouyang, L., Kim, C., Hesse, C., Jain, S., Kosaraju, V., Saunders, W., Jiang, X., Cobbe, K., Eloundou, T., Krueger, G., Button, K., Knight, M., Chess, B., and Schulman, J. (2022).
+Nakano, R., Hilton, J., Balaji, S., Wu, J., Ouyang, L., Kim, C., Hesse, C., Jain, S., Kosaraju, V., and Saunders, W. (2022).
 \newblock {WebGPT}: {Browser}-assisted question-answering with human feedback.
 \newblock arXiv. \url{http://arxiv.org/abs/2112.09332}.
 
@@ -395,7 +395,7 @@ Naveed, H., Khan, A.~U., Qiu, S., Saqib, M., Anwar, S., Usman, M., Akhtar, N., B
 \newblock arXiv. \url{http://arxiv.org/abs/2307.06435}.
 
 \bibitem[Neelakantan et~al., 2022]{neelakantan_text_2022}
-Neelakantan, A., Xu, T., Puri, R., Radford, A., Han, J.~M., Tworek, J., Yuan, Q., Tezak, N.~A., Kim, J.~W., Hallacy, C., Heidecke, J., Shyam, P., Power, B., Nekoul, T.~E., Sastry, G., Krueger, G., Schnurr, D.~P., Such, F.~P., Hsu, K. S.-K., Thompson, M., Khan, T., Sherbakov, T., Jang, J., Welinder, P., and Weng, L. (2022).
+Neelakantan, A., Xu, T., Puri, R., Radford, A., Han, J.~M., Tworek, J., Yuan, Q., Tezak, N.~A., Kim, J.~W., and Hallacy, C. (2022).
 \newblock Text and code embeddings by contrastive pre-training.
 \newblock arXiv. \url{https://arxiv.org/abs/2201.10005}.
 
@@ -420,7 +420,7 @@ Nishida, K., Saito, I., Otsuka, A., Asano, H., and Tomita, J. (2018).
 \newblock Accessed: 2023-09-22.
 
 \bibitem[Ouyang et~al., 2022]{ouyang_training_2022}
-Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C.~L., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray, A., Schulman, J., Hilton, J., Kelton, F., Miller, L., Simens, M., Askell, A., Welinder, P., Christiano, P.~F., Leike, J., and Lowe, R. (2022).
+Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C.~L., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., and Ray, A. (2022).
 \newblock Training language models to follow instructions with human feedback.
 \newblock In Koyejo, S., Mohamed, S., Agarwal, A., Belgrave, D., Cho, K., and Oh, A., editors, {\em Advances in Neural Information Processing Systems 35: Annual Conference on Neural Information Processing Systems 2022, NeurIPS 2022, New Orleans, LA, USA, November 28 - December 9, 2022}.
 
@@ -495,7 +495,7 @@ Serban, I.~V., García-Durán, A., Gulcehre, C., Ahn, S., Chandar, S., Courville
 \newblock In {\em Proceedings of the 54th {Annual} {Meeting} of the {Association} for {Computational} {Linguistics} ({Volume} 1: {Long} {Papers})}, pages 588--598, Berlin, Germany. Association for Computational Linguistics.
 
 \bibitem[Shen et~al., 2023]{chung_scaling_2022}
-Shen, S., Hou, L., Zhou, Y., Du, N., Longpre, S., Wei, J., Chung, H.~W., Zoph, B., Fedus, W., Chen, X., Vu, T., Wu, Y., Chen, W., Webson, A., Li, Y., Zhao, V., Yu, H., Keutzer, K., Darrell, T., and Zhou, D. (2023).
+Shen, S., Hou, L., Zhou, Y., Du, N., Longpre, S., Wei, J., Chung, H.~W., Zoph, B., Fedus, W., and Chen, X. (2023).
 \newblock Flan-moe: Scaling instruction-finetuned language models with sparse mixture of experts.
 \newblock arXiv. \url{https://arxiv.org/abs/2305.14705}.
 
@@ -515,7 +515,7 @@ Thakur, N., Reimers, N., R{\"u}ckl{\'e}, A., Srivastava, A., and Gurevych, I. (2
 \newblock In {\em Proceedings of the 2021 Neural Information Processing Systems (NeurIPS-2021): Track on Datasets and Benchmarks}.
 
 \bibitem[Thoppilan et~al., 2022]{thoppilan_lamda_2022}
-Thoppilan, R., De~Freitas, D., Hall, J., Shazeer, N., Kulshreshtha, A., Cheng, H.-T., Jin, A., Bos, T., Baker, L., Du, Y., Li, Y., Lee, H., Zheng, H.~S., Ghafouri, A., Menegali, M., Huang, Y., Krikun, M., Lepikhin, D., Qin, J., Chen, D., Xu, Y., Chen, Z., Roberts, A., Bosma, M., Zhao, V., Zhou, Y., Chang, C.-C., Krivokon, I., Rusch, W., Pickett, M., Srinivasan, P., Man, L., Meier-Hellstern, K., Morris, M.~R., Doshi, T., Santos, R.~D., Duke, T., Soraker, J., Zevenbergen, B., Prabhakaran, V., Diaz, M., Hutchinson, B., Olson, K., Molina, A., Hoffman-John, E., Lee, J., Aroyo, L., Rajakumar, R., Butryna, A., Lamm, M., Kuzmina, V., Fenton, J., Cohen, A., Bernstein, R., Kurzweil, R., Aguera-Arcas, B., Cui, C., Croak, M., Chi, E., and Le, Q. (2022).
+Thoppilan, R., De~Freitas, D., Hall, J., Shazeer, N., Kulshreshtha, A., Cheng, H.-T., Jin, A., Bos, T., Baker, L., and Du, Y. (2022).
 \newblock {LaMDA}: {Language} {Models} for {Dialog} {Applications}.
 \newblock arXiv. \url{http://arxiv.org/abs/2201.08239}.
 
@@ -526,12 +526,12 @@ Tito, R., Karatzas, D., and Valveny, E. (2021).
 \newblock arXiv:2104.14336 [cs].
 
 \bibitem[{Touvron} et~al., 2023]{touvron_llama_2023}
-{Touvron}, H., {Martin}, L., {Stone}, K., {Albert}, P., {Almahairi}, A., {Babaei}, Y., {Bashlykov}, N., {Batra}, S., {Bhargava}, P., {Bhosale}, S., {Bikel}, D., {Blecher}, L., {Canton Ferrer}, C., {Chen}, M., {Cucurull}, G., {Esiobu}, D., {Fernandes}, J., {Fu}, J., {Fu}, W., {Fuller}, B., {Gao}, C., {Goswami}, V., {Goyal}, N., {Hartshorn}, A., {Hosseini}, S., {Hou}, R., {Inan}, H., {Kardas}, M., {Kerkez}, V., {Khabsa}, M., {Kloumann}, I., {Korenev}, A., {Singh Koura}, P., {Lachaux}, M.-A., {Lavril}, T., {Lee}, J., {Liskovich}, D., {Lu}, Y., {Mao}, Y., {Martinet}, X., {Mihaylov}, T., {Mishra}, P., {Molybog}, I., {Nie}, Y., {Poulton}, A., {Reizenstein}, J., {Rungta}, R., {Saladi}, K., {Schelten}, A., {Silva}, R., {Smith}, E.~M., {Subramanian}, R., {Tan}, X.~E., {Tang}, B., {Taylor}, R., {Williams}, A., {Kuan}, J.~X., {Xu}, P., {Yan}, Z., {Zarov}, I., {Zhang}, Y., {Fan}, A., {Kambadur}, M., {Narang}, S., {Rodriguez}, A., {Stojnic}, R., {Edunov}, S., and {Scialom}, T. (2023).
+{Touvron}, H., {Martin}, L., {Stone}, K., {Albert}, P., {Almahairi}, A., {Babaei}, Y., {Bashlykov}, N., {Batra}, S., {Bhargava}, P., and {Bhosale}, S. (2023).
 \newblock {Llama 2: Open Foundation and Fine-Tuned Chat Models}.
 \newblock arXiv. \url{https://arxiv.org/abs/2307.09288}.
 
 \bibitem[Treviso et~al., 2023]{treviso_efficient_2023}
-Treviso, M., Lee, J.-U., Ji, T., Aken, B.~V., Cao, Q., Ciosici, M.~R., Hassid, M., Heafield, K., Hooker, S., Raffel, C., Martins, P.~H., Martins, A. F.~T., Forde, J.~Z., Milder, P., Simpson, E., Slonim, N., Dodge, J., Strubell, E., Balasubramanian, N., Derczynski, L., Gurevych, I., and Schwartz, R. (2023).
+Treviso, M., Lee, J.-U., Ji, T., Aken, B.~V., Cao, Q., Ciosici, M.~R., Hassid, M., Heafield, K., Hooker, S., and Raffel, C. (2023).
 \newblock Efficient {Methods} for {Natural} {Language} {Processing}: {A} {Survey}.
 \newblock {\em Transactions of the Association for Computational Linguistics}, 11:826--860.
 
@@ -616,7 +616,7 @@ Zhang, T., Kishore, V., Wu, F., Weinberger, K.~Q., and Artzi, Y. (2020).
 \newblock In {\em 8th International Conference on Learning Representations, {ICLR} 2020, Addis Ababa, Ethiopia, April 26-30, 2020}. OpenReview.net.
 
 \bibitem[Zhao et~al., 2023]{zhao_survey_2023}
-Zhao, W.~X., Zhou, K., Li, J., Tang, T., Wang, X., Hou, Y., Min, Y., Zhang, B., Zhang, J., Dong, Z., Du, Y., Yang, C., Chen, Y., Chen, Z., Jiang, J., Ren, R., Li, Y., Tang, X., Liu, Z., Liu, P., Nie, J., and rong Wen, J. (2023).
+Zhao, W.~X., Zhou, K., Li, J., Tang, T., Wang, X., Hou, Y., Min, Y., Zhang, B., Zhang, J., and Dong, Z. (2023).
 \newblock A survey of large language models.
 \newblock arXiv. \url{https://arxiv.org/abs/2303.18223}.
 

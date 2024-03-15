@@ -3,9 +3,9 @@ This chapter provides essential background information and reviews relevant prio
 \section{Question Answering}
 \label{sec:qa}
 
-In section \ref{subsec:qa_basics} we will lay the groundwork by introducing the fundamental aspects of \gls{qa}-Systems and the techniques used to differentiate and categorize them. Following that, subsequent sections will delve deeper into the examination of specific system components.
+In Section \ref{subsec:qa_basics} we will lay the groundwork by introducing the fundamental aspects of \gls{qa}-Systems and the techniques used to differentiate and categorize them. Following that, subsequent sections will delve deeper into the examination of specific system components.
 
-\textbf{Important for Thesis Research:} The concepts and taxonomy of \gls{qa} systems mentioned in Section \ref{subsec:qa_basics} are essential background knowledge. While Section \ref{subsec:qa_architectures} outlines different conceptual approaches towards the holistic architecture of \gls{qa}-systems, this thesis will later focus solely on \gls{rag}s. The following sections, \ref{subsec:qa_indexing}, \ref{subsec:qa_retrieval}, and \ref{subsec:qa_reader}, will create a holistic image of possible approaches towards these components, which is necessary to understand on a higher level what possible system designs entail. However, the thesis will mainly focus on zero-shot retrievers, their optimization, and generative readers. The other mentioned methods can be viewed as possible alternatives and historical developments that should not be forgotten in the research process. The decision to include this information was motivated by the dynamic nature of the research field of \gls{qa}. While certain methods may have gained popularity in recent months, it's essential to recognize that the landscape of QA is continually evolving. Just because a particular method has gained traction does not render other approaches obsolete. By acknowledging the ongoing development and diversity within the field, we aim to provide a comprehensive understanding and context in this thesis.
+The concepts and taxonomy of \gls{qa} systems mentioned in Section \ref{subsec:qa_basics} are essential background knowledge. While Section \ref{subsec:qa_architectures} outlines different conceptual approaches towards the holistic architecture of \gls{qa}-systems, this thesis will later focus solely on \gls{rag}s. The following sections, \ref{subsec:qa_indexing}, \ref{subsec:qa_retrieval}, and \ref{subsec:qa_reader}, will give a holistic image of possible approaches towards these components, which is necessary to understand on a higher level what possible system designs entail. However, the thesis will mainly focus on zero-shot retrievers, their optimization, and generative readers. The other mentioned methods can be viewed as possible alternatives and historical developments that should not be forgotten in the research process. The decision to include this information was motivated by the dynamic nature of the research field of \gls{qa}. While certain methods may have gained popularity in recent months, it's essential to recognize that the landscape of QA is continually evolving. Just because a particular method has gained traction does not render other approaches obsolete. By acknowledging the ongoing development and diversity within the field, we aim to provide a comprehensive understanding and context in this thesis.
 
 
 \subsection{Basics}
@@ -13,7 +13,7 @@ In section \ref{subsec:qa_basics} we will lay the groundwork by introducing the 
 
 Jurafsky and Martin define a \gls{qa}-System as a system \enquote{designed to satisfy human information needs} \cite{jurafsky_speech_2023}. Hence, it primarily functions as an Information Retrieval System, with its primary objective being to provide users with the desired and accurate information in response to natural language requests.
 
-The research community has yet to establish a universally accepted classification framework for Question Answering (QA) systems. For instance, Hao et al. and Farea et al. \cite{hao_recent_2022, farea_evaluation_2022} take a comprehensive approach to classify QA systems but differ in certain aspects, such as their treatment of question types and knowledge sources. On the other hand, other researchers \cite{zhu_retrieving_2021, jurafsky_speech_2023, etezadi_state_2023, zhang_survey_2023} employ a similar classification methodology but often focus solely on retrieval-based approaches, thereby lacking a holistic perspective.
+The research community has yet to establish a universally accepted classification framework for \gls{qa} systems. For instance, Hao et al. and Farea et al. \cite{hao_recent_2022, farea_evaluation_2022} take a comprehensive approach to classify QA systems but differ in certain aspects, such as their treatment of question types and knowledge sources. On the other hand, other researchers \cite{zhu_retrieving_2021, jurafsky_speech_2023, etezadi_state_2023, zhang_survey_2023} employ a similar classification methodology but often focus solely on retrieval-based approaches, thereby lacking a holistic perspective.
 
 The classification proposed by Farea et al. \cite{farea_evaluation_2022} goes a step further by distinguishing between the \textbf{QA-Framework} and \textbf{QA-Paradigms}, enhancing its versatility for comparing classical and modern QA systems. An adaptation of this classification will be utilized in this thesis. The originally proposed QA algorithms have been extended to include the Retrieval-based approach, and the Question Types have been revised based on the typology introduced by Mishra et al. in their 2016 survey \cite{mishra_survey_2016}, which was further elaborated upon by Etezadi et al. \cite{etezadi_state_2023}. Also the answer types were adjusted to align with the classifications used in \cite{mcdonald_detect_2022,dasigi_dataset_2021}. In this context, a crucial distinction is made between a \textbf{QA} and \textbf{ConvQA} system, guided by the criteria outlined in \cite{zamani_conversational_2023}: a \textbf{QA} system exclusively handles standalone questions, while any inquiry exceeding a single question and involving conversational context falls within the domain of a \textbf{ConvQA} system.
 
@@ -24,7 +24,7 @@ The \textbf{\gls{qa}-Framework} encompasses external factors such as Question an
     
     \item \textbf{Knowledge Base (KB) QA}: In this approach, a semantic representation of the question is constructed, and a knowledge base is queried using this representation. The returned results are then used to generate an answer.
     
-    \item \textbf{Generative Question Answering}: Here, knowledge is fully implicit, and a neural network (NN) generates answers based on its trained parameters.
+    \item \textbf{Generative Question Answering}: Here, knowledge is fully implicit, and a \gls{nn} generates answers based on its trained parameters.
 
 \end{enumerate}
 
@@ -33,7 +33,7 @@ For visual clarity, a diagram illustrating the adjusted \gls{qa} Framework Class
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{Grafiken/QA_Framework.png}
-    \caption{Adjusted \gls{qa} Framework Classification by Farea et al. \cite{farea_evaluation_2022}}
+    \caption{Adjusted QA Framework Classification by Farea et al. \cite{farea_evaluation_2022}}
     \label{fig:qa_classification}
 \end{figure}
 
@@ -52,10 +52,10 @@ Furthermore, a closed-domain setup often entails limitations on the types of que
 
 Conversely, open-domain QA systems are designed to tackle a wide spectrum of user queries, ranging from factoids to more complex inquiries. They typically deal with unstructured knowledge sources, which can be substantial and diverse in content \cite{zhu_retrieving_2021, farea_evaluation_2022, jurafsky_speech_2023}.
 
-An alternative perspective for distinguishing \gls{qa}-Systems lies in the \textbf{Question Types} that users can input into the system. Questions can fall into various categories, such as \textit{factoid, list, casual, confirmation, hypothetical} \cite{mishra_survey_2016}, or \textit{complex} \cite{etezadi_state_2023}.
+An alternative perspective for distinguishing \gls{qa}-Systems lies in the \textbf{Question Types} that users can input into the system. Questions can fall into various categories, such as \textit{factoid, list, casual, confirmation, hypothetical} \cite{mishra_survey_2016}, or \textit{complex}~\cite{etezadi_state_2023}.\nopagebreak
 
 \begin{itemize}
-   \item \textit{Factoid questions}, the most common type, is typically signaled by question words (what, when, which, who, how) and yield a concise factual answer.
+   \item \textit{Factoid questions}, the most common type, is typically signaled by question words (what, when, which, who, how) and yields a concise factual answer.
    
    \item \textit{List questions} represent a specialized subset of factoid questions, where the answer comprises a list of facts.
    
@@ -95,7 +95,7 @@ Generative \gls{qa} is often denoted as \textit{Retriever-free} or \textit{Neura
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Grafiken/Retriever_Reader.png}
-    \caption{Reader-Retriever-System Architecture for \gls{qa} by Zhu et al. \cite{zhu_retrieving_2021}.}
+    \caption{Reader-Retriever-System Architecture for QA by Zhu et al. \cite{zhu_retrieving_2021}.}
     \label{fig:rr_architecture}
 \end{figure}
 
@@ -272,7 +272,7 @@ Luo et al. conducted the first survey comparing state-of-the-art Extractive and 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Grafiken/RAG-Figure1.png}
-    \caption{Overview of \gls{rag} by Lewis et al. \cite{lewis_retrieval-augmented_2021}}
+    \caption{Overview of RAG by Lewis et al. \cite{lewis_retrieval-augmented_2021}}
     \label{fig:rag}
 \end{figure}
 
@@ -283,7 +283,7 @@ Further \gls{rag} generators are attention-based like \gls{fid} \cite{izacard_le
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Grafiken/fid.png}
-    \caption{Overview of \gls{fid} by Izacard et al. \cite{izacard_leveraging_2021}}
+    \caption{Overview of FiD by Izacard et al. \cite{izacard_leveraging_2021}}
     \label{fig:fid}
 \end{figure}
 
@@ -296,7 +296,7 @@ The \textbf{Answer Post-Processor} is similar to the Document Post-Processor, se
 \subsection{Limitations}
 \label{subsec:qa_limitations}
 
-The evaluation metrics for \gls{ir} systems will be discussed in detail in Section \ref{chap:eval}. In general, selecting the components and models for an \gls{ir} system always involves a trade-off between accuracy, memory consumption, and inference speed \cite{zhang_survey_2023}.
+The evaluation metrics for \gls{ir} systems will be discussed in detail in Chapter \ref{chap:eval}. In general, selecting the components and models for an \gls{ir} system always involves a trade-off between accuracy, memory consumption, and inference speed \cite{zhang_survey_2023}.
 
 Accuracy is primarily determined by the chosen Retriever-Reader-System. Sparse retrievers often lack a certain degree of semantic understanding, resulting in less accurate retrieved passages. In contrast, Dense Retrievers can achieve higher levels of accuracy but require thorough evaluation and training for the desired use case. Thakur et al. demonstrated that high-accuracy Dense Retrievers like \gls{dpr} can underperform in zero-shot scenarios compared to BM25 by -47.7\% \cite{thakur_beir_2021}. This highlights another crucial limitation of all \gls{nn}-based retrievers and readers: training. BM25 is, by nature, an unsupervised model for \gls{ir}, while common approaches for Dense Retrieval usually belong to the group of supervised models. These models heavily depend on their training data, whereas a Sparse Retriever like BM25 can be used without any training. According to experiments conducted by Thakur et al. \cite{thakur_beir_2021}, the best-performing out-of-distribution standalone Retrievers are Representation-Interaction Retrievers like ColBERT. Nevertheless, there exist enhanced approaches like \textit{Mixture-of-Experts}/\textit{Hybrid-Search}  or the multi-stage retrievers like \textit{BM25+CE} (will be discussed in Section \ref{subsec:retriever}), which are an implementation of the mentioned \textit{Document Post-Processing}. These approaches can outperform standalone Retrievers.
 
@@ -326,9 +326,9 @@ For a detailed overview of approaches towards more efficient \gls{odqa} systems,
 \section{Conversational Question Answering}
 \label{sec:cqa}
 
-The differentiation of \gls{convqa} towards \gls{qa} will be discussed in Section \ref{subsec:cqa_basics}. This Section also introduces the fundamental concepts of \gls{convqa} which are necessary to understand challenges and necessary components compared to a regular \gls{qa}-System. Section \ref{subsec:cqa_contextual_query_understanding} will cover approaches toward the concept of query expansion. Section \ref{subsec:cqa_initiative} will clampse on the concept of initiative and further approaches towards a Conversation Manager.
+The differentiation of \gls{convqa} towards \gls{qa} will be discussed in Section \ref{subsec:cqa_basics}. This section also introduces the fundamental concepts of \gls{convqa} which are necessary to understand challenges and necessary components compared to a regular \gls{qa}-System. Section \ref{subsec:cqa_contextual_query_understanding} will cover approaches toward the concept of query expansion. Section \ref{subsec:cqa_initiative} will clampse on the concept of initiative and further approaches towards a Conversation Manager.
 
-\textbf{Important for Thesis Research:} Most crucial for the research of this thesis are the concepts introduced in Section \ref{subsec:cqa_basics}. Especially how a \gls{convqa} distinguishes from a regular \gls{qa}-System and the core concepts of a conversation. The approaches introduced in Section \ref{subsec:cqa_contextual_query_understanding} are good to know, but the thesis will later focus mostly on query rewriting. The other approaches are necessary for alternative system designs which will not be discussed. Section \ref{subsec:cqa_initiative} only scratches the surface of the research field of \textit{Initiative}. This is a highly complex field, with ongoing research and won't be covered in this thesis.
+ Most crucial for the research of this thesis are the concepts introduced in Section \ref{subsec:cqa_basics}. Especially how a \gls{convqa} distinguishes from a regular \gls{qa}-System and the core concepts of a conversation. The approaches introduced in Section \ref{subsec:cqa_contextual_query_understanding} are good to know, but the thesis will later focus mostly on query rewriting. The other approaches are necessary for alternative system designs which will not be discussed. Section \ref{subsec:cqa_initiative} only scratches the surface of the research field of \textit{Initiative}. This is a highly complex field, with ongoing research and won't be covered in this thesis.
 
 \subsection{Basics}
 \label{subsec:cqa_basics}
@@ -343,7 +343,7 @@ Figure \ref{fig:conversation_explain} shows the core concepts based on a chat. F
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{Grafiken/Conversation_Explain.png}
-    \caption{Concepts of a Conversation in regards to a \gls{cis}}
+    \caption{Concepts of a Conversation in regards to a CIS}
     \label{fig:conversation_explain}
 \end{figure}
 
@@ -352,7 +352,7 @@ Regarding the System architecture of a \gls{convqa} there is no one fits them al
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Grafiken/System_Architecture_ConQA.png}
-    \caption{General System Architecture of a \gls{convqa} System by Gao et al. \cite{gao_neural_2022}}
+    \caption{General System Architecture of a Conv QA System by Gao et al. \cite{gao_neural_2022}}
     \label{fig:convqa_system_architecture}
 \end{figure}
 
@@ -403,13 +403,13 @@ While several surveys \cite{ling_domain_2023, zhao_survey_2023} have explored th
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Grafiken/Efficient_Survey_Steps.png}
-    \caption{Adapted Stages of Efficiency Improvement for \gls{llm} by Treviso et al. \cite{treviso_efficient_2023}}
+    \caption{Adapted Stages of Efficiency Improvement for LLMs by Treviso et al. \cite{treviso_efficient_2023}}
     \label{fig:llm_taxonomy}
 \end{figure}
 
 Section \ref{subsec:llm_fine_tuning} will explore possibilities to enhance efficiency during the fine-tuning process, while Section \ref{subsec:llm_compression} will delve into the topic of model compression, which is applicable to the \textit{Inference} step in Figure \ref{fig:llm_taxonomy}.
 
-\textbf{Important for Thesis Research:} This thesis itself won't delve into fine-tuning (the content of Section \ref{subsec:llm_fine_tuning}) or model compression (the content of Section \ref{subsec:llm_compression}) itself. Still, concepts like multi-task learning are necessary to understand the capabilities and where those are coming from of \gls{llm}s, and the technique of \textit{Prompting} will be used in Chapter \ref{chap:eval}. Also, in Chapter \ref{chap:eval}, quantized models will be used to evaluate the performance of the \gls{convqa}-System, out of the necessity to run \gls{llm}s on the available hardware resources. Nevertheless, the following section can be seen as an excursion to the main topic of this thesis for real-world implementations facing resource-constrained systems.
+ This thesis itself won't delve into fine-tuning (the content of Section \ref{subsec:llm_fine_tuning}) or model compression (the content of Section \ref{subsec:llm_compression}) itself. Still, concepts like multi-task learning are necessary to understand the capabilities and where those are coming from for modern \gls{llm}s, and the technique of \textit{Prompting} will be used in Chapter \ref{chap:eval}. Also, in Chapter \ref{chap:eval}, quantized models will be used to evaluate the performance of the \gls{convqa}-System, out of the necessity to run \gls{llm}s on the available hardware resources. Nevertheless, the following section can be seen as an excursion to the main topic of this thesis for real-world implementations facing resource-constrained systems.
 
 
 % \begin{figure}

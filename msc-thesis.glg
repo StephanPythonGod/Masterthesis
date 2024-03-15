@@ -1,4 +1,5 @@
-Warning: File 'msc-thesis.glo' is empty.
-Have you used any entries defined in glossary 'main'?
-Remember to use package option 'nomain' if you
-don't want to use the main glossary.
+This is makeindex, version 2.17 [TeX Live 2023] (kpathsea + Thai support).
+Scanning style file ./msc-thesis.ist...........................done (27 attributes redefined, 0 ignored).
+Scanning input file msc-thesis.glo...done (0 entries accepted, 0 rejected).
+Nothing written in msc-thesis.gls.
+Transcript written in msc-thesis.glg.

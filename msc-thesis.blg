@@ -9,32 +9,32 @@ Warning--empty booktitle in tito_document_2021
 Warning--empty publisher in tito_document_2021
 You've used 127 entries,
             1935 wiz_defined-function locations,
-            1128 strings with 43369 characters,
-and the built_in function-call counts, 73350 in all, are:
-= -- 6602
-> -- 5608
+            1128 strings with 37226 characters,
+and the built_in function-call counts, 63120 in all, are:
+= -- 5942
+> -- 3958
 < -- 81
-+ -- 2091
-- -- 2055
-* -- 6783
-:= -- 13053
++ -- 1431
+- -- 1395
+* -- 5463
+:= -- 11073
 add.period$ -- 425
 call.type$ -- 127
-change.case$ -- 1603
+change.case$ -- 1273
 chr.to.int$ -- 121
 cite$ -- 131
 duplicate$ -- 2214
 empty$ -- 3533
-format.name$ -- 2206
-if$ -- 13988
+format.name$ -- 1546
+if$ -- 12338
 int.to.chr$ -- 7
 int.to.str$ -- 0
 missing$ -- 82
 newline$ -- 638
 num.names$ -- 433
-pop$ -- 1571
+pop$ -- 1241
 preamble$ -- 1
-purify$ -- 1605
+purify$ -- 1275
 quote$ -- 0
 skip$ -- 1713
 stack$ -- 0
