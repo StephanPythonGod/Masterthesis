@@ -19,7 +19,7 @@ However, despite advancements in research, there is a notable absence of papers 
 This thesis aims to bridge this gap by addressing the question of how to build a faithful conversational question-answering system for real-world use cases, a topic that has not been adequately explored in scientific literature to date. This thesis resolves this issue by firstly laying out the fundamental concepts and techniques necessary, secondly developing a holistic framework for constructing such a system based on \gls{rag}, and thirdly implementing a \gls{poc} based on the examination regulations of Heidelberg University. Finally, we evaluate the \gls{poc} using synthetic data and human evaluation. The core contributions of this thesis are as follows:
 
 \begin{itemize}
-    \item Providing a holistic overview of the challenges in conversational question-answering systems tailored to a specific document collection and developing a comprehensive framework for constructing such systems based on the four components: Retriever, Reader, CQU and Extract.
+    \item Providing a holistic overview of the challenges in conversational question-answering systems tailored to a specific document collection and developing a comprehensive framework for constructing such systems based on the four components: Extract, CQU, Retriever and Reader.
     \item Breaking down the extraction of passages from a document collection into pipeline operations.
     \item Identifying challenges faced by the Retriever component towards both the knowledge base and the evidence set and how to resolve them using synthetic-data-based fine-tuning and Mixture-of-Experts.
     \item Decomposing the task of the Reader component into micro-challenges and proposing solutions for them.
