@@ -9,6 +9,10 @@
 \usepackage{graphicx}
 \usepackage{fancybox}
 
+\usepackage{caption}
+
+\usepackage{booktabs}
+
 \usepackage{beamerthemesplit}
 \usetheme[compress]{Heidelberg}
 \definecolor{unirot}{rgb}{0.5976525,0,0}
@@ -57,11 +61,13 @@ Database Systems Research Group\\
   \onslide<1>
   \begin{figure}
   \includegraphics[width=\textwidth]{Grafiken/Obama_Chatgpt.png} 
+  \captionsetup{font={tiny}} % This line changes the caption font size
   \caption{Question Answering with ChatGPT, \textit{Source: chat.openai.com}}
   \end{figure}
   \onslide<2>
   \begin{figure}
   \includegraphics[width=\textwidth]{Grafiken/Chatgpt_Message_Highlight.png}
+  \captionsetup{font={tiny}} % This line changes the caption font size
   \caption{Question Answering with ChatGPT, \textit{Source: chat.openai.com}}
   \end{figure}
   \end{overprint}
@@ -159,8 +165,6 @@ Database Systems Research Group\\
   \end{overprint}
 }
 
-\section[Thesis' Goal]{Goal of the Thesis}
-
 \frame{
 \frametitle{Example Use-Case}
 
@@ -168,20 +172,25 @@ Database Systems Research Group\\
 \onslide<1>
 \begin{figure}
 \includegraphics[width=\textwidth]{Grafiken/Use_Case.png}
+\captionsetup{font={tiny}} % This line changes the caption font size
 \caption{Overview of the Example Use-Case}
 \end{figure}
 
 \onslide<2>
 \begin{figure}
 \includegraphics[width=\textwidth]{Grafiken/Use_Case.png}
+\captionsetup{font={tiny}} % This line changes the caption font size
 \caption{Overview of the Example Use-Case}
 \end{figure}
 \vspace*{-5cm}
 \begin{block}{Defined Goal}
-  To build a framework for a conversational question-answering system that is tailored to a specific collection of documents.
+  Build a framework for a conversational question-answering system that is tailored to a specific collection of documents.
 \end{block}
 \end{overprint}
 }
+
+% \section[Thesis' Goal]{Goal of the Thesis}
+
 
 \section[Fundamentals]{Fundamental Concepts}
 
@@ -190,6 +199,7 @@ Database Systems Research Group\\
 
   \begin{figure}
     \includegraphics[width=\textwidth]{Grafiken/Retriever_Reader.png}
+    \captionsetup{font={tiny}} % This line changes the caption font size
     \caption{Reader-Retriever-System Architecture for QA by Zhu et al. [Zhu et al., 2021]}
   \end{figure}
 
@@ -232,6 +242,7 @@ Database Systems Research Group\\
 
   \begin{figure}
     \includegraphics[width=\textwidth]{Grafiken/RAG-Figure1.png}
+    \captionsetup{font={tiny}} % This line changes the caption font size
     \caption{RAG by Lewis et al. [Lewis et al., 2020b]}
   \end{figure}
 
@@ -251,6 +262,7 @@ Database Systems Research Group\\
       \vfill
       \begin{figure}
         \includegraphics[width=\textwidth]{Grafiken/Conversation_Explain.png}
+        \captionsetup{font={tiny}} % This line changes the caption font size
         \caption{Concepts of a Conversation in regards to a CIS}
       \end{figure}
       \vfill
@@ -297,14 +309,685 @@ Database Systems Research Group\\
   \end{enumerate}
 \end{frame}
 
+\begin{frame}{Problem Definition}
+
+  \begin{figure}
+    \includegraphics[width=\textwidth]{Grafiken/conrag_konzeptionell.png}
+    \captionsetup{font={tiny}} % This line changes the caption font size
+    \caption{System Architecture in the context of mathematical model $\mathbf{M}$}
+  \end{figure}
+  
+\end{frame}
+
+\begin{frame}{Definition Intent}
+  
+  \begin{definition}
+    \textbf{(Intent)} Given two elements, which either can be questions, answers or passages, there exists an operation Intent $\mathcal{I}(x, y)$. This operation returns a value between 0 and 1, which indicates the overlap of the two intents of $x$ and $y$, $\mathcal{I}(x, y) = [0,1]$.
+    \label{def:intent}
+  \end{definition}
+
+  \bigskip
+  \textbf{Example:}
+  \begin{flushleft}
+    Question: When was Barack Obama born?
+  \end{flushleft}
+  \begin{flushleft}
+    Answer 1: 4. August 1961
+
+    Answer 2: Barack Obama was the 44th president of the USA.
+    
+    Answer 3: Either 04.08.1961 or 05.09.1962 I'm not sure. 
+  \end{flushleft}
+
+\end{frame}
+
 \section[ConRAG]{ConRAG}
+
+\begin{frame}{ConRAG}
+
+  \vfill
+  \begin{figure}
+    \includegraphics[width=0.8\textwidth]{Grafiken/System_Architecture.png}
+    \captionsetup{font={tiny}} % This line changes the caption font size
+    \caption{Overview of the Conversational-RAG System Architecture}
+  \end{figure}
+  \vfill
+
+\end{frame}
+
+\subsection*{Extract}
+\begin{frame}{Extract}
+
+  \begin{block}{Definition}
+    \textbf{(Extraction)} Given a set of documents $D$, extract the textual content $C_d$ of each document $d \in D$ and create a knowledge source $P$ based on $C_d$ of every document $d \in D$. 
+  \end{block}
+
+  \begin{columns}[T] % align columns
+    \begin{column}{.5\textwidth}
+      \textbf{Operations}
+      \begin{itemize}
+        \item Information Extraction
+        \begin{itemize}
+          \item Structured Extraction
+          \item Unstructured Extraction
+        \end{itemize}
+        \item Passage Extraction 
+        \begin{itemize}
+          \item Paragraphs
+          \item Snippets
+          \item Sliding Window
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+    
+    \begin{column}{.5\textwidth}
+      \textbf{Synthetic Data}
+      \begin{itemize}
+        \item Questions given Context
+        \item Question-Context-Answer Triples
+        \item Conversational Question-Context-Answer Histories
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection*{Retriever}
+\begin{frame}{Retriever - Overview}
+  \vfill
+
+  \begin{block}{Definition}
+    \textbf{(Retriever)} Given a contextualized question $q_c$ and a knowledge source $P$, retrieve the most relevant passages $p$ from $P$ and combine them in an evidence set $E$.
+  \end{block}
+
+  \begin{figure}
+    \includegraphics[width=\textwidth]{Grafiken/Retriever_Fields_of_Improvement.png}
+    \captionsetup{font={tiny}} % This line changes the caption font size
+    \caption{Retriever Relations}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Retriever - Index}
+  \begin{figure}
+    \includegraphics[width=0.4\textwidth]{Grafiken/Retriever_Index.png}
+  \end{figure}
+
+  \begin{block}{Fine-Tuning}
+    \begin{columns}
+      \begin{column}{.55\textwidth}
+        \begin{figure}
+          \includegraphics[width=0.9\textwidth]{Grafiken/Training.png}
+          \captionsetup{font={tiny}} % This line changes the caption font size
+          \caption{Fine-Tuning of the Retriever}
+        \end{figure}
+      \end{column}
+
+      \begin{column}{.45\textwidth}
+        \begin{itemize}
+          \item Use synthetic Q-A pairs
+          \item Adapt Retriever to Passage language and format 
+          \item Filter out incorrect synthetic pairs
+        \end{itemize}
+      \end{column}
+    \end{columns}
+  \end{block}
+  \vfill
+\end{frame}
+
+\begin{frame}{Retriever - Metadata}
+  \begin{figure}
+    \includegraphics[width=0.15\textwidth]{Grafiken/User_Retriever.png}
+  \end{figure}
+
+  \begin{block}{Metadata Filtering}
+
+
+\begin{columns}
+  \begin{column}{.4\textwidth}
+    \vfill
+    \small
+    \scalebox{0.7}{$
+        m_{\text{Ret}}(p|q_c) =
+        \begin{cases}
+                p \in E_m, & \bigcap\limits_{i=p_1}^{\substack{E_{q_c}}} M_{i} \subset M_p \\
+                p \notin E_m, & \bigcap\limits_{i=p_1}^{\substack{E_{q_c}}} M_{i} \not\subset M_p
+        \end{cases}
+    $}
+    \vfill
+    \normalsize
+  \end{column}
+  \begin{column}{.5\textwidth}
+    \textbf{Index Types:}
+    \begin{itemize}
+      \item Metadata Passage Integration
+      \item Separate Metadata Index
+      \item Hierarchical Index
+    \end{itemize}
+  \end{column}
+\end{columns}
+
+
+  \end{block}
+\end{frame}
+
+\begin{frame}{Retriever - Evidence Set}
+  \begin{figure}
+    \includegraphics[width=0.4\textwidth]{Grafiken/Retriever_Passages.png}
+  \end{figure}
+
+  \begin{block}
+    {Mixture-of-Experts}
+    \textbf{Approaches:}
+    \begin{itemize}
+      \item Re-Ranking
+      \item Ensemble
+    \end{itemize} 
+  \end{block}
+\end{frame}
+
+\subsection*{Reader}
+
+\begin{frame}
+  \frametitle{Reader - Challenges}
+
+  \begin{block}{Definition}
+    \textbf{(Reader)} Given a history $H$, a new question $q_{i+1}$ and a set of passages $E$, generate an answer $a$ to $q_{i+1}$ based on $E$, so that $\mathcal{I}(q_{i+1},a) = 1$.
+  \end{block}
+
+  \textbf{Challenges:}
+
+  \begin{enumerate}
+    \item Generate an answer $a$ based on $E_{q_c}$ that satisfies $\mathcal{I}(q_c, a) = 1$.
+    \item Identify the case for $E_{q_c}$ and determine $\hat{E}_{q_c} \subset E_{q_c}, \quad \mathcal{I}(q_c, \hat{E}_{q_c}) = 1$.
+    \item Identify ambiguous questions $q_{i}$ and determine a clarification question $a_{i}$ for the next turn $i+1$.
+    \item Ensure chatlike behavior, including contextual understanding and human-like conversation.
+  \end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Reader - Solutions}
+
+  \textbf{Solutions:}
+
+  \begin{enumerate}
+    \item Train the model with a dataset of varied question-context-answer triples where context is $\hat{E}_{q_c}$ and the question type varies.
+    \item Implement a passage identification mechanism in the Reader to overcome Transformer context window limitations and nonperfect evidence sets. Solutions:
+      \begin{itemize}
+          \item Re-Ranker: Re-rank $E_{q_c}$ before Reader processing.
+          \item Compression: Extract most relevant information from passage $p \in E_{q_c}$.
+          \item Multi-Retrieval: Perform multiple retrievals until evidence set $E_{q_c}$ is satisfactory.
+          \item Trained Reader: Train Reader on a dataset where $E_{q_c} \not= \hat{E}_{q_c}$.
+          \item Parametric Knowledge: Train Reader's Transformer on knowledge source $P$.
+      \end{itemize}
+  \end{enumerate}
+  
+\end{frame}
+
+\begin{frame}{Reader - Solutions (cont.)}
+
+  \textbf{Solutions (continued):}
+
+  \begin{enumerate}
+    \setcounter{enumi}{2}
+    \item Train on a dataset with question-context-answer-ambiguity quadruples to learn to identify and resolve ambiguous questions.
+    \item Fine-tune a Transformer model for human-like conversation using a human conversation history dataset $H$.
+  \end{enumerate}
+  
+\end{frame}
+
+
+\subsection*{Contextual Querry Understanding}
+
+\begin{frame}{Contextual Query Understanding}
+
+  \begin{block}{Definition}
+    \textbf{(CQU)} Given a history $H$ and a new question $q_{i+1}$, generate a contextualized question $q_c$ based on $H$, such that $\mathcal{I}(q_c,q_{i+1}) = 1$. 
+  \end{block}
+
+  \begin{equation*}
+    CQU(h_{i-k:i}, q_{i+1}) := q_c \mid \mathcal{I}(q_c, q_{i+1}) = 1
+  \end{equation*}
+
+  \bigskip
+
+  \begin{enumerate}
+    \item \textbf{K-many:} Consideration of the last $k$ turns.
+    \item \textbf{All:} Utilization of the entire history, $k = i - 1$.
+    \item \textbf{Memory:} Inclusion of not only the current history but also previous Sessions by this user.
+  \end{enumerate} 
+\end{frame}
 
 \section[Implementation]{Implementation}
 
+\subsection{Dataset}
+
+
+\begin{frame}{Dataset}
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \begin{figure}
+        \includegraphics[width=0.9\textwidth]{Grafiken/PO_german_Document Count per Faculty.png}
+        \captionsetup{font={tiny}} % This line changes the caption font size
+        \caption{Documents per Faculty - German ERs}
+      \end{figure}
+      \begin{figure}
+        \includegraphics[width=0.9\textwidth]{Grafiken/PO_english_Document Count per Faculty.png}
+        \captionsetup{font={tiny}} % This line changes the caption font size
+        \caption{Documents per Faculty - English ERs}
+      \end{figure}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{figure}
+        \includegraphics[width=0.9\textwidth]{Grafiken/DnC_PO.png}
+        \captionsetup{font={tiny}} % This line changes the caption font size
+        \caption{Example PDF of the Dataset}
+      \end{figure}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{Extract}
+
+\begin{frame}
+  \frametitle{Extract Statistics}
+
+  \begin{figure}
+    \includegraphics[width=0.5\textwidth]{Grafiken/IndexEnglish_Passages_Distribution.png}
+    \captionsetup{font={tiny}}
+    \caption{Passages per Document of the English Dataset}
+  \end{figure}
+
+  \begin{figure}
+    \includegraphics[width=0.5\textwidth]{Grafiken/IndexEnglish_Passage_Length_Statistics.png}
+    \captionsetup{font={tiny}}
+    \caption{Passage Length Distribution of the English Dataset} 
+  \end{figure}
+
+\end{frame}
+
+\subsection{Models}
+
+\begin{frame}{Used Models}
+  \begin{columns}[T] % Added [T] option for top alignment
+    \begin{column}{.5\textwidth}
+      \textbf{Retriever}
+      \begin{itemize}
+        \item BM25\footnotemark[1]
+          \begin{itemize}
+            \item k\_1 = 1.5, b = 0.75, c = 0.25
+          \end{itemize}
+        \item BM25 + CE
+          \begin{itemize}
+            \item English: \emph{ms-marco-MiniLM-L-6-v2}\footnotemark[2]
+            \item German: \emph{ms-marco-MiniLM-L-6-en-de-v1}\footnotemark[3]
+          \end{itemize}
+        \item Large DPR
+          \begin{itemize}
+            \item \emph{text-embedding-ada-002}\footnotemark[4]
+          \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \textbf{Reader}
+      \begin{itemize}
+        \item \emph{gpt-3.5-turbo} (approx. 175B)\footnotemark[5]
+        \item \emph{Llama2-7B-Chat-GPTQ}\footnotemark[6]
+        \item \emph{leo-hessianai-7B-chat-GPTQ}\footnotemark[7]
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 \section[Experiments]{Experiments}
 
-\section[Results]{Results}
+\subsection*{Evaluation Methods}
 
+\begin{frame}{Evaluation of RAG}
+    
+  \captionsetup{font={tiny}}
+  \begin{figure}
+    \includegraphics[width=\textwidth]{Grafiken/Evaluation_Dimensions_RAGAS_Turelens.png} 
+    \caption{Adapted Evaluation Aspects and Components by TruLens [TruLens, 2024]}
+  \end{figure}
+  
+\end{frame}
+
+\begin{frame}{Evaluation Metrics \& Approaches}
+  \begin{columns}[T] % Added [T] option for top alignment
+    \begin{column}{.5\textwidth}
+      \textbf{Metrics:}
+      \begin{itemize}
+        \item \textbf{Retriever:}
+          \begin{itemize}
+            \item Hit Rate (HR)
+            \item Mean Reciprocal Rank (MRR)
+          \end{itemize}
+        \item \textbf{Reader:}
+          \begin{itemize}
+            \item BLEU-1
+            \item ROUGE-L
+            \item F1-BERTScore
+            \item Accuracy
+            \begin{itemize}
+              \item LLM-based
+              \item Human-based
+            \end{itemize}
+          \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \textbf{End-to-End Approach:}
+      \begin{enumerate}
+        \item Human evaluator starts a context-dependent conversation.
+        \item Conversation lasts for 4-10 turns.
+        \item Post-conversation, RAG evaluation aspects are assessed turnwise using Knowledge Base, Evidence Set, and contextualized Query, including the \textit{Reason for Incorrectness}.
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\subsection{Limitations}
+
+\begin{frame}{Evaluation Limitations}
+
+  \textbf{Limiting Factors for auto single component Evaluation:}
+  \begin{itemize}
+    \item LLM Performance
+    \item Gold-Answer-Generation Performance
+    \item Generated Question Usefulness
+    \item Negative Rejection Evaluation
+    \item BLUE and ROUGE Metrics
+  \end{itemize}
+
+  \bigskip
+
+  \begin{block}{Conclusion}
+    Auto evaluation suits extractive questions due to question-context-answer structure. New methods are needed for abstractive and complex questions.
+  \end{block}
+    
+\end{frame}
+
+\subsection{End-to-End Evaluation}
+
+
+\begin{frame}{End-to-End Evaluation}
+
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \begin{itemize}
+        \item \alert<1>{Context Relevance}
+        \item Faithfulness
+        \item Noise Robustness
+        \item Negative Rejection
+        \item Answer Relevance
+      \end{itemize}
+    \end{column}
+
+    \begin{column}{.5\textwidth}
+      \centering
+
+      \includegraphics[width=0.9\textwidth]{Grafiken/Combined_Plots.png}
+      \captionsetup{font={tiny}} % This line changes the caption font size
+      \captionof{figure}{Reason for Incorrectness Distribution per Model}
+
+      \resizebox{0.9\textwidth}{!}{% Add this line
+        \begin{tabular}{lrr}
+          \toprule
+           & avg. Context Relevance & Count \\
+          Question Type &  &  \\
+          \midrule
+          Abstract & 0.404040 & 99 \\
+          Complex & 0.282051 & 39 \\
+          Factoid & 0.492308 & 195 \\
+          List & 0.833333 & 18 \\
+          Yes/No & 0.428571 & 14 \\
+          \bottomrule
+        \end{tabular}
+      }% And this line
+      \captionof{table}{Average Context Relevance per Question Type}
+      \label{tab:context-relevance-per-question-type}
+    \end{column}
+
+  \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{End-to-End Evaluation}
+
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \begin{itemize}
+        \item \alert<1>{Context Relevance}
+        \item Faithfulness
+        \item Noise Robustness
+        \item Negative Rejection
+        \item Answer Relevance
+      \end{itemize}
+    \end{column}
+
+    \begin{column}{.5\textwidth}
+      \centering
+
+      \includegraphics[width=0.9\textwidth]{Grafiken/Turns-Errors.png}
+      \captionsetup{font={tiny}} % This line changes the caption font size
+      \captionof{figure}{Reason for Incorrectness Distribution per Turn}
+   \end{column}
+
+  \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{End-to-End Evaluation}
+    \begin{itemize}
+      \item Context Relevance
+      \item \alert<1>{Faithfulness}
+      \item Noise Robustness
+      \item Negative Rejection
+      \item Answer Relevance
+    \end{itemize}
+
+    \begin{table}
+      \centering
+      \resizebox{\textwidth}{!}{%
+        \begin{tabular}{lrrrrrrr}
+          \toprule
+          & avg. Faithfullness & Count & avg. AR1* & Count & avg. AR\textgreater1** & Count & Negative Rejection Specificity\\
+          Model Language &  &  &  &  &  &  &  \\
+          \midrule
+          GPT-3.5-de & 0.892 & 93 & 0.692 & 26 & 0.654 & 13 & 0.607 \\
+          GPT-3.5-en & 0.908 & 98 & 0.550 & 20 & 0.613 & 8 & 0.826 \\
+          Llama2-7B-chat-en & 0.726 & 95 & 0.395 & 19 & 0.373 & 15 & 0.128 \\
+          leo-hessian-7B-chat-de & 0.620 & 92 & 0.300 & 23 & 0.200 & 24 & 0.467 \\
+          \bottomrule
+        \end{tabular}
+      }
+      \begin{tabular}{p{\textwidth}}
+        {\raggedright\tiny * \textit{AR1} stands for \textit{Answer Relevance} where the \textit{Context Position = 1}\par}
+        {\raggedright\tiny ** \textit{AR\textgreater1} stands for \textit{Answer Relevance} where the \textit{Context Position \textgreater 1}\par}
+      \end{tabular}
+      \vspace*{-5mm} % Adjust this value as needed
+      \captionsetup{font={tiny}} % This line changes the caption font size
+      \caption{Multiple Metrics per Model and Language}
+      \label{tab:average-faithfullness-and-context-relevance-per-model-language}
+    \end{table}
+
+\end{frame}
+
+
+\begin{frame}{End-to-End Evaluation}
+  \begin{itemize}
+    \item Context Relevance
+    \item Faithfulness
+    \item \alert<1>{Noise Robustness}
+    \item Negative Rejection
+    \item Answer Relevance
+  \end{itemize}
+
+  \begin{table}
+    \centering
+    \resizebox{\textwidth}{!}{%
+      \begin{tabular}{lrrrrrrr}
+        \toprule
+        & avg. Faithfullness & Count & avg. AR1* & Count & avg. AR\textgreater1** & Count & Negative Rejection Specificity\\
+        Model Language &  &  &  &  &  &  &  \\
+        \midrule
+        GPT-3.5-de & 0.892 & 93 & 0.692 & 26 & 0.654 & 13 & 0.607 \\
+        GPT-3.5-en & 0.908 & 98 & 0.550 & 20 & 0.613 & 8 & 0.826 \\
+        Llama2-7B-chat-en & 0.726 & 95 & 0.395 & 19 & 0.373 & 15 & 0.128 \\
+        leo-hessian-7B-chat-de & 0.620 & 92 & 0.300 & 23 & 0.200 & 24 & 0.467 \\
+        \bottomrule
+      \end{tabular}
+    }
+    \begin{tabular}{p{\textwidth}}
+      {\raggedright\tiny * \textit{AR1} stands for \textit{Answer Relevance} where the \textit{Context Position = 1}\par}
+      {\raggedright\tiny ** \textit{AR\textgreater1} stands for \textit{Answer Relevance} where the \textit{Context Position \textgreater 1}\par}
+    \end{tabular}
+    \vspace*{-5mm} % Adjust this value as needed
+    \captionsetup{font={tiny}} % This line changes the caption font size
+    \caption{Multiple Metrics per Model and Language}
+    \label{tab:average-faithfullness-and-context-relevance-per-model-language}
+  \end{table}
+\end{frame}
+
+
+\begin{frame}{End-to-End Evaluation}
+  \begin{itemize}
+    \item Context Relevance
+    \item Faithfulness
+    \item Noise Robustness
+    \item \alert<1>{Negative Rejection}
+    \item Answer Relevance
+  \end{itemize}
+
+  \begin{table}
+    \centering
+    \resizebox{\textwidth}{!}{%
+      \begin{tabular}{lrrrrrrr}
+        \toprule
+        & avg. Faithfullness & Count & avg. AR1* & Count & avg. AR\textgreater1** & Count & Negative Rejection Specificity\\
+        Model Language &  &  &  &  &  &  &  \\
+        \midrule
+        GPT-3.5-de & 0.892 & 93 & 0.692 & 26 & 0.654 & 13 & 0.607 \\
+        GPT-3.5-en & 0.908 & 98 & 0.550 & 20 & 0.613 & 8 & 0.826 \\
+        Llama2-7B-chat-en & 0.726 & 95 & 0.395 & 19 & 0.373 & 15 & 0.128 \\
+        leo-hessian-7B-chat-de & 0.620 & 92 & 0.300 & 23 & 0.200 & 24 & 0.467 \\
+        \bottomrule
+      \end{tabular}
+    }
+    \begin{tabular}{p{\textwidth}}
+      {\raggedright\tiny * \textit{AR1} stands for \textit{Answer Relevance} where the \textit{Context Position = 1}\par}
+      {\raggedright\tiny ** \textit{AR\textgreater1} stands for \textit{Answer Relevance} where the \textit{Context Position \textgreater 1}\par}
+    \end{tabular}
+    \vspace*{-5mm} % Adjust this value as needed
+    \captionsetup{font={tiny}} % This line changes the caption font size
+    \caption{Multiple Metrics per Model and Language}
+    \label{tab:average-faithfullness-and-context-relevance-per-model-language}
+  \end{table}
+
+\end{frame}
+
+
+\begin{frame}{End-to-End Evaluation}
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \begin{itemize}
+        \item Context Relevance
+        \item Faithfulness
+        \item Noise Robustness
+        \item Negative Rejection
+        \item \alert<1>{Answer Relevance}
+      \end{itemize}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \begin{table}[h]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{lll}
+          \toprule
+          Model-Language         & Number of Error-free turns & avg. Answer Relevance \\
+          \midrule
+          GPT-3.5-de             & 14 (20.59 \%)*              & 0.7786                \\
+          GPT-3.5-en             & 10 (17.54 \%)*              & 0.85                  \\
+          Llama2-7B-chat-en      & 3 (3.37 \%)*                & 0.7333                \\
+          leo-hessian-7B-chat-de & 8 (10.26 \%)*               & 0.825                 \\
+          \bottomrule
+          {\raggedright\footnotesize * The percentage compared to all turns}
+        \end{tabular}%
+        }
+        \captionsetup{font=tiny}
+        \caption{Error-free turns per Model and Language}
+        \label{tab:correct-turns-per-model}
+      \end{table}
+    \end{column}
+  \end{columns}
+
+  \begin{table}[h]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{lrrrrrrrrrrrrrr}
+        \toprule
+        & \multicolumn{2}{c}{GPT-3.5-de} & \multicolumn{2}{c}{GPT-3.5-en} & \multicolumn{2}{c}{Llama2-7B-chat-en} & \multicolumn{2}{c}{leo-hessian-7B-chat-de} \\
+        Question Type & avg. AR* & Count & avg. AR* & Count & avg. AR* & Count & avg. AR* & Count \\
+        \midrule
+        Abstract & \textbf{0.478} & 18 & 0.421 & 14 & 0.200 & 31 & 0.258 & 12 \\
+        Complex & \textbf{0.327} & 11 & 0.263 & 8 & 0.000 & 5 & 0.167 & 3 \\
+        Factoid & 0.435 & 31 & \textbf{0.477} & 26 & 0.323 & 40 & 0.154 & 52 \\
+        List & 0.550 & 4 & 0.467 & 6 & \textbf{0.600} & 2 & 0.225 & 4 \\
+        Yes/No & \textbf{0.500} & 2 & 0.200 & 2 & 0.067 & 3 & 0.420 & 5 \\
+        \bottomrule
+    \end{tabular}%
+    }
+    {\raggedright\tiny * \textit{AR} stands for \textit{Answer Relevance}\par}
+    \captionsetup{font=tiny}
+    \caption{Answer Relevance per Model, Language and Question Type}
+    \label{tab:answer-relevance-per-model}
+  \end{table}
+\end{frame}
+
+\section[Conclusion]{Conclusion}
+
+
+\begin{frame}{Conclusion}
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \textbf{Contributions:}
+      \begin{itemize}
+        \item Decision map for ConRAG-System
+        \item Operations-based extraction
+        \item Approaches to improve reader and retriever
+        \item Limitations of synthetic auto component-wise evaluation
+        \item Evaluation approaches for end-to-end RAG evaluation
+      \end{itemize}
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \textbf{Future Work:}
+      \begin{itemize}
+        \item Feasibility of ConQA Systems
+        \item Constrained System Design
+        \item Improving the Retriever
+        \item PDF Data Extraction
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\section*{Backup}
+
+\subsection*{Backup}
+
+\begin{frame}{Backup - Model links}
+  \begin{itemize}
+    \item \url{https://github.com/dorianbrown/rank_bm25}
+    \item \url{https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-6-v2}
+    \item \url{https://huggingface.co/cross-encoder/msmarco-MiniLM-L6-en-de-v1}
+    \item \url{https://platform.openai.com/docs/models/embeddings}
+    \item \url{https://platform.openai.com/docs/models/gpt-3-5}
+    \item \url{https://huggingface.co/TheBloke/Llama-2-7b-Chat-GPTQ}
+    \item \url{https://huggingface.co/TheBloke/leo-hessianai-7B-chat-GPTQ}
+  \end{itemize}
+\end{frame}
 % \section[Structure]{Page Structure}
 
 % \subsection{Enumerations}
