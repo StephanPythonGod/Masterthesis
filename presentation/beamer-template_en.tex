@@ -27,7 +27,7 @@
 \institute[Uni HD]{
 Heidelberg University\\
 Institute of Computer Science\\
-Database Systems Research Group\\
+Data Science\\
 \color{unirot}{stephan.lenert@stud.uni-heidelberg.de}}
 
 %---------------------------------------%
@@ -77,7 +77,7 @@ Database Systems Research Group\\
 \frame{
 \frametitle{Generative-only QA-Systems}
 
-  {\color{unirot}Issues of generative-only QA-systems:}
+  {\color{unirot}Issues of generative-only Question Answering (QA)-systems:}
   \begin{itemize}
     \item Parameterized Knowledge
     \item Explainability
@@ -96,72 +96,48 @@ Database Systems Research Group\\
 
   \begin{overprint}
   \onslide<1>
-    \begin{columns}[t]
-    \begin{column}{.5\textwidth}
-    {\color{unirot}Research Papers}
-    \begin{itemize}
-      \item Feng, 2021
-      \begin{itemize}
-        \item Utilizes visual document question answering
-        \item Uses extractive Readers, not the latest LLMs
-      \end{itemize}
-    \end{itemize}
-    \end{column}
 
+    \begin{table}
+      \renewcommand{\arraystretch}{1.5} % Add more vertical spacing to the table
+      \resizebox{\textwidth}{!}{%
+      \begin{tabular}{|l|l|l|l|}
+      \hline
+      \textbf{Author/Organisation} & \textbf{Type} & \textbf{Publication Date} & \textbf{Drawbacks} \\ \hline
+      Song Feng & Research Paper & 2021 & \begin{tabular}[c]{@{}l@{}}- Uses visual QA methods\\- Not latest LLMs\end{tabular} \\ \hline
+      Langchain & Opensource Project & 2023 & \begin{tabular}[c]{@{}l@{}}- Bound to explicit RAG\\- Limited tool options \end{tabular}\\ \hline
+      OpenAI Plugins & \begin{tabular}[c]{@{}l@{}}Commercial Tool\\ + Opensource Repository\end{tabular} & 2023 & \begin{tabular}[c]{@{}l@{}}- Same as Langchain\\- Limited to ChatGPT\end{tabular} \\ \hline
+      \end{tabular}%
+      }
+      \captionsetup{font={tiny}} % This line changes the caption font size
+      \caption{Sources for building a holistic use-case specific QA-system}
+      \label{tab:sources}
+    \end{table}
 
-    \begin{column}{.5\textwidth}
-    {\color{unirot}Frameworks} 
-    \begin{itemize}
-      \item Langchain
-      \begin{itemize}
-        \item Bound to explicit RAG approaches
-        \item Limited to predefined Extraction, Retriever and Index Tools 
-      \end{itemize}
-      \item OpenAI Plugins
-        \begin{itemize}
-          \item Same as Langchain
-          \item Limited to ChatGPT
-        \end{itemize}
-    \end{itemize}
-    \end{column}
-
-    \end{columns}
     \vfill
   \onslide<2>
-      \begin{columns}[t]
-        \begin{column}{.5\textwidth}
-        {\color{unirot}Research Papers}
-        \begin{itemize}
-          \item Feng, 2021
-          \begin{itemize}
-            \item Utilizes visual document question answering
-            \item Uses extractive Readers, not the latest LLMs
-          \end{itemize}
-        \end{itemize}
-        \end{column}
-    
-    
-        \begin{column}{.5\textwidth}
-        {\color{unirot}Frameworks} 
-        \begin{itemize}
-          \item Langchain
-          \begin{itemize}
-            \item Bound to explicit RAG approaches
-            \item Limited to predefined Extraction, Retriever and Index Tools 
-          \end{itemize}
-          \item OpenAI Plugins
-            \begin{itemize}
-              \item Same as Langchain
-              \item Limited to ChatGPT
-            \end{itemize}
-        \end{itemize}
-        \end{column}
-    
-        \end{columns}
-        \vfill
+        
+    \begin{table}
+      \renewcommand{\arraystretch}{1.5} % Add more vertical spacing to the table
+      \resizebox{\textwidth}{!}{%
+      \begin{tabular}{|l|l|l|l|}
+      \hline
+      \textbf{Author/Organisation} & \textbf{Type} & \textbf{Publication Date} & \textbf{Drawbacks} \\ \hline
+      Song Feng & Research Paper & 2021 & \begin{tabular}[c]{@{}l@{}}- Uses visual QA methods\\- Not latest LLMs\end{tabular} \\ \hline
+      Langchain & Opensource Project & 2023 & \begin{tabular}[c]{@{}l@{}}- Bound to explicit RAG\\- Limited tool options \end{tabular}\\ \hline
+      OpenAI Plugins & \begin{tabular}[c]{@{}l@{}}Commercial Tool\\ + Opensource Repository\end{tabular} & 2023 & \begin{tabular}[c]{@{}l@{}}- Same as Langchain\\- Limited to ChatGPT\end{tabular} \\ \hline
+      \end{tabular}%
+      }
+      \captionsetup{font={tiny}} % This line changes the caption font size
+      \caption{Sources for building a holistic use-case specific QA-system}
+      \label{tab:sources}
+    \end{table}
+
+    \vfill
+
     \begin{block}{There exists a Research Gap ...}
     No research work explores the use-case specific implementation of conversational question answering systems.
     \end{block}
+
   \end{overprint}
 }
 
@@ -314,7 +290,7 @@ Database Systems Research Group\\
   \begin{figure}
     \includegraphics[width=\textwidth]{Grafiken/conrag_konzeptionell.png}
     \captionsetup{font={tiny}} % This line changes the caption font size
-    \caption{System Architecture in the context of mathematical model $\mathbf{M}$}
+    \caption{Abstract System Architecture $\mathbf{M}$}
   \end{figure}
   
 \end{frame}
@@ -341,13 +317,13 @@ Database Systems Research Group\\
 
 \end{frame}
 
-\section[ConRAG]{ConRAG}
+\section[ConRAG]{Conversationl RAG}
 
-\begin{frame}{ConRAG}
+\begin{frame}{Conversational RAG}
 
   \vfill
   \begin{figure}
-    \includegraphics[width=0.8\textwidth]{Grafiken/System_Architecture.png}
+    \includegraphics[width=0.9\textwidth]{Grafiken/System_Architecture.png}
     \captionsetup{font={tiny}} % This line changes the caption font size
     \caption{Overview of the Conversational-RAG System Architecture}
   \end{figure}
@@ -364,7 +340,7 @@ Database Systems Research Group\\
 
   \begin{columns}[T] % align columns
     \begin{column}{.5\textwidth}
-      \textbf{Operations}
+      {\color{unirot}Operations}
       \begin{itemize}
         \item Information Extraction
         \begin{itemize}
@@ -381,7 +357,7 @@ Database Systems Research Group\\
     \end{column}
     
     \begin{column}{.5\textwidth}
-      \textbf{Synthetic Data}
+      {\color{unirot}Synthetic Data}
       \begin{itemize}
         \item Questions given Context
         \item Question-Context-Answer Triples
@@ -607,35 +583,81 @@ Database Systems Research Group\\
 \subsection{Models}
 
 \begin{frame}{Used Models}
-  \begin{columns}[T] % Added [T] option for top alignment
-    \begin{column}{.5\textwidth}
-      \textbf{Retriever}
-      \begin{itemize}
-        \item BM25\footnotemark[1]
-          \begin{itemize}
-            \item k\_1 = 1.5, b = 0.75, c = 0.25
-          \end{itemize}
-        \item BM25 + CE
-          \begin{itemize}
-            \item English: \emph{ms-marco-MiniLM-L-6-v2}\footnotemark[2]
-            \item German: \emph{ms-marco-MiniLM-L-6-en-de-v1}\footnotemark[3]
-          \end{itemize}
-        \item Large DPR
-          \begin{itemize}
-            \item \emph{text-embedding-ada-002}\footnotemark[4]
-          \end{itemize}
-      \end{itemize}
-    \end{column}
-    \begin{column}{.5\textwidth}
-      \textbf{Reader}
-      \begin{itemize}
-        \item \emph{gpt-3.5-turbo} (approx. 175B)\footnotemark[5]
-        \item \emph{Llama2-7B-Chat-GPTQ}\footnotemark[6]
-        \item \emph{leo-hessianai-7B-chat-GPTQ}\footnotemark[7]
-      \end{itemize}
-    \end{column}
-  \end{columns}
+
+  \begin{center}
+    {\color{unirot}Retriever}
+  
+    \begin{table}[]
+      \scriptsize
+      \renewcommand{\arraystretch}{1.5} % Add more vertical spacing to the table
+      \begin{tabular}{|l|l|}
+      \hline
+      \textbf{Model} & \textbf{Notes} \\ \hline
+      \textit{BM25}\footnotemark[1] & $k_1$ = 1.5, b = 0.75, c = 0.25 \\ \hline
+      % \textit{BM25 + CE} & English: \emph{ms-marco-MiniLM-L-6-v2}\footnotemark[2], German: \emph{ms-marco-MiniLM-L-6-en-de-v1}\footnotemark[3] \\ \hline
+      \textit{BM25 + CE} & \begin{tabular}{@{}l@{}}
+                            English: \emph{ms-marco-MiniLM-L-6-v2}\footnotemark[2] \\
+                            German: \emph{ms-marco-MiniLM-L-6-en-de-v1}\footnotemark[3]
+                          \end{tabular} \\ \hline
+      \textit{Large DPR} & English/German: \emph{text-embedding-ada-002}\footnotemark[4] \\ \hline
+      \end{tabular}
+      \captionsetup{font={tiny}}
+      \caption{Used Retriever Models}
+      \label{tab:retriever-models}
+    \end{table}
+  \end{center}
+
+  \begin{center}
+    {\color{unirot}Reader}
+    \begin{table}[]
+      \scriptsize
+      \renewcommand{\arraystretch}{1.5} % Add more vertical spacing to the table
+      \begin{tabular}{|l|l|}
+      \hline
+      \textbf{Model} & \textbf{Parameters} \\ \hline
+      \textit{GPT-3.5-turbo}\footnotemark[5] & Approx. 175B \\ \hline
+      \textit{Llama2-7B-chat-GPTQ}\footnotemark[6] & 7B \\ \hline
+      \textit{leo-hessianai-7B-chat-GPTQ}\footnotemark[7] & 7B \\ \hline
+      \end{tabular}
+      \captionsetup{font={tiny}}
+      \caption{Used Reader Models}
+      \label{tab:reader-models}
+    \end{table}
+  \end{center}
+
 \end{frame}
+
+
+% \begin{frame}{Used Models}
+%   \begin{columns}[T] % Added [T] option for top alignment
+%     \begin{column}{.5\textwidth}
+%       \textbf{Retriever}
+%       \begin{itemize}
+%         \item BM25\footnotemark[1]
+%           \begin{itemize}
+%             \item k\_1 = 1.5, b = 0.75, c = 0.25
+%           \end{itemize}
+%         \item BM25 + CE
+%           \begin{itemize}
+%             \item English: \emph{ms-marco-MiniLM-L-6-v2}\footnotemark[2]
+%             \item German: \emph{ms-marco-MiniLM-L-6-en-de-v1}\footnotemark[3]
+%           \end{itemize}
+%         \item Large DPR
+%           \begin{itemize}
+%             \item \emph{text-embedding-ada-002}\footnotemark[4]
+%           \end{itemize}
+%       \end{itemize}
+%     \end{column}
+%     \begin{column}{.5\textwidth}
+%       \textbf{Reader}
+%       \begin{itemize}
+%         \item \emph{gpt-3.5-turbo} (approx. 175B)\footnotemark[5]
+%         \item \emph{Llama2-7B-Chat-GPTQ}\footnotemark[6]
+%         \item \emph{leo-hessianai-7B-chat-GPTQ}\footnotemark[7]
+%       \end{itemize}
+%     \end{column}
+%   \end{columns}
+% \end{frame}
 
 \section[Experiments]{Experiments}
 
@@ -653,19 +675,19 @@ Database Systems Research Group\\
 
 \begin{frame}{Evaluation Metrics \& Approaches}
   \begin{columns}[T] % Added [T] option for top alignment
-    \begin{column}{.5\textwidth}
-      \textbf{Metrics:}
+    \begin{column}{.55\textwidth}
+      {\color{unirot}Metrics}
       \begin{itemize}
         \item \textbf{Retriever:}
           \begin{itemize}
-            \item Hit Rate (HR)
-            \item Mean Reciprocal Rank (MRR)
+            \item Hit Rate 
+            \item Mean Reciprocal Rank
           \end{itemize}
         \item \textbf{Reader:}
           \begin{itemize}
             \item BLEU-1
             \item ROUGE-L
-            \item F1-BERTScore
+            \item F1-BERTScore\footnotemark[8]
             \item Accuracy
             \begin{itemize}
               \item LLM-based
@@ -674,8 +696,8 @@ Database Systems Research Group\\
           \end{itemize}
       \end{itemize}
     \end{column}
-    \begin{column}{.5\textwidth}
-      \textbf{End-to-End Approach:}
+    \begin{column}{.45\textwidth}
+      {\color{unirot}End-to-End Approach}
       \begin{enumerate}
         \item Human evaluator starts a context-dependent conversation.
         \item Conversation lasts for 4-10 turns.
@@ -951,7 +973,7 @@ Database Systems Research Group\\
 \begin{frame}{Conclusion}
   \begin{columns}[T]
     \begin{column}{.5\textwidth}
-      \textbf{Contributions:}
+      {\color{unirot}Contributions}
       \begin{itemize}
         \item Decision map for ConRAG-System
         \item Operations-based extraction
@@ -961,7 +983,7 @@ Database Systems Research Group\\
       \end{itemize}
     \end{column}
     \begin{column}{.5\textwidth}
-      \textbf{Future Work:}
+      {\color{unirot}Future Work}
       \begin{itemize}
         \item Feasibility of ConQA Systems
         \item Constrained System Design
@@ -978,7 +1000,8 @@ Database Systems Research Group\\
 \subsection*{Backup}
 
 \begin{frame}{Backup - Model links}
-  \begin{itemize}
+  \tiny{
+  \begin{enumerate}
     \item \url{https://github.com/dorianbrown/rank_bm25}
     \item \url{https://huggingface.co/cross-encoder/ms-marco-MiniLM-L-6-v2}
     \item \url{https://huggingface.co/cross-encoder/msmarco-MiniLM-L6-en-de-v1}
@@ -986,7 +1009,9 @@ Database Systems Research Group\\
     \item \url{https://platform.openai.com/docs/models/gpt-3-5}
     \item \url{https://huggingface.co/TheBloke/Llama-2-7b-Chat-GPTQ}
     \item \url{https://huggingface.co/TheBloke/leo-hessianai-7B-chat-GPTQ}
-  \end{itemize}
+    \item \url{https://huggingface.co/spaces/evaluate-metric/bertscore}
+  \end{enumerate}
+  }
 \end{frame}
 % \section[Structure]{Page Structure}
 

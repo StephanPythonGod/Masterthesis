@@ -1,4 +1,7 @@
+\beamer@slide {tab:sources}{7}
 \beamer@slide {def:intent}{20}
+\beamer@slide {tab:retriever-models}{35}
+\beamer@slide {tab:reader-models}{35}
 \beamer@slide {tab:context-relevance-per-question-type}{40}
 \beamer@slide {tab:average-faithfullness-and-context-relevance-per-model-language}{42}
 \beamer@slide {tab:average-faithfullness-and-context-relevance-per-model-language}{43}
