@@ -169,65 +169,22 @@ Data Science\\
 
 
 \section[Fundamentals]{Fundamental Concepts}
-
-\begin{frame}
-  \frametitle{Natural Language QA}
-
-  \begin{figure}
-    \includegraphics[width=\textwidth]{Grafiken/Retriever_Reader.png}
-    \captionsetup{font={tiny}} % This line changes the caption font size
-    \caption{Reader-Retriever-System Architecture for QA by Zhu et al. [Zhu et al., 2021]}
-  \end{figure}
-
-\end{frame}
-
-\begin{frame}
-  \frametitle{Retriever and Reader}
-
-  % Create two rows retriever and reader
-  \begin{columns}[t]
-    \begin{column}{.5\textwidth}
-    {\color{unirot}Retriever}
-    \begin{itemize}
-      \item Retrieves relevant documents given a query
-      \item Existing approaches
-      \begin{itemize}
-        \item Sparse Retrieval
-        \item Dense Retrieval
-        \item Iterative Retrieval
-      \end{itemize}
-    \end{itemize}
-    \end{column}
-    \begin{column}{.5\textwidth}
-    {\color{unirot}Reader}
-    \begin{itemize}
-      \item Extracts answers from evidence set given a query
-      \item Existing approaches
-      \begin{itemize}
-        \item Extractive
-        \item Generative
-      \end{itemize}
-    \end{itemize}
-    \end{column}
-  \end{columns}
-
-\end{frame}
-
 \begin{frame}
   \frametitle{Retrieval-Augmented Generation}
 
   \begin{figure}
-    \includegraphics[width=\textwidth]{Grafiken/RAG-Figure1.png}
+    \includegraphics[width=\textwidth]{Grafiken/rag-process.png}
     \captionsetup{font={tiny}} % This line changes the caption font size
-    \caption{RAG by Lewis et al. [Lewis et al., 2020b]}
+    \caption{RAG by Gao et al. [Gao et al., 2024]}
+    % \caption{RAG by Lewis et al. [Lewis et al., 2020b]}
   \end{figure}
 
-  RAG:
-  \begin{itemize}
-    \item Extends parametric knowledge of generator by non-parametric retrieved evidences
-    \item Originally proposed as end-to-end training
-    \item Modern RAG implementations use explicit evidence sets
-  \end{itemize}
+  % RAG:
+  % \begin{itemize}
+  %   \item Extends parametric knowledge of generator by non-parametric retrieved evidences
+  %   \item Originally proposed as end-to-end training
+  %   \item Modern RAG implementations use explicit evidence sets
+  % \end{itemize}
   
 \end{frame}
 
@@ -259,6 +216,28 @@ Data Science\\
 
 \end{frame}
 
+\begin{frame}{Intent}
+  
+  \begin{definition}
+    \textbf{(Intent)} Given two elements, which either can be questions, answers or passages, there exists an operation Intent $\mathcal{I}(x, y)$. This operation returns a value between 0 and 1, which indicates the overlap of the two intents of $x$ and $y$, $\mathcal{I}(x, y) = [0,1]$.
+    \label{def:intent}
+  \end{definition}
+
+  \bigskip
+  \textbf{Example:}
+  \begin{flushleft}
+    Question: When was Barack Obama born?
+  \end{flushleft}
+  \begin{flushleft}
+    Answer 1: 4. August 1961
+
+    Answer 2: Barack Obama was the 44th president of the USA.
+    
+    Answer 3: Either 04.08.1961 or 05.09.1962 I'm not sure. 
+  \end{flushleft}
+
+\end{frame}
+
 \section[Problem Statement]{Problem Statement}
 
 \begin{frame}{QA-System}
@@ -285,37 +264,7 @@ Data Science\\
   \end{enumerate}
 \end{frame}
 
-\begin{frame}{Problem Definition}
 
-  \begin{figure}
-    \includegraphics[width=\textwidth]{Grafiken/conrag_konzeptionell.png}
-    \captionsetup{font={tiny}} % This line changes the caption font size
-    \caption{Abstract System Architecture $\mathbf{M}$}
-  \end{figure}
-  
-\end{frame}
-
-\begin{frame}{Definition Intent}
-  
-  \begin{definition}
-    \textbf{(Intent)} Given two elements, which either can be questions, answers or passages, there exists an operation Intent $\mathcal{I}(x, y)$. This operation returns a value between 0 and 1, which indicates the overlap of the two intents of $x$ and $y$, $\mathcal{I}(x, y) = [0,1]$.
-    \label{def:intent}
-  \end{definition}
-
-  \bigskip
-  \textbf{Example:}
-  \begin{flushleft}
-    Question: When was Barack Obama born?
-  \end{flushleft}
-  \begin{flushleft}
-    Answer 1: 4. August 1961
-
-    Answer 2: Barack Obama was the 44th president of the USA.
-    
-    Answer 3: Either 04.08.1961 or 05.09.1962 I'm not sure. 
-  \end{flushleft}
-
-\end{frame}
 
 \section[ConRAG]{Conversationl RAG}
 
@@ -460,78 +409,9 @@ Data Science\\
   \end{block}
 \end{frame}
 
-\subsection*{Reader}
+% \subsection*{Reader}
 
-\begin{frame}
-  \frametitle{Reader - Challenges}
-
-  \begin{block}{Definition}
-    \textbf{(Reader)} Given a history $H$, a new question $q_{i+1}$ and a set of passages $E$, generate an answer $a$ to $q_{i+1}$ based on $E$, so that $\mathcal{I}(q_{i+1},a) = 1$.
-  \end{block}
-
-  \textbf{Challenges:}
-
-  \begin{enumerate}
-    \item Generate an answer $a$ based on $E_{q_c}$ that satisfies $\mathcal{I}(q_c, a) = 1$.
-    \item Identify the case for $E_{q_c}$ and determine $\hat{E}_{q_c} \subset E_{q_c}, \quad \mathcal{I}(q_c, \hat{E}_{q_c}) = 1$.
-    \item Identify ambiguous questions $q_{i}$ and determine a clarification question $a_{i}$ for the next turn $i+1$.
-    \item Ensure chatlike behavior, including contextual understanding and human-like conversation.
-  \end{enumerate}
-
-\end{frame}
-
-\begin{frame}{Reader - Solutions}
-
-  \textbf{Solutions:}
-
-  \begin{enumerate}
-    \item Train the model with a dataset of varied question-context-answer triples where context is $\hat{E}_{q_c}$ and the question type varies.
-    \item Implement a passage identification mechanism in the Reader to overcome Transformer context window limitations and nonperfect evidence sets. Solutions:
-      \begin{itemize}
-          \item Re-Ranker: Re-rank $E_{q_c}$ before Reader processing.
-          \item Compression: Extract most relevant information from passage $p \in E_{q_c}$.
-          \item Multi-Retrieval: Perform multiple retrievals until evidence set $E_{q_c}$ is satisfactory.
-          \item Trained Reader: Train Reader on a dataset where $E_{q_c} \not= \hat{E}_{q_c}$.
-          \item Parametric Knowledge: Train Reader's Transformer on knowledge source $P$.
-      \end{itemize}
-  \end{enumerate}
-  
-\end{frame}
-
-\begin{frame}{Reader - Solutions (cont.)}
-
-  \textbf{Solutions (continued):}
-
-  \begin{enumerate}
-    \setcounter{enumi}{2}
-    \item Train on a dataset with question-context-answer-ambiguity quadruples to learn to identify and resolve ambiguous questions.
-    \item Fine-tune a Transformer model for human-like conversation using a human conversation history dataset $H$.
-  \end{enumerate}
-  
-\end{frame}
-
-
-\subsection*{Contextual Querry Understanding}
-
-\begin{frame}{Contextual Query Understanding}
-
-  \begin{block}{Definition}
-    \textbf{(CQU)} Given a history $H$ and a new question $q_{i+1}$, generate a contextualized question $q_c$ based on $H$, such that $\mathcal{I}(q_c,q_{i+1}) = 1$. 
-  \end{block}
-
-  \begin{equation*}
-    CQU(h_{i-k:i}, q_{i+1}) := q_c \mid \mathcal{I}(q_c, q_{i+1}) = 1
-  \end{equation*}
-
-  \bigskip
-
-  \begin{enumerate}
-    \item \textbf{K-many:} Consideration of the last $k$ turns.
-    \item \textbf{All:} Utilization of the entire history, $k = i - 1$.
-    \item \textbf{Memory:} Inclusion of not only the current history but also previous Sessions by this user.
-  \end{enumerate} 
-\end{frame}
-
+% \subsection*{Contextual Querry Understanding}
 \section[Implementation]{Implementation}
 
 \subsection{Dataset}
@@ -1015,394 +895,127 @@ Data Science\\
 \end{frame}
 % \section[Structure]{Page Structure}
 
-% \subsection{Enumerations}
-
-
-% \frame{
-% \frametitle{Enumerations}
-
-% \begin{itemize}
-% \item Item
-% \begin{itemize}
-%   \item Subitem 1
-%   \item Subitem 2
-%   \item Subitem 3
-% \end{itemize}
-% \item Another main item
-% \item And yet another one
-% \begin{itemize}
-%   \item \ldots with subitem
-% \end{itemize}
-% \end{itemize}
-% } % END OF FRAME
-
-% %----------------------------------------
-
-% \frame{
-% \frametitle{Enumerations / 2}
-
-% \begin{itemize}
-% \item Item
-% \medskip
-% \begin{itemize}
-%   \item Subitem 1
-%   \medskip
-%   \item Subitem 2
-%   \medskip
-%   \item Subitem 3
-% \end{itemize}
-% \bigskip
-% \item And another item
-% \bigskip
-% \item And yet another one
-% \medskip
-% \begin{itemize}
-%   \item again with subitem
-% \end{itemize}
-% \end{itemize}
-% } % END OF FRAME
-
-% %----------------------------------------
-
-% \frame[t]{
-% \frametitle{Enumerations / 3}
-
-% \begin{itemize}
-% \item Main item with 3 subitems
-% \begin{itemize}
-%   \item[(a)] Subitem 1
-%   \item[(b)] Subitem 2
-%   \item[(c)] Subitem 3
-% \end{itemize}
-% \item And another item
-% \item And yet another one
-% \begin{itemize}
-%   \item \ldots again with subitem 
-% \end{itemize}
-% \end{itemize}
-% } % END OF FRAME
-
-% %========================================
-
-% \subsection{Rows}
-
-
-% \frame{
-% \frametitle{Rows}
-
-% \begin{columns}[t]
-% \begin{column}{.5\textwidth}
-% {\color{unirot}Advantages}
-% \begin{itemize}
-%   \item There are many
-%   \item and more
-%   \item and even more
-%   \item and a last advantage
-% \end{itemize}
-% \end{column}
-
-
-% \begin{column}{.5\textwidth}
-% {\color{unirot}Disadvantages} 
-% \begin{itemize}
-%   \item There is only one 
-%   \item or two
-% \end{itemize}
-% \end{column}
-
-% \end{columns}
-% \vfill
-% } % END OF FRAME
-
-% %----------------------------------------
-
-% \frame{
-% \frametitle{Rows / 2}
+\begin{frame}
+  \frametitle{Backup - Natural Language QA}
+
+  \begin{figure}
+    \includegraphics[width=\textwidth]{Grafiken/Retriever_Reader.png}
+    \captionsetup{font={tiny}} % This line changes the caption font size
+    \caption{Reader-Retriever-System Architecture for QA by Zhu et al. [Zhu et al., 2021]}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Backup - Retriever and Reader}
+
+  % Create two rows retriever and reader
+  \begin{columns}[t]
+    \begin{column}{.5\textwidth}
+    {\color{unirot}Retriever}
+    \begin{itemize}
+      \item Retrieves relevant documents given a query
+      \item Existing approaches
+      \begin{itemize}
+        \item Sparse Retrieval
+        \item Dense Retrieval
+        \item Iterative Retrieval
+      \end{itemize}
+    \end{itemize}
+    \end{column}
+    \begin{column}{.5\textwidth}
+    {\color{unirot}Reader}
+    \begin{itemize}
+      \item Extracts answers from evidence set given a query
+      \item Existing approaches
+      \begin{itemize}
+        \item Extractive
+        \item Generative
+      \end{itemize}
+    \end{itemize}
+    \end{column}
+  \end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Backup - Problem Definition}
+
+  \begin{figure}
+    \includegraphics[width=\textwidth]{Grafiken/conrag_konzeptionell.png}
+    \captionsetup{font={tiny}} % This line changes the caption font size
+    \caption{Abstract System Architecture $\mathbf{M}$}
+  \end{figure}
+  
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Backup - Reader - Challenges}
+
+  \begin{block}{Definition}
+    \textbf{(Reader)} Given a history $H$, a new question $q_{i+1}$ and a set of passages $E$, generate an answer $a$ to $q_{i+1}$ based on $E$, so that $\mathcal{I}(q_{i+1},a) = 1$.
+  \end{block}
+
+  \textbf{Challenges:}
+
+  \begin{enumerate}
+    \item Generate an answer $a$ based on $E_{q_c}$ that satisfies $\mathcal{I}(q_c, a) = 1$.
+    \item Identify the case for $E_{q_c}$ and determine $\hat{E}_{q_c} \subset E_{q_c}, \quad \mathcal{I}(q_c, \hat{E}_{q_c}) = 1$.
+    \item Identify ambiguous questions $q_{i}$ and determine a clarification question $a_{i}$ for the next turn $i+1$.
+    \item Ensure chatlike behavior, including contextual understanding and human-like conversation.
+  \end{enumerate}
+
+\end{frame}
+
+\begin{frame}{Backup - Reader - Solutions}
+
+  \textbf{Solutions:}
+
+  \begin{enumerate}
+    \item Train the model with a dataset of varied question-context-answer triples where context is $\hat{E}_{q_c}$ and the question type varies.
+    \item Implement a passage identification mechanism in the Reader to overcome Transformer context window limitations and nonperfect evidence sets. Solutions:
+      \begin{itemize}
+          \item Re-Ranker: Re-rank $E_{q_c}$ before Reader processing.
+          \item Compression: Extract most relevant information from passage $p \in E_{q_c}$.
+          \item Multi-Retrieval: Perform multiple retrievals until evidence set $E_{q_c}$ is satisfactory.
+          \item Trained Reader: Train Reader on a dataset where $E_{q_c} \not= \hat{E}_{q_c}$.
+          \item Parametric Knowledge: Train Reader's Transformer on knowledge source $P$.
+      \end{itemize}
+  \end{enumerate}
+  
+\end{frame}
+
+\begin{frame}{Backup - Reader - Solutions (cont.)}
+
+  \textbf{Solutions (continued):}
+
+  \begin{enumerate}
+    \setcounter{enumi}{2}
+    \item Train on a dataset with question-context-answer-ambiguity quadruples to learn to identify and resolve ambiguous questions.
+    \item Fine-tune a Transformer model for human-like conversation using a human conversation history dataset $H$.
+  \end{enumerate}
+  
+\end{frame}
 
-% \begin{columns}[b]
-% \begin{column}{.5\textwidth}
-% {\color{unirot}Advantages}
-% \begin{itemize}
-%    \item There are many
-%   \item and more
-%   \item and even more
-%   \item and a last advantage
-% \end{itemize}
-% \end{column}
-
 
-% \begin{column}{.5\textwidth}
-% {\color{unirot}Disadvantages} 
-% \begin{itemize}
-%   \item There is only one 
-%   \item or two
-% \end{itemize}
-% \end{column}
+\begin{frame}{Backup - Contextual Query Understanding}
 
-% \end{columns}
-% \vfill
-% } % END OF FRAME
-
-% %========================================
-
-% \subsection{Blocks}
-
-
-% \frame{
-% \frametitle{Blocks}
-
-% \begin{block}{\centering Definition of x}
-% x is an important parameter for any type of text.
-% \end{block}
-
-% \medskip
-% \begin{block}{\centering Steps}
-% \begin{itemize}
-%   \item[(1)] Practice
-%   \item[(2)] Practice
-%   \item[(3)] Practice
-% \end{itemize}
-% \end{block}
-
-% \medskip
-% \begin{block}{}
-% \centering
-
-% A block does not require a title.
-% \end{block}
-
-% } % END OF FRAME
-
+  \begin{block}{Definition}
+    \textbf{(CQU)} Given a history $H$ and a new question $q_{i+1}$, generate a contextualized question $q_c$ based on $H$, such that $\mathcal{I}(q_c,q_{i+1}) = 1$. 
+  \end{block}
 
+  \begin{equation*}
+    CQU(h_{i-k:i}, q_{i+1}) := q_c \mid \mathcal{I}(q_c, q_{i+1}) = 1
+  \end{equation*}
 
-% %========================================
-% %========================================
-
-% \section[Transitions]{Transitions  between Slides}
-
-% \subsection{Simpel pause and the like}
-
-
-% \frame{
-% \frametitle{Enumerations}
-
-% \begin{itemize}
-% \item Main item
-% \begin{itemize}
-%   \item Subitem 1
-%   \item Subitem 2
-%   \item Subitem 3
-% \end{itemize}
-% \pause
-
-% \item Another main item
-% \pause
-
-% \item And yet another one
-% \begin{itemize}
-%   \item again with subitem
-%   \pause
-%   \item and a second subitem
-% \end{itemize}
-% \end{itemize}
-% } % END OF FRAME
-
-% %----------------------------------------
-
-% \frame{
-% \frametitle{Enumerations / 2}
-
-% \begin{itemize}
-% \item Main item
-% \begin{itemize}
-%   \item<1> Subitem 1
-%   \item<2-3> Subitem 2
-%   \item<3-> Subitem 3
-% \end{itemize}
-% \item<4> Another main item
-% \item<4-> And yet another one
-% \begin{itemize}
-%   \item<6-> again with subitem
-%   \item<7> and a second subitem
-% \end{itemize}
-% \end{itemize}
-% } % END OF FRAME
-
-% %========================================
-
-% \subsection{Overlays}
-
-% \frame{
-% \frametitle{Overlay of Images}
-% \vspace*{-2ex}
-
-% \begin{overprint}
-% \onslide<1>
-% \begin{figure}
-% \includegraphics[width=\textwidth]{humboldt_wiki-blank.png} 
-% \caption{AvH in Wikipedia, \textit{Source: URL}}
-% \end{figure}
-
-% \onslide<2>
-% \begin{figure}
-% \includegraphics[width=\textwidth]{humboldt_wiki-locations.png} 
-% \caption{AvH in Wikipedia, \textit{Source: URL}}
-% \end{figure}
-
-% \onslide<3>
-% \begin{figure}
-% \includegraphics[width=\textwidth]{humboldt_wiki-locations-dates.png} 
-% \caption{AvH in Wikipedia, \textit{Source: URL}}
-% \end{figure}
-
-% \onslide<4>
-% \begin{figure}
-% \includegraphics[width=\textwidth]{humboldt_wiki-locations-dates.png} 
-% \caption{AvH in Wikipedia, \textit{Source: URL}}
-% \end{figure}
-% \vspace*{-5cm}
-% \begin{block}{An the essence is \ldots}
-% \textbf{There were many events in the life of AvH.}
-% \end{block}
-
-% \end{overprint}
-
-% } % END OF FRAME
-
-% %----------------------------------------
-
-
-
-% \frame{\frametitle{Overlaying Details}
-% \vspace*{-1ex}
-% \begin{itemize}
-% \item What are the issues?
-% \begin{overprint}
-% \onslide<1>
-%   \begin{itemize}
-%   \item Issue 1
-%   \item Issue 2
-%   \item Issue 3
-%   \end{itemize}
-% \onslide<2>
-%   \begin{itemize}
-%   \item Issue 1 \\
-% \vspace*{-3ex}  
-%   \begin{center}
-% \includegraphics[width=.3\textwidth]{questions}
-% \end{center}
-%   \item Issue 2
-%   \item Issue 3
-%   \end{itemize}
-% \onslide<3>
-%   \begin{itemize}
-%   \item Issue 1
-%   \item Issue 2 \\
-%   \begin{center}
-%   \includegraphics[width=.3\textwidth]{questions}
-%   \end{center}
-%   \item Issue 3
-%   \end{itemize}
-% \onslide<4>
-%   \begin{itemize}
-%   \item Issue 1
-%   \item Issue 2
-%   \item Issue 3 \\
-%   \begin{center}
-%   \includegraphics[width=.3\textwidth]{questions}
-%   \end{center}
-%   \end{itemize}
-% \end{overprint}
-% \end{itemize}
-% } % END OF FRAME
-
-
-
-% %========================================
-% %========================================
-
-% \section{Accentuations}
-
-% \subsection{Accentuations}
-
-% %----------------------------------------
-
-% \def\hilite<#1>{%
-%   \temporal<#1>{\color{black}}{\color{unirot}}%
-%                {\color{gray}}}
-               
-% %----------------------------------------
-
-% \frame{
-% \frametitle{Accentuating Parts of Text }
-
-% \textbf{Source:} Beamer v3.0 Guide
-% \bigskip
-
-% \begin{Large}
-% \begin{tabular}{|p{3.5cm}|}
-% \hline
-% \texttt{{\hilite<4>A}( Id,{ \hilite<2>X}, {\hilite<3>Y})} \\
-% \texttt{B( Id, {\hilite<2>X}, {\hilite<3>Y})} \\ 
-% \hline
-% \end{tabular}
-% \end{Large} 
-
-% } % END OF FRAME
-
-% %----------------------------------------
-
-% \frame{
-% \frametitle{Accentuating Parts of Text / 2}
-
-% \textbf{Source:} Beamer v3.0 Guide
-
-% \bigskip
-% \begin{itemize}
-% \item<1-2> \alert<1>{This is important}
-% \item \alert<2-3>{Now this is important}
-% \item \alert<3>{Now both are important}
-% \item This is never important
-% \end{itemize}
-
-% } % END OF FRAME
-
-
-% %========================================
-% %========================================
-
-% \section[More]{More Information}
-
-% \subsection{More Information}
-
-% \frame{
-% \frametitle{Useful Beamer Tutorials}
-
-% \begin{itemize}
-% \item The Beamer class -- CTAN\\
-% \url{http://ctan.math.utah.edu/ctan/tex-archive/macros/latex/contrib/beamer/doc/beameruserguide.pdf}
-% \item ``A Beamer Tutorial in Beamer'' von Charles T. Batts \\
-% \url{https://www.uncg.edu/cmp/reu/presentations/Charles\%20Batts\%20-\%20Beamer\%20Tutorial.pdf}
-% %\texttt{http://www.uncg.edu/cmp/reu/presentations/Charles \\ \%20Batts\%20-\%20Beamer\%20Tutorial.pdf}
-% \medskip
-% \item The Beamer class for \LaTeX\\
-% \url{http://www.mathematik.uni-leipzig.de/~hellmund/LaTeX/beamer2.pdf}
-% \medskip
-% \item Beamer Theme Matrix \\
-% \texttt{http://www.hartwork.org/beamer-theme-matrix/}
-% \end{itemize}
-
-% }
-
-% %----------------------------------------
-
-% \frame{\frametitle{Questions}
-% \begin{figure}
-% \includegraphics[width=.8\textwidth]{questions} 
-% \end{figure}
-% \vspace*{-3.3cm}\begin{center}\begin{LARGE}\textbf{Questions}\end{LARGE}\end{center}
-
-% \vspace*{2cm}
-% }
+  \bigskip
+
+  \begin{enumerate}
+    \item \textbf{K-many:} Consideration of the last $k$ turns.
+    \item \textbf{All:} Utilization of the entire history, $k = i - 1$.
+    \item \textbf{Memory:} Inclusion of not only the current history but also previous Sessions by this user.
+  \end{enumerate} 
+\end{frame}
 
 \end{document}
