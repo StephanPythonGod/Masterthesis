@@ -1,0 +1,3 @@
+[submodule "code/chat-app"]
+    path = code/chat-app
+    url = https://github.com/StephanPythonGod/Masterthesis_PoC.git
